@@ -14,7 +14,7 @@ public class GameTime : MonoBehaviour {
 	public int _conversationsLeft;
 	// Use this for initialization
 	void Start () {
-		newDay();
+		_conversationsLeft = 5;
 	}
 
 	/// <summary>
@@ -22,7 +22,17 @@ public class GameTime : MonoBehaviour {
 	/// Complete all of the tasks the survivors were sent on
 	/// </summary>
 	public void newDay(){
-		_conversationsLeft = 5;
+
+
+		//process the tasks
+		evaluateTasks();
+	}
+
+	void evaluateTasks(){
+		for(int s = 0; s < _shelter.NumberOfSurvivors; s++){
+			_shelter._survivors[s].AssignedTask = Survivor.task.Unassigned;
+		}
+
 	}
 
 	// Update is called once per frame
@@ -70,6 +80,8 @@ public class GameTime : MonoBehaviour {
 				}
 				itY +=buttonHeight;
 			}
+			
+			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Assigned Task: " + _shelter._survivors[i].AssignedTask.ToString())){}
 			startX += buttonWidth;
 		}
 
