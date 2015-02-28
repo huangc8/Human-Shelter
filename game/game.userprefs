@@ -1,9 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\UpgradeDisplay.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameTime.cs">
     <Files>
-      <File FileName="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\GameOverMenu.cs" Line="187" Column="104" />
-      <File FileName="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\UpgradeDisplay.cs" Line="315" Column="35" />
+      <File FileName="Assets\Scripts\GameTime.cs" Line="56" Column="3" />
+      <File FileName="Assets\Scripts\Survivor.cs" Line="32" Column="8" />
+      <File FileName="Assets\Scripts\Shelter.cs" Line="33" Column="41" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
