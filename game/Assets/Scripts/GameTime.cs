@@ -28,8 +28,27 @@ public class GameTime : MonoBehaviour {
 		evaluateTasks();
 	}
 
+	/// <summary>
+	/// Evaluates the tasks. Carry out the task for each survivor
+	/// </summary>
 	void evaluateTasks(){
 		for(int s = 0; s < _shelter.NumberOfSurvivors; s++){
+			//carry out the task
+			switch(_shelter._survivors[s].AssignedTask){
+			case Survivor.task.Heal:
+				break;
+			case Survivor.task.Defend:
+				break;
+			case Survivor.task.Scavenge:
+				break;
+			case Survivor.task.Raiding:
+				break;
+			case Survivor.task.Unassigned:
+				goto case Survivor.task.Resting;
+			case Survivor.task.Resting:
+				break;
+			}
+
 			_shelter._survivors[s].AssignedTask = Survivor.task.Unassigned;
 		}
 
