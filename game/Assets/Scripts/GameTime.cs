@@ -26,6 +26,7 @@ public class GameTime : MonoBehaviour {
 
 		//process the tasks
 		evaluateTasks();
+		_conversationsLeft = 5;
 	}
 
 	/// <summary>
@@ -103,8 +104,16 @@ public class GameTime : MonoBehaviour {
 			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Assigned Task: " + _shelter._survivors[i].AssignedTask.ToString())){}
 			startX += buttonWidth;
 		}
-
+		startX += buttonWidth;
+		itY = startY;
+		if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Food: " + _shelter.Food)){}
+		itY += buttonHeight;
+		if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Luxuries: " + _shelter.Luxuries)){}
+		itY += buttonHeight;
+		if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Medicine: " + _shelter.Medicine)){}
+		itY += buttonHeight;
 	}
+
 
 
 }

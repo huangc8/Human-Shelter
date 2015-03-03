@@ -100,6 +100,7 @@ public class Shelter : MonoBehaviour {
 			_storage.Food = value;
 		}
 	}
+	
 
 	/// <summary>
 	/// Gets or sets the luxuries.
@@ -117,9 +118,17 @@ public class Shelter : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		_survivors = new Survivor[6];
+		_storage = new Stores(this);
 		DefaultSetup();
 
-		_storage = new Stores(this);
+	}
+
+	/// <summary>
+	/// Kills the survivor.
+	/// </summary>
+	public void KillSurvivor(Survivor s){
+		_numSurvivors--;
+		Destroy(s);
 	}
 
 	/// <summary>
