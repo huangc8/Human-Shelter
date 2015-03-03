@@ -76,6 +76,7 @@
      <Compile Include="Assets\Dialogue System\Scripts\Templates\TemplateTextFieldUI.cs" />
      <Compile Include="Assets\Scripts\Event.cs" />
      <Compile Include="Assets\Scripts\GameTime.cs" />
+     <Compile Include="Assets\Scripts\Report.cs" />
      <Compile Include="Assets\Scripts\Shelter.cs" />
      <Compile Include="Assets\Scripts\Survivor.cs" />
      <None Include="Assets\Dialogue System\_README.txt" />
