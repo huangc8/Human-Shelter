@@ -20,6 +20,24 @@ public class Shelter : MonoBehaviour {
 		int _luxuries;//How much medicine we have
 		int _food;//how much food we have
 		int _medicine; //how much medicine we have
+		int _defenses;
+
+
+		/// <summary>
+		/// Refreshes shelter for a new day, sets _defenses to 0
+		/// </summary>
+		public void NewDay(){
+			_defenses = 0;
+		}
+
+		/// <summary>
+		/// Bolsters the defenses.
+		/// </summary>
+		/// <param name="proficiency">Proficiency.</param>
+		public int IncreaseDefenses(int proficiency){
+			_defenses += proficiency;
+			return _defenses;
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Shelter+stores"/> class.
@@ -31,6 +49,8 @@ public class Shelter : MonoBehaviour {
 			_luxuries = 0;
 			_food = 0;
 			_medicine = 0;
+
+			_defenses = 0;
 		}
 
 		/// <summary>
