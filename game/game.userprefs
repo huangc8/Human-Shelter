@@ -1,8 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Dialogue System/Scripts/Lua Interpreter/LuaInterpreter.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\ZombieAI.cs">
     <Files>
-      <File FileName="Assets/Dialogue System/Scripts/Lua Interpreter/LuaInterpreter.cs" Line="5" Column="18" />
+      <File FileName="game.sln" Line="1" Column="1" />
+      <File FileName="Assets\Dialogue System\Scripts\Lua Interpreter\LuaInterpreter.cs" Line="1" Column="1" />
+      <File FileName="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\ZombieAI.cs" Line="155" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

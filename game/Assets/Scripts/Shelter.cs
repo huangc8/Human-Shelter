@@ -162,10 +162,12 @@ public class Shelter : MonoBehaviour {
 		Survivor s2 = new Survivor();
 		s2.Init();
 
+		
+
 		_survivors[0] = s;
-		_survivors[0].Name = "Jim Bob Jones";
+		_survivors[0].Name = "Brian";
 		_survivors[1] = s2;
-		_survivors[1].Name = "Jelly Bean Jimmy";
+		_survivors[1].Name = "Marina";
 
 		_numSurvivors = 2;
 	}
