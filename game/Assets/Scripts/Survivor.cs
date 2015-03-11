@@ -16,6 +16,7 @@ public class Survivor : ScriptableObject
 		// personal info
 		private string _name; // name of the survivor
 		private int _health = 10; // health of survivor
+	private int _appetite = 10;
 		private int _fatigue = 10; // fatigue level of survivor
 		private int[] _proficiencies; //array, stores skill at each task
 		private int _conversationsHad; //how many times the player has talked to this character
@@ -92,6 +93,9 @@ public class Survivor : ScriptableObject
 				get {
 						return _health;
 				}
+		set{
+			_health = value;
+		}
 		}
 
 	/// <summary>
@@ -120,8 +124,20 @@ public class Survivor : ScriptableObject
 				get {
 						return _fatigue;
 				}
+			set{
+				_fatigue = value;
+			}
 		}
-	
+
+	public int Appetitie{
+		get{
+			return _appetite;
+		}
+		set{
+			_appetite = value;
+		}
+	}
+
 		// =================================================== action
 		/// <summary>
 		/// Converse with this survivor.
@@ -294,6 +310,13 @@ public class Survivor : ScriptableObject
 				}
 		}
 
+	/// <summary>
+	/// Randomizes the characteristics.
+	/// </summary>
+	public void RandomizeCharacteristics(){
+		_appetite = Random.Range(3,10);
+	}
+
 		// ================================================= initialization
 		
 	public void CopyInit(Survivor sCopy)
@@ -309,15 +332,19 @@ public class Survivor : ScriptableObject
 		_fatigue = sCopy.Fatigue;
 		_proficiencies = sCopy.GetProficiencies();
 		_conversationsHad = sCopy.ConversationsHad;
+		_appetite = sCopy.Appetitie;
 	}
+
+
 
 		/// <summary>
 		/// Init this survivor.
 		/// </summary>
-		public void Init ()
-		{
-				_assignedTask = false;
-				_enabled = true;
-				RandomizeProficiences ();
-		}
+	public void Init ()
+	{
+		_assignedTask = false;
+		_enabled = true;
+		RandomizeProficiences ();
+		RandomizeCharacteristics();
+	}
 }
