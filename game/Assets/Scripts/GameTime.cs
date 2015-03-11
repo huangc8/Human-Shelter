@@ -9,18 +9,20 @@ using System.Collections.Generic;
 public class GameTime : MonoBehaviour {
 
 	// =============================================== data
-
 	Shelter _shelter; // the shelter data
 	Queue <Event> _events; // today's events
 	string _newDay; // newDay text
 	int _currentDay; // current day
+	Queue<Report> _reports; // the reports of assign task
 	public int _conversationsLeft; // converstation points left
 	public PixelCrushers.DialogueSystem.DialogueSystemController _DiagCon;
+
 	// =============================================== initialization
 	// Use this for initialization
 	void Start () {
 		_conversationsLeft = 5;
 		_currentDay = 0;
+		_reports = new Queue<Report>();
 	}
 
 	// =============================================== action
@@ -44,22 +46,37 @@ public class GameTime : MonoBehaviour {
 	/// Evaluates the tasks. Carry out the task for each survivor
 	/// </summary>
 	void evaluateTasks(){
+		//Evaluate each task
 		for(int s = 0; s < _shelter.NumberOfSurvivors; s++){
 			//carry out the task
+			Report r = new Report();
 			switch(_shelter._survivors[s].AssignedTask){
+			case Survivor.task.Scout:
+				r = _shelter._survivors[s].Scout(_shelter);
+				break;
 			case Survivor.task.Heal:
+				r = _shelter._survivors[s].Heal(_shelter);
 				break;
 			case Survivor.task.Defend:
+				r = _shelter._survivors[s].Defend(_shelter);
 				break;
 			case Survivor.task.Scavenge:
+				r = _shelter._survivors[s].Scavenge(_shelter);
 				break;
 			case Survivor.task.Raiding:
 				break;
 			case Survivor.task.Unassigned:
 				goto case Survivor.task.Resting;
 			case Survivor.task.Resting:
+				r = _shelter._survivors[s].Rest(_shelter);
 				break;
 			}
+			_reports.Enqueue(r);
+		}
+
+		//Set each task to unassigned
+		for(int s = 0; s < _shelter.NumberOfSurvivors; s++){
+			_shelter._survivors[s].Exhaust();
 			_shelter._survivors[s].AssignedTask = Survivor.task.Unassigned;
 		}
 	}
@@ -117,6 +134,13 @@ public class GameTime : MonoBehaviour {
 			}
 			
 			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Assigned Task: " + _shelter._survivors[i].AssignedTask.ToString())){}
+			itY += buttonHeight*2;
+			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Health: " + _shelter._survivors[i].Health)){}
+			itY += buttonHeight;
+
+			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Fatigue: " + _shelter._survivors[i].Fatigue)){}
+
+
 			startX += buttonWidth;
 		}
 		startX += buttonWidth;

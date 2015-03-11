@@ -13,6 +13,7 @@ public class Shelter : MonoBehaviour
 
 	public class Stores
 	{
+		// =============================================================== data
 		/// <summary>
 		/// Stores class, nested class that keeps track of all of the items we currently
 		/// have in the shelter
@@ -21,7 +22,9 @@ public class Shelter : MonoBehaviour
 		int _luxuries;//How much medicine we have
 		int _food;//how much food we have
 		int _medicine; //how much medicine we have
+		int _defenses; // the defense of the building (depend on guard
 
+		// =============================================================== initialization
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Shelter+stores"/> class.
 		/// Sets each store to be zero, sets the parent class too.
@@ -33,8 +36,27 @@ public class Shelter : MonoBehaviour
 			_luxuries = 0;
 			_food = 0;
 			_medicine = 0;
+			_defenses = 0;
 		}
 
+		// ================================================================ helper
+		/// <summary>
+		/// Refreshes shelter for a new day, sets _defenses to 0
+		/// </summary>
+		public void NewDay(){
+			_defenses = 0;
+		}
+
+		/// <summary>
+		/// Bolsters the defenses.
+		/// </summary>
+		/// <param name="proficiency">Proficiency.</param>
+		public int IncreaseDefenses(int proficiency){
+			_defenses += proficiency;
+			return _defenses;
+		}
+
+		// ================================================================= accessor
 		/// <summary>
 		/// Gets or sets the luxuries.
 		/// </summary>
@@ -74,6 +96,7 @@ public class Shelter : MonoBehaviour
 			}
 		}
 	}
+
 
 	//================================================== accessor
 	/// <summary>
@@ -149,6 +172,7 @@ public class Shelter : MonoBehaviour
 	/// <summary>
 	/// The default starting configuration for the shelter
 	/// </summary>
+
 	private void DefaultSetup ()
 	{
 		//create basic survivor
