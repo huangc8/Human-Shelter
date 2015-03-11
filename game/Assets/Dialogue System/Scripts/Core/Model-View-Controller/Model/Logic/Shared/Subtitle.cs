@@ -116,7 +116,9 @@ namespace PixelCrushers.DialogueSystem {
 			if ((formattedText.picConversant != FormattedText.NoPicOverride) && (listenerInfo != null)) return listenerInfo.GetPicOverride(formattedText.picConversant);
 			return speakerInfo.portrait;
 		}
-		
-	}
 
+		public int getEntryID(){
+			return dialogueEntry.id;
+		}
+	}
 }

@@ -11,7 +11,13 @@ namespace PixelCrushers.DialogueSystem {
 	/// </summary>
 	[AddComponentMenu("Dialogue System/Miscellaneous/Dialogue System Controller")]
 	public class DialogueSystemController : MonoBehaviour {
-		
+
+		// ========================================== MY FUNCTION
+		public int getID(){
+			return conversationController.getStatID ();
+		}
+		// ==========================================
+
 		/// <summary>
 		/// The initial dialogue database.
 		/// </summary>
@@ -59,7 +65,7 @@ namespace PixelCrushers.DialogueSystem {
 		private DatabaseManager databaseManager = null;
 		private DisplaySettings originalDisplaySettings = null;
 		private bool isOverrideUIPrefab = false;
-		private ConversationController conversationController = null;
+		private  ConversationController conversationController = null;
 		private IsDialogueEntryValidDelegate isDialogueEntryValid = null;
 		private LuaWatchers luaWatchers = new LuaWatchers();
 		private AssetBundleManager assetBundleManager = new AssetBundleManager();

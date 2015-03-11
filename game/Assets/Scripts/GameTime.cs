@@ -29,26 +29,28 @@ public class GameTime : MonoBehaviour
 				BrianTalked = false;
 		}
 
-	// =============================================== action
-	/// <summary>
-	/// Start a new day, reset all of your values that reset over night
-	/// Complete all of the tasks the survivors were sent on
-	/// </summary>
-	public void newDay(){
-		//process the tasks
-		evaluateTasks();
-		_conversationsLeft = 5;
-		for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
-			_shelter._survivors[i].ConvReset();
+		// =============================================== action
+		/// <summary>
+		/// Start a new day, reset all of your values that reset over night
+		/// Complete all of the tasks the survivors were sent on
+		/// </summary>
+		public void newDay ()
+		{
+				//process the tasks
+				evaluateTasks ();
+				_conversationsLeft = 5;
+				for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
+						_shelter._survivors [i].ConvReset ();
+				}
+				_currentDay++;
 		}
-		_currentDay++;
-	}
 
-	// ================================================ helper
-	/// <summary>
-	/// Evaluates the tasks. Carry out the task for each survivor
-	/// </summary>
-	void evaluateTasks(){
+		// ================================================ helper
+		/// <summary>
+		/// Evaluates the tasks. Carry out the task for each survivor
+		/// </summary>
+		void evaluateTasks ()
+		{
 				//Evaluate each task
 				for (int s = 0; s < _shelter.NumberOfSurvivors; s++) {
 #if debuglog
@@ -172,9 +174,10 @@ public class GameTime : MonoBehaviour
 								_DiagCon.StartConversation ("Conv_2");
 						}
 				}
-
-		if (_DiagCon.IsConversationActive) {
-			}
+	
+				if (_DiagCon.IsConversationActive) {
+						Debug.Log (_DiagCon.getID ());
+				} 
 		}// end of OnGUI
 }
 

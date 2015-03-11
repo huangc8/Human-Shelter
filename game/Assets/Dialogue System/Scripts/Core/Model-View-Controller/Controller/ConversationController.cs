@@ -194,6 +194,10 @@ namespace PixelCrushers.DialogueSystem {
 			view.SetActorPortraitTexture(actorName, portraitTexture);
 		}
 
+		public int getStatID(){
+			return state.subtitle.getEntryID ();
+		}
+
 	}// end of conversationController
 	
 }

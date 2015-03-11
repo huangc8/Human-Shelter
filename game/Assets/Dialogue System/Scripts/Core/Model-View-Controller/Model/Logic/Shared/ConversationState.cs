@@ -113,7 +113,11 @@ namespace PixelCrushers.DialogueSystem {
 			this.pcResponses = pcResponses;
 			this.IsGroup = isGroup;
 		}
-		
+
+		public int getSubID(){
+			return subtitle.getEntryID ();
+		}
+
 	}
 
 }
