@@ -131,7 +131,7 @@ public class Survivor : MonoBehaviour
 				case task.Resting:
 						break;
 				case task.Scavenge:
-						if (Random.Range (0, proficiency) < 3) {
+						if (Random.Range (0, 100) < 3) { 
 								s.KillSurvivor (this);
 						} else {
 								s.Food += Random.Range (0, 10) * proficiency;
@@ -183,7 +183,7 @@ public class Survivor : MonoBehaviour
 		{
 				Report r = new Report ();
 		
-				int proficiency = GetProficiency (task.Scavenge);
+				int proficiency = 10;
 				if (Random.Range (0, proficiency) < 3) {
 						s.KillSurvivor (this);
 				} else {
