@@ -45,26 +45,16 @@ public class GameTime : MonoBehaviour
 						_shelter._survivors [i].ConvReset ();
 				}
 				_currentDay++;
-		}
-<<<<<<< HEAD
+			_shelter.NewDay();
 
-		// ================================================ helper
-		/// <summary>
-		/// Evaluates the tasks. Carry out the task for each survivor
-		/// </summary>
-		void evaluateTasks ()
-		{
-=======
-		_currentDay++;
-		_shelter.NewDay();
 	}
+
 
 	// ================================================ helper
 	/// <summary>
 	/// Evaluates the tasks. Carry out the task for each survivor
 	/// </summary>
 	void evaluateTasks(){
->>>>>>> 660a37a385bd86c9a9cf564f20121311fe045f77
 				//Evaluate each task
 				for (int s = 0; s < _shelter.NumberOfSurvivors; s++) {
 #if debuglog
@@ -193,14 +183,9 @@ public class GameTime : MonoBehaviour
 				}
 				
 				if (_DiagCon.IsConversationActive) {
-				}
-<<<<<<< HEAD
-	
-				if (_DiagCon.IsConversationActive) {
-						Debug.Log (_DiagCon.getID ());
-				} 
-		}// end of OnGUI
-=======
+					Debug.Log (_DiagCon.getID ());
+
+		}
 
 		//new survivor arrives
 		startX += buttonWidth;
@@ -235,6 +220,5 @@ public class GameTime : MonoBehaviour
 
 	}
 
->>>>>>> 660a37a385bd86c9a9cf564f20121311fe045f77
 }
 
