@@ -57,10 +57,11 @@
      <None Include="Assets\Dialogue System\Examples\Bark Example\Bark Example.xml" />
      <None Include="Assets\Dialogue System\Third Party Support\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Bark Example\Bark Conversation\_README.txt" />
+     <None Include="Assets\Dialogue System\Scripts\Supplemental\UI\Example\Art\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Art\Sounds\_README.txt" />
-     <None Include="Assets\Dialogue System\Scripts\Supplemental\UI\Prefabs\Unity UI Assets\_README.txt" />
      <None Include="Assets\Dialogue System\DLLs\_README.txt" />
      <None Include="Assets\Dialogue System\Prefabs\Unity Dialogue UIs\Circle\Textures\_README.txt" />
+     <None Include="Assets\Dialogue System\Scripts\NLua\COPYRIGHT.txt" />
      <None Include="Assets\Dialogue System\Prefabs\Unity Dialogue UIs\Necromancer\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Feature Demo\Multiple Database Example\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Bark Example\_README.txt" />
@@ -71,7 +72,6 @@
      <None Include="Assets\Dialogue System\Examples\Quick Start\Quick Start.xml" />
      <None Include="Assets\Dialogue System\Examples\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Sequence Example\_README.txt" />
-     <None Include="Assets\Dialogue System\Scripts\Supplemental\UI\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Feature Demo\Text Input Example\_README.txt" />
      <None Include="Assets\Dialogue System\Prefabs\Unity Dialogue UIs\Necromancer\Necromancer GUI\Kingthings.txt" />
      <None Include="Assets\Dialogue System\Examples\Art\_README.txt" />
@@ -83,18 +83,18 @@
      <None Include="Assets\Dialogue System\Documentation\_README.txt" />
      <None Include="Assets\Dialogue System\Prefabs\Unity Dialogue UIs\Necromancer\Necromancer GUI\Readme.txt" />
      <None Include="Assets\Dialogue System\Scripts\Supplemental\Utility\_README.txt" />
+     <None Include="Assets\Dialogue System\Scripts\Lua Interpreter\_README.txt" />
      <None Include="Assets\Dialogue System\Scripts\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Feature Demo\Feature Demo with Continue Button\_README.txt" />
      <None Include="Assets\Dialogue System\Prefabs\Unity Dialogue UIs\Wheel\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Feature Demo\Menu Text Demo\Feature Demo With Menu Text.xml" />
-     <None Include="Assets\Dialogue System\Scripts\Lua Interpreter\_README.txt" />
-     <None Include="Assets\Dialogue System\Scripts\NLua\COPYRIGHT.txt" />
+     <None Include="Assets\Dialogue System\Scripts\Supplemental\UI\_README.txt" />
      <None Include="Assets\Dialogue System\Prefabs\Unity Dialogue UIs\Shared Fonts\Orbitron\SIL Open Font License.txt" />
      <None Include="Assets\Dialogue System\Prefabs\Unity Dialogue UIs\Shared Textures\_README.txt" />
+     <None Include="Assets\Dialogue System\Scripts\Supplemental\UI\Prefabs\Unity UI Assets\_README.txt" />
      <None Include="Assets\Dialogue System\Prefabs\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Feature Demo\Menu Text Demo\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Feature Demo\Articy Feature Demo\Articy Feature Demo.xml" />
-     <None Include="Assets\Dialogue System\Scripts\Supplemental\UI\Example\Art\_README.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>
