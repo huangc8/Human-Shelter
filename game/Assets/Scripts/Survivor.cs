@@ -141,7 +141,9 @@ public class Survivor : ScriptableObject
 	/// <param name="s">Shelter</param>
 	public Report Defend (Shelter s)
 	{
-		int proficiency = GetProficiency (task.Defend);
+		int fatigueModifier = (100/(10+Fatigue))*10;
+
+		int proficiency = GetProficiency (task.Defend) + fatigueModifier;
 		int newDefenses = s.BolsterDefenses(proficiency);
 
 		Report r = new Report ();
@@ -189,21 +191,21 @@ public class Survivor : ScriptableObject
 		/// Scavenge  for the shelter s.
 		/// </summary>
 		/// <param name="s">S.</param>
-		public Report Scavenge (Shelter s)
-		{
-				Report r = new Report ();
-		
-				int proficiency = GetProficiency(task.Scavenge);
-				if (Random.Range (-10, proficiency) < -8 && Random.Range (0,10) < 1) {
-						s.KillSurvivor (this);
-				} else {
-			s.Food += 1 + (int)Random.Range (0, 10) * (proficiency+11) * .1f;
-			s.Medicine += 1 + (int)Random.Range (0, 10) * (proficiency + 11)* .1f;
-			s.Luxuries += 1 + (int)Random.Range (0, 10) * (proficiency + 11) * .1f;
-						r.SetMessage (_name + " Scavenged supplies are now Food:" + s.Food + " Medicine:" + s.Medicine + " Luxuries:" + s.Luxuries);
-				}
-				return r;
+	public Report Scavenge (Shelter s)
+	{
+		Report r = new Report ();
+		int fatigueModifier = (100/(10+Fatigue))*10;
+		int proficiency = GetProficiency(task.Scavenge);
+		if (Random.Range (-10, proficiency + fatigueModifier) < -8 && Random.Range (0,10) < 3) {
+			s.KillSurvivor (this);
+		} else {
+			s.Food += 1 + (int) (Random.Range (0, 10) * (proficiency+fatigueModifier+11) * .1f);
+			s.Medicine += 1 + (int) (Random.Range (0, 10) * (proficiency +fatigueModifier+ 11)* .1f);
+			s.Luxuries += 1 + (int) (Random.Range (0, 10) * (proficiency +fatigueModifier+ 11) * .1f);
+			r.SetMessage (_name + " Scavenged supplies are now Food:" + s.Food + " Medicine:" + s.Medicine + " Luxuries:" + s.Luxuries);
 		}
+		return r;
+	}
 
 		public Report Rest (Shelter s)
 		{
@@ -221,17 +223,18 @@ public class Survivor : ScriptableObject
 	{
 		Report r = new Report ();
 		int heals = 0;
+		int fatigueModifier = (100/(10+Fatigue))*10;
 		
 		int proficiency = GetProficiency(task.Heal);
 
-		int medicineUsed = 5-proficiency;
+		int medicineUsed = 20-(proficiency+fatigueModifier);
 
         for (int i = 0; i < s.NumberOfSurvivors; i++) {
 			if(s.Medicine >= medicineUsed)
 			{
 				if (s._survivors [i]._task == task.Resting) {
 					heals++;
-					s._survivors [i].HealMe (proficiency);
+					s._survivors [i].HealMe (proficiency + fatigueModifier);
 				}
 				s.UseMedicine(medicineUsed);
 			}
@@ -255,7 +258,7 @@ public class Survivor : ScriptableObject
 		/// </summary>
 		public void Exhaust ()
 		{
-				_fatigue++;
+				_fatigue += 10;
 		}
 
 		/// <summary>
@@ -263,7 +266,7 @@ public class Survivor : ScriptableObject
 		/// </summary>
 		public int RestMe ()
 		{
-				_fatigue -= 5;
+				_fatigue -= 30;
 				return _fatigue;
 		}
 
