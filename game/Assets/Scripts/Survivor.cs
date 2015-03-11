@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Survivor : MonoBehaviour
+public class Survivor : ScriptableObject
 {
 
 		// ========================================================= data
