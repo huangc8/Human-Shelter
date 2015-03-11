@@ -194,7 +194,7 @@ public class Survivor : ScriptableObject
 				Report r = new Report ();
 		
 				int proficiency = GetProficiency(task.Scavenge);
-				if (Random.Range (-10, proficiency) < -6) {
+				if (Random.Range (-10, proficiency) < -8 && Random.Range (0,10) < 1) {
 						s.KillSurvivor (this);
 				} else {
 						s.Food += Random.Range (0, 10) * proficiency;
