@@ -44,6 +44,7 @@ public class GameTime : MonoBehaviour
 			_shelter._survivors[i].ConvReset();
 		}
 		_currentDay++;
+		_shelter.NewDay();
 	}
 
 	// ================================================ helper

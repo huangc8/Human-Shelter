@@ -142,8 +142,8 @@ public class Survivor : ScriptableObject
 	public Report Defend (Shelter s)
 	{
 		int proficiency = GetProficiency (task.Defend);
-		s.BolsterDefenses(proficiency);
-		int newDefenses = s.DefenseLevel;
+		int newDefenses = s.BolsterDefenses(proficiency);
+
 		Report r = new Report ();
 		r.SetMessage (_name + " Bolstered defenses to " + newDefenses);
 		return r;
@@ -193,7 +193,7 @@ public class Survivor : ScriptableObject
 		{
 				Report r = new Report ();
 		
-				int proficiency = GetProficiency[task.Scavenge];
+				int proficiency = GetProficiency(task.Scavenge);
 				if (Random.Range (-10, proficiency) < -6) {
 						s.KillSurvivor (this);
 				} else {
@@ -222,7 +222,7 @@ public class Survivor : ScriptableObject
 		Report r = new Report ();
 		int heals = 0;
 		
-		int proficiency = GetProficiency[task.Heal];
+		int proficiency = GetProficiency(task.Heal);
 
 		int medicineUsed = 5-proficiency;
 
