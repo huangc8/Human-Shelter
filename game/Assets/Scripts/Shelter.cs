@@ -175,7 +175,8 @@ public class Shelter : MonoBehaviour
 
 	// ================================================== action
 	public void EvictSurvivor(Survivor s){
-		_numSurvivors--;
+		_evictedSurvivors[_numEvictedSurvivors] = CopySurvivor(s);
+		_numEvictedSurvivors++;
 		Destroy (s);
 	}
 
