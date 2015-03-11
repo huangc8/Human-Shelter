@@ -8,7 +8,7 @@ namespace PixelCrushers.DialogueSystem {
 	/// conversation.
 	/// </summary>
 	public class ConversationController {
-		
+
 		/// <summary>
 		/// The data model of the conversation.
 		/// </summary>
@@ -194,6 +194,6 @@ namespace PixelCrushers.DialogueSystem {
 			view.SetActorPortraitTexture(actorName, portraitTexture);
 		}
 
-	}
+	}// end of conversationController
 	
 }

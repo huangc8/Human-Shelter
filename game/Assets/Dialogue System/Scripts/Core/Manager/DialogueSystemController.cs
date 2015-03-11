@@ -578,6 +578,7 @@ namespace PixelCrushers.DialogueSystem {
 				gameObject.BroadcastMessage("OnConversationEnd", actor, SendMessageOptions.DontRequireReceiver);
 				conversationController = null;
 			}
+
 			RestoreOriginalUI();
 			luaWatchers.NotifyObservers(LuaWatchFrequency.EndOfConversation);
 			CheckAlerts();
