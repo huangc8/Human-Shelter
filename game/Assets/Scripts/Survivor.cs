@@ -163,10 +163,10 @@ public class Survivor : ScriptableObject
 		int fatigueModifier = (100/(10+Fatigue))*10;
 		
 		int proficiency = GetProficiency (task.Raiding) + fatigueModifier;
-		int newDefenses = s.BosterAttack(proficiency);
+		int newAttack = s.BolsterAttack(proficiency);
 		
 		Report r = new Report ();
-		r.SetMessage (_name + " Bolstered attack strength to " + newDefenses);
+		r.SetMessage (_name + " Bolstered attack strength to " + newAttack);
 		return r;
 	}
 
