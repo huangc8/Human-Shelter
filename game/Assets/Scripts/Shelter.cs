@@ -105,6 +105,7 @@ public class Shelter : MonoBehaviour
 	public bool EatFood(int toEat){
 		_storage.Food = _storage.Food - toEat;
 		if(_storage.Food < 0){
+			_storage.Food = 0;
 			return false;
 		}
 		return true;
