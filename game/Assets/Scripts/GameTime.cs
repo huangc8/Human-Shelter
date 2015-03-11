@@ -184,16 +184,26 @@ public class GameTime : MonoBehaviour
 		//new survivor arrives
 		startX += buttonWidth;
 		itY = startY;
-		if (_visitors._personList[_currentDay] != null) {
+		Survivor visitorAtGate = _visitors._personList [_currentDay];
+		if (visitorAtGate != null) {
 			if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "There is someone at the gate!")) {}
 			itY += buttonHeight;
-			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Talk to " +_visitors._personList[_currentDay].Name.ToString())){}
+			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Talk to " +visitorAtGate.Name.ToString())){}
 			itY += buttonHeight;
-			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Invite")){}
+			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Invite")){
+				_shelter._survivors[_shelter.NumberOfSurvivors] =  visitorAtGate;
+				_shelter.NumberOfSurvivors++;
+				_visitors._personList[_currentDay] = null;
+			}
 			itY += buttonHeight;
-			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Reject")){}
+			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Reject")){
+				_visitors._personList[_currentDay] = null;
+			}
 			itY += buttonHeight;
-			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Kill")){}
+			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Kill")){
+				_visitors._personList[_currentDay] = null;
+
+			}
 			itY += buttonHeight;
 				}
 		else{
