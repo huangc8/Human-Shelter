@@ -83,6 +83,7 @@ public class GameTime : MonoBehaviour
 				r = _shelter._survivors [s].Evict (_shelter);
 				break;
 			case Survivor.task.Raiding:
+				r = _shelter._survivors [s].Raid(_shelter);
 				break;
 			case Survivor.task.Unassigned:
 				goto case Survivor.task.Resting;

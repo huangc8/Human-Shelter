@@ -158,6 +158,17 @@ public class Survivor : ScriptableObject
 		{
 				_health += healAmount;
 		}
+	public Report Raid(Shelter s)
+	{
+		int fatigueModifier = (100/(10+Fatigue))*10;
+		
+		int proficiency = GetProficiency (task.Raiding) + fatigueModifier;
+		int newDefenses = s.BosterAttack(proficiency);
+		
+		Report r = new Report ();
+		r.SetMessage (_name + " Bolstered attack strength to " + newDefenses);
+		return r;
+	}
 
 	public Report Evict(Shelter s)
 	{
