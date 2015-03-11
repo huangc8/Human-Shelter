@@ -13,6 +13,7 @@ public class Shelter : MonoBehaviour
 	private int _numEvictedSurvivors; //current number of survivors who have been evicted
 	private int _numSurvivors; // current number of survivors
 	private Stores _storage; // the storage
+	int _defenses; // the defense of the building (depend on guard
 
 	public class Stores
 	{
@@ -25,7 +26,6 @@ public class Shelter : MonoBehaviour
 		int _luxuries;//How much medicine we have
 		int _food;//how much food we have
 		int _medicine; //how much medicine we have
-		int _defenses; // the defense of the building (depend on guard
 
 		// =============================================================== initialization
 		/// <summary>
@@ -39,24 +39,10 @@ public class Shelter : MonoBehaviour
 			_luxuries = 0;
 			_food = 0;
 			_medicine = 0;
-			_defenses = 0;
 		}
 
-		// ================================================================ helper
-		/// <summary>
-		/// Refreshes shelter for a new day, sets _defenses to 0
-		/// </summary>
-		public void NewDay(){
-			_defenses = 0;
-		}
-
-		/// <summary>
-		/// Bolsters the defenses.
-		/// </summary>
-		/// <param name="proficiency">Proficiency.</param>
-		public int IncreaseDefenses(int proficiency){
-			_defenses += proficiency;
-			return _defenses;
+		public void UseMedicine(int useAmount){
+			_medicine -= useAmount;
 		}
 
 		// ================================================================= accessor
@@ -100,8 +86,30 @@ public class Shelter : MonoBehaviour
 		}
 	}
 
+	
+	/// <summary>
+	/// Bolsters the defenses.
+	/// </summary>
+	/// <param name="proficiency">Proficiency.</param>
+	public int BolsterDefenses(int proficiency){
+		_defenses += proficiency;
+		return _defenses;
+    }
+    
+    // ================================================================ helper
+	/// <summary>
+	/// Refreshes shelter for a new day, sets _defenses to 0
+	/// </summary>
+	public void NewDay(){
+		_defenses = 0;
+    }
 
-	//================================================== accessor
+	//================================================== Modifier
+	public void UseMedicine(int useAmount){
+		_storage.UseMedicine(useAmount);
+	}
+
+    //================================================== accessor
 	/// <summary>
 	/// Gets or sets the medicine.
 	/// </summary>
@@ -175,7 +183,8 @@ public class Shelter : MonoBehaviour
 
 	// ================================================== action
 	public void EvictSurvivor(Survivor s){
-		_numSurvivors--;
+		_evictedSurvivors[_numEvictedSurvivors] = CopySurvivor(s);
+		_numEvictedSurvivors++;
 		Destroy (s);
 	}
 
@@ -209,9 +218,9 @@ public class Shelter : MonoBehaviour
 	{
 		//create basic survivor
 		_survivors [0] = CreateSurvivor("Brian");
-		_survivors [1] = CreateSurvivor("Marina");
-		_survivors [2] = CreateSurvivor("Jimbob");
-		_survivors [3] = CreateSurvivor("Jones");
+		//_survivors [1] = CreateSurvivor("Marina");
+		//_survivors [2] = CreateSurvivor("Jimbob");
+		//_survivors [3] = CreateSurvivor("Jones");
 
 		for(int s = 0; s < _numSurvivors; s++){
 			Debug.Log(_survivors[s].AssignedTask.ToString());
@@ -222,6 +231,8 @@ public class Shelter : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		
+		_defenses = 0;
 		_survivors = new Survivor[6];
 		_evictedSurvivors = new Survivor[100];
 

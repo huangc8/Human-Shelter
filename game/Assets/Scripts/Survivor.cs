@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Survivor : MonoBehaviour
+public class Survivor : ScriptableObject
 {
 
 		// ========================================================= data
@@ -135,25 +135,26 @@ public class Survivor : MonoBehaviour
 		// =================================================== task
 		
 
-		/// <summary>
-		/// Defend the specified shelter s.
-		/// </summary>
-		/// <param name="s">Shelter</param>
-		public Report Defend (Shelter s)
-		{
-				int proficiency = GetProficiency (task.Defend);
-				int newDefenses = 0;
-				Report r = new Report ();
-				r.SetMessage (_name + " Bolstered defenses to " + newDefenses);
-				return r;
-		}
+	/// <summary>
+	/// Defend the specified shelter s.
+	/// </summary>
+	/// <param name="s">Shelter</param>
+	public Report Defend (Shelter s)
+	{
+		int proficiency = GetProficiency (task.Defend);
+		int newDefenses = s.BolsterDefenses(proficiency);
+
+		Report r = new Report ();
+		r.SetMessage (_name + " Bolstered defenses to " + newDefenses);
+		return r;
+	}
 	
 		/// <summary>
 		/// Heals this survivor
 		/// </summary>
-		public void HealMe ()
+		public void HealMe (int healAmount)
 		{
-				_health += 5;
+				_health += healAmount;
 		}
 
 	public Report Evict(Shelter s)
@@ -192,8 +193,8 @@ public class Survivor : MonoBehaviour
 		{
 				Report r = new Report ();
 		
-				int proficiency = 10;
-				if (Random.Range (0, proficiency) < 3) {
+				int proficiency = GetProficiency(task.Scavenge);
+				if (Random.Range (-10, proficiency) < -8 && Random.Range (0,10) < 1) {
 						s.KillSurvivor (this);
 				} else {
 						s.Food += Random.Range (0, 10) * proficiency;
@@ -216,19 +217,28 @@ public class Survivor : MonoBehaviour
 		/// <summary>
 		/// Heal the other survivors
 		/// </summary>
-		public Report Heal (Shelter s)
-		{
-				Report r = new Report ();
-				int heals = 0;
-				for (int i = 0; i < s.NumberOfSurvivors; i++) {
-						if (s._survivors [i]._task == task.Resting) {
-								heals++;
-								s._survivors [i].HealMe ();
-						}
+	public Report Heal (Shelter s)
+	{
+		Report r = new Report ();
+		int heals = 0;
+		
+		int proficiency = GetProficiency(task.Heal);
+
+		int medicineUsed = 5-proficiency;
+
+        for (int i = 0; i < s.NumberOfSurvivors; i++) {
+			if(s.Medicine >= medicineUsed)
+			{
+				if (s._survivors [i]._task == task.Resting) {
+					heals++;
+					s._survivors [i].HealMe (proficiency);
 				}
-				r.SetMessage (_name + " healed " + heals + " survivors.");
-				return r;
+				s.UseMedicine(medicineUsed);
+			}
 		}
+		r.SetMessage (_name + " healed " + heals + " survivors.");
+		return r;
+	}
 
 		// ===================================================== helper
 

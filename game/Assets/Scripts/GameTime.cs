@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class GameTime : MonoBehaviour
 {
 
@@ -15,6 +16,7 @@ public class GameTime : MonoBehaviour
 		string _newDay; // newDay text
 		int _currentDay; // current day
 		Queue<Report> _reports; // the reports of assign task
+		Visitor _visitors; //grab info about newcomers
 		public int _conversationsLeft; // converstation points left
 		public PixelCrushers.DialogueSystem.DialogueSystemController _DiagCon;
 		bool BrianTalked;
@@ -44,6 +46,7 @@ public class GameTime : MonoBehaviour
 				}
 				_currentDay++;
 		}
+<<<<<<< HEAD
 
 		// ================================================ helper
 		/// <summary>
@@ -51,6 +54,17 @@ public class GameTime : MonoBehaviour
 		/// </summary>
 		void evaluateTasks ()
 		{
+=======
+		_currentDay++;
+		_shelter.NewDay();
+	}
+
+	// ================================================ helper
+	/// <summary>
+	/// Evaluates the tasks. Carry out the task for each survivor
+	/// </summary>
+	void evaluateTasks(){
+>>>>>>> 660a37a385bd86c9a9cf564f20121311fe045f77
 				//Evaluate each task
 				for (int s = 0; s < _shelter.NumberOfSurvivors; s++) {
 #if debuglog
@@ -89,13 +103,17 @@ public class GameTime : MonoBehaviour
 				}
 		}
 
-		// ================================================= update / GUI
-		// Update is called once per frame
-		void Update ()
-		{
-				if (_shelter == null) {
-						_shelter = this.GetComponent<Shelter> ();
-				}
+	// ================================================= update / GUI
+	// Update is called once per frame
+	void Update () {
+		if(_shelter == null){
+			_shelter = this.GetComponent<Shelter>();
+
+		}
+		if(_visitors == null){
+			_visitors = this.GetComponent<Visitor>();
+
+		}
 
 				if (_conversationsLeft > 0) {
 						_newDay = "New Day";
@@ -155,7 +173,6 @@ public class GameTime : MonoBehaviour
 						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Fatigue: " + _shelter._survivors [i].Fatigue)) {
 						}
 
-
 						startX += buttonWidth;
 				}
 				startX += buttonWidth;
@@ -170,14 +187,54 @@ public class GameTime : MonoBehaviour
 				}
 				itY += buttonHeight;
 				if (BrianTalked && !_DiagCon.IsConversationActive) {
-						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Door: " + _shelter.Medicine)) {
-								_DiagCon.StartConversation ("Conv_2");
-						}
+					if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Door: " + _shelter.Medicine)) {
+						_DiagCon.StartConversation ("Conv_2");
+					}
 				}
+				
+				if (_DiagCon.IsConversationActive) {
+				}
+<<<<<<< HEAD
 	
 				if (_DiagCon.IsConversationActive) {
 						Debug.Log (_DiagCon.getID ());
 				} 
 		}// end of OnGUI
+=======
+
+		//new survivor arrives
+		startX += buttonWidth;
+		itY = startY;
+		Survivor visitorAtGate = _visitors._personList [_currentDay];
+		if (visitorAtGate != null) {
+			if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "There is someone at the gate!")) {}
+			itY += buttonHeight;
+			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Talk to " +visitorAtGate.Name.ToString())){}
+			itY += buttonHeight;
+			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Invite")){
+				_shelter._survivors[_shelter.NumberOfSurvivors] =  visitorAtGate;
+				_shelter.NumberOfSurvivors++;
+				_visitors._personList[_currentDay] = null;
+			}
+			itY += buttonHeight;
+			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Reject")){
+				_visitors._personList[_currentDay] = null;
+			}
+			itY += buttonHeight;
+			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Kill")){
+				_visitors._personList[_currentDay] = null;
+
+			}
+			itY += buttonHeight;
+				}
+		else{
+			if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Nobody is at the gate")) {}
+		}
+
+
+
+	}
+
+>>>>>>> 660a37a385bd86c9a9cf564f20121311fe045f77
 }
 
