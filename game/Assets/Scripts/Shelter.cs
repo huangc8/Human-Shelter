@@ -37,7 +37,7 @@ public class Shelter : MonoBehaviour
 		{
 			this._parent = parent;
 			_luxuries = 0;
-			_food = 0;
+			_food = 50;
 			_medicine = 0;
 		}
 
@@ -99,6 +99,13 @@ public class Shelter : MonoBehaviour
 	public int BolsterAttack(int proficiency){
 		_attackStrength += proficiency;
 		return _attackStrength;
+	}
+
+	public void EatFood(int toEat){
+		_storage.Food = _storage.Food - toEat;
+		if(_storage.Food < 0){
+			Application.CancelQuit();
+		}
 	}
 
     

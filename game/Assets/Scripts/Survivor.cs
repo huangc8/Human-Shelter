@@ -272,6 +272,11 @@ public class Survivor : ScriptableObject
 
 		// ===================================================== helper
 
+	public void Eat(Shelter s)
+	{
+		s.EatFood(Random.Range (1,_appetite));
+	}
+
 		/// <summary>
 		/// Reset Conversation.
 		/// </summary>

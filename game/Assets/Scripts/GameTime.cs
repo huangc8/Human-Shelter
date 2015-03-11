@@ -91,6 +91,7 @@ public class GameTime : MonoBehaviour
 				r = _shelter._survivors [s].Rest (_shelter);
 				break;
 			}
+			_shelter._survivors [s].Eat(_shelter);
 			r.Log();
 			_reports.Enqueue (r);
 		}
