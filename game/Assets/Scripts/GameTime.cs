@@ -14,6 +14,7 @@ public class GameTime : MonoBehaviour {
 	string _newDay; // newDay text
 	int _currentDay; // current day
 	Queue<Report> _reports; // the reports of assign task
+	Visitor _visitors; //grab info about newcomers
 	public int _conversationsLeft; // converstation points left
 	public PixelCrushers.DialogueSystem.DialogueSystemController _DiagCon;
 
@@ -87,6 +88,11 @@ public class GameTime : MonoBehaviour {
 	void Update () {
 		if(_shelter == null){
 			_shelter = this.GetComponent<Shelter>();
+
+		}
+		if(_visitors == null){
+			_visitors = this.GetComponent<Visitor>();
+
 		}
 
 		if(_conversationsLeft > 0){
@@ -151,6 +157,28 @@ public class GameTime : MonoBehaviour {
 		itY += buttonHeight;
 		if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Medicine: " + _shelter.Medicine)){}
 		itY += buttonHeight;
+
+		//new survivor arrives
+		startX += buttonWidth;
+		itY = startY;
+		print (_visitors._personList[_currentDay]);
+		if (_visitors._personList[_currentDay] != null) {
+			if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "There is someone at the gate!")) {}
+				}
+		else{
+			if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Nobody is at the gate")) {}
+		}
+		itY += buttonHeight;
+		if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Talk")){}
+		itY += buttonHeight;
+		if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Invite")){}
+		itY += buttonHeight;
+		if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Reject")){}
+		itY += buttonHeight;
+		if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Kill")){}
+		itY += buttonHeight;
+
+
 	}
 }
 
