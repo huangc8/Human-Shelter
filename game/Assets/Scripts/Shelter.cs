@@ -8,6 +8,9 @@ using System.Collections;
 public class Shelter : MonoBehaviour
 {
 	public Survivor[] _survivors; //array of survivors, maximum capacity is 6
+	public Survivor[] _evictedSurvivors; //Array of survivors who have been kicked out of the shelter
+
+	private int _numEvictedSurvivors; //current number of survivors who have been evicted
 	private int _numSurvivors; // current number of survivors
 	private Stores _storage; // the storage
 
@@ -158,14 +161,43 @@ public class Shelter : MonoBehaviour
 		return stmp;
 	}
 
+	/// <summary>
+	/// Copies the survivor.
+	/// </summary>
+	/// <returns>The survivor.</returns>
+	/// <param name="toBeCopied">To be copied.</param>
+	private Survivor CopySurvivor(Survivor toBeCopied){
+		Survivor stmp = new Survivor();
+
+		stmp.CopyInit(toBeCopied);
+		return stmp;
+	}
+
 	// ================================================== action
+	public void EvictSurvivor(Survivor s){
+		_numSurvivors--;
+		Destroy (s);
+	}
+
 	/// <summary>
 	/// Kills the survivor.
 	/// </summary>
 	public void KillSurvivor (Survivor s)
 	{
+		//Find the survivors position
+		int sPosition = -1;
+		for(int i = 0; i < _numSurvivors; i++){
+			if(_survivors[i].Name == s.Name){
+				sPosition = i;
+			}
+		}
+		Debug.Log ("Killing Survivor: " + s.Name + " sPosition: " + sPosition);
+		//Swap him with the survivor at the end of the list
+		Debug.Log (_survivors[sPosition].Name);
+		_survivors[sPosition] = CopySurvivor(_survivors[_numSurvivors-1]);
+		Debug.Log (_survivors[sPosition].Name);
 		_numSurvivors--;
-		Destroy (s);
+		Debug.Log (_numSurvivors);
 	}
 
 	// ================================================== initialization
@@ -177,14 +209,26 @@ public class Shelter : MonoBehaviour
 	{
 		//create basic survivor
 		_survivors [0] = CreateSurvivor("Brian");
+		_survivors [1] = CreateSurvivor("Marina");
+		_survivors [2] = CreateSurvivor("Jimbob");
+		_survivors [3] = CreateSurvivor("Jones");
+
+		for(int s = 0; s < _numSurvivors; s++){
+			Debug.Log(_survivors[s].AssignedTask.ToString());
+		}
+
 	}
 
 	// Use this for initialization
 	void Start ()
 	{
 		_survivors = new Survivor[6];
+		_evictedSurvivors = new Survivor[100];
+
+
 		_storage = new Stores (this);
 		_numSurvivors = 0;
+		_numEvictedSurvivors = 0;
 		DefaultSetup ();
 	}
 

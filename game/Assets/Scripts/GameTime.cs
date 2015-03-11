@@ -48,6 +48,9 @@ public class GameTime : MonoBehaviour {
 	void evaluateTasks(){
 		//Evaluate each task
 		for(int s = 0; s < _shelter.NumberOfSurvivors; s++){
+#if debuglog
+			Debug.Log ("Evaluating task for survivor number " + s + " name:" + _shelter._survivors[s].Name);
+#endif
 			//carry out the task
 			Report r = new Report();
 			switch(_shelter._survivors[s].AssignedTask){
@@ -62,6 +65,12 @@ public class GameTime : MonoBehaviour {
 				break;
 			case Survivor.task.Scavenge:
 				r = _shelter._survivors[s].Scavenge(_shelter);
+				break;
+			case Survivor.task.Execute:
+				r = _shelter._survivors[s].Execute(_shelter);
+				break;
+			case Survivor.task.Evict:
+				r = _shelter._survivors[s].Evict(_shelter);
 				break;
 			case Survivor.task.Raiding:
 				break;

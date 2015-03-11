@@ -28,6 +28,8 @@ public class Survivor : MonoBehaviour
 				Scavenge,
 				Raiding, //special one, can't always be used
 				Resting,
+		        Execute,
+		        Evict,
 				Unassigned,
 				Count
 		}
@@ -92,6 +94,24 @@ public class Survivor : MonoBehaviour
 				}
 		}
 
+	/// <summary>
+	/// Gets the proficiencies array used in copy constructor.
+	/// </summary>
+	/// <returns>The proficiencies.</returns>
+	public int [] GetProficiencies(){
+		return _proficiencies;
+	}
+
+	/// <summary>
+	/// Gets a value indicating whether this instance is assinged task.
+	/// </summary>
+	/// <value><c>true</c> if this instance is assinged task; otherwise, <c>false</c>.</value>
+	public bool IsAssingedTask{
+		get{
+			return _assignedTask;
+		}
+	}
+
 		/// <summary>
 		/// Gets the fatigue.
 		/// </summary>
@@ -113,36 +133,7 @@ public class Survivor : MonoBehaviour
 
 	
 		// =================================================== task
-		/// <summary>
-		/// Init this instance.
-		/// </summary>
-		/// <param name="s">Reference to the shelter</param>
-		/// <param name="t">task to be performed</param>
-		public void PerformTask (Shelter s, task t)
-		{
-				int proficiency = GetProficiency (t);
-				switch (t) {
-				case task.Defend:
-						break;
-				case task.Heal:
-						break;
-				case task.Raiding:
-						break;
-				case task.Resting:
-						break;
-				case task.Scavenge:
-						if (Random.Range (0, 100) < 3) { 
-								s.KillSurvivor (this);
-						} else {
-								s.Food += Random.Range (0, 10) * proficiency;
-								s.Medicine += Random.Range (0, 10) * proficiency;
-								s.Luxuries += Random.Range (0, 10) * proficiency;
-						}
-						break;
-				case task.Scout:
-						break;
-				}// end of switch
-		}
+		
 
 		/// <summary>
 		/// Defend the specified shelter s.
@@ -165,7 +156,25 @@ public class Survivor : MonoBehaviour
 				_health += 5;
 		}
 
-		/// <summary>
+	public Report Evict(Shelter s)
+	{
+		Report r = new Report ();
+		r.SetMessage (_name + " successfully evicted");
+
+		s.KillSurvivor(this);
+		s.EvictSurvivor(this);
+		return r;
+	}
+
+	public Report Execute(Shelter s)
+	{
+		Report r = new Report ();
+		s.KillSurvivor(this);
+		r.SetMessage (_name + " successfully executed");
+		return r;
+		
+	}
+	    /// <summary>
 		/// Have this survivor scout, return info about surroundings on report
 		/// </summary>
 		public Report Scout (Shelter s)
@@ -198,7 +207,6 @@ public class Survivor : MonoBehaviour
 		public Report Rest (Shelter s)
 		{
 				Report r = new Report ();
-		
 				int restoration = RestMe ();
 		
 				r.SetMessage (_name + "'s fatigue is restored to " + restoration);
@@ -264,6 +272,21 @@ public class Survivor : MonoBehaviour
 
 		// ================================================= initialization
 		
+	public void CopyInit(Survivor sCopy)
+	{
+		_name = sCopy.Name;
+		_enabled = true;
+
+		_assignedTask = sCopy.IsAssingedTask;
+		_task = sCopy.AssignedTask;
+
+		_name = sCopy.Name;
+		_health = sCopy.Health;
+		_fatigue = sCopy.Fatigue;
+		_proficiencies = sCopy.GetProficiencies();
+		_conversationsHad = sCopy.ConversationsHad;
+	}
+
 		/// <summary>
 		/// Init this survivor.
 		/// </summary>
