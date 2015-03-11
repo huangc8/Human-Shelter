@@ -12,6 +12,7 @@ public class Shelter : MonoBehaviour
 
 	private int _numEvictedSurvivors; //current number of survivors who have been evicted
 	private int _numSurvivors; // current number of survivors
+	private int _defenseLevel; //The defense level for this fort
 	private Stores _storage; // the storage
 
 	public class Stores
@@ -98,10 +99,39 @@ public class Shelter : MonoBehaviour
 				_medicine = value;
 			}
 		}
+
+		/// <summary>
+		/// Uses the medicine.
+		/// </summary>
+		/// <param name="toBeUsed">To be used.</param>
+		public void UseMedicine(int toBeUsed){
+			_medicine -= toBeUsed;
+		}
+	}
+
+	public void UseMedicine(int toBeUsed){
+		_storage.UseMedicine(toBeUsed);
+    }
+
+	//================================================== accessor
+	public int DefenseLevel{
+		get{
+			return _defenseLevel;
+		}
+		set{
+			_defenseLevel = value;
+		}
+	}
+
+	/// <summary>
+	/// Bolsters the defenses. Increase them by the amount passed.
+	/// </summary>
+	/// <param name="bolsterAmount">Bolster amount.</param>
+	public void BolsterDefenses(int bolsterAmount){
+		_defenseLevel += bolsterAmount;
 	}
 
 
-	//================================================== accessor
 	/// <summary>
 	/// Gets or sets the medicine.
 	/// </summary>
