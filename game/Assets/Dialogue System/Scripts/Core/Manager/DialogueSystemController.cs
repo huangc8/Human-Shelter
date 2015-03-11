@@ -50,12 +50,13 @@ namespace PixelCrushers.DialogueSystem {
 		/// be helpful when tracing through conversations.
 		/// </summary>
 		public DialogueDebug.DebugLevel debugLevel = DialogueDebug.DebugLevel.Warning;
-		
+
+		public  IDialogueUI currentDialogueUI = null;
+		public  IDialogueUI originalDialogueUI = null;
+
 		private const string DefaultDialogueUIResourceName = "Default Dialogue UI";
 		
 		private DatabaseManager databaseManager = null;
-		private IDialogueUI currentDialogueUI = null;
-		private IDialogueUI originalDialogueUI = null;
 		private DisplaySettings originalDisplaySettings = null;
 		private bool isOverrideUIPrefab = false;
 		private ConversationController conversationController = null;

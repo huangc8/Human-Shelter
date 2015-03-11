@@ -7,28 +7,39 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GameTime : MonoBehaviour {
-	Shelter _shelter;
-	Queue <Event> _events;
-	string _newDay;
 
-	public int _conversationsLeft;
+	// =============================================== data
+
+	Shelter _shelter; // the shelter data
+	Queue <Event> _events; // today's events
+	string _newDay; // newDay text
+	int _currentDay; // current day
+	public int _conversationsLeft; // converstation points left
+	public PixelCrushers.DialogueSystem.DialogueSystemController _DiagCon;
+	// =============================================== initialization
 	// Use this for initialization
 	void Start () {
 		_conversationsLeft = 5;
+		_currentDay = 0;
 	}
 
+	// =============================================== action
 	/// <summary>
 	/// Start a new day, reset all of your values that reset over night
 	/// Complete all of the tasks the survivors were sent on
 	/// </summary>
 	public void newDay(){
-
-
 		//process the tasks
 		evaluateTasks();
 		_conversationsLeft = 5;
+		for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
+			_shelter._survivors[i].ConvReset();
+		}
+		_currentDay++;
 	}
 
+
+	// ================================================ helper
 	/// <summary>
 	/// Evaluates the tasks. Carry out the task for each survivor
 	/// </summary>
@@ -49,12 +60,12 @@ public class GameTime : MonoBehaviour {
 			case Survivor.task.Resting:
 				break;
 			}
-
 			_shelter._survivors[s].AssignedTask = Survivor.task.Unassigned;
 		}
-
 	}
 
+
+	// ================================================= update / GUI
 	// Update is called once per frame
 	void Update () {
 		if(_shelter == null){
@@ -69,12 +80,15 @@ public class GameTime : MonoBehaviour {
 		}
 	}
 
+	// GUI
 	void OnGUI(){
-		if (GUI.Button(new Rect(10, 30, 100, 30), _newDay)){
+		if (GUI.Button(new Rect(10, 45, 100, 30), _newDay)){
 			newDay();
 		}
 
-
+		if(GUI.Button(new Rect(20, 10, 1000, 30), "Day Survived: " + _currentDay.ToString())){
+		}
+		
 		int startX = 200;
 		int startY = 200;
 		int itY;
@@ -83,8 +97,7 @@ public class GameTime : MonoBehaviour {
 		int buttonHeight = 30;
 
 		int numSurvivors = _shelter.NumberOfSurvivors;
-
-
+		
 		for(int i = 0; i < numSurvivors; i++){
 			itY = startY;
 			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), _shelter._survivors[i].Name)){}
@@ -92,7 +105,9 @@ public class GameTime : MonoBehaviour {
 			if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Converse: " + _shelter._survivors[i].ConversationsHad) && _conversationsLeft > 0){
 				_shelter._survivors[i].Converse();
 				_conversationsLeft--;
+				_DiagCon.StartConversation ("Conv_1");
 			}
+
 			itY+=buttonHeight;
 			for(int t = 0; t < (int) Survivor.task.Count; t++){
 				if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), ((Survivor.task)t).ToString())){
@@ -113,7 +128,5 @@ public class GameTime : MonoBehaviour {
 		if(GUI.Button(new Rect(startX,itY,buttonWidth,buttonHeight), "Medicine: " + _shelter.Medicine)){}
 		itY += buttonHeight;
 	}
-
-
-
 }
+

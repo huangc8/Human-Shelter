@@ -5,27 +5,21 @@ using UnityEngine;
 using System.Collections;
 
 public class Survivor : MonoBehaviour {
+
+	// ========================================================= data
+	// public info
 	public bool _assignedTask; //if the character is not on a mission, idle is true
-	public bool _enabled = false;
 	public task _task = task.Unassigned;
+	public bool _enabled = false;
+
+	// personal info
+	private string _name; // name of the survivor
+	private int [] _proficiencies; //array, stores skill at each task
 	private int _conversationsHad; //how many times the player has talked to this character
 
-	private int [] _proficiencies; //array, stores skill at each task
-
-	private string _name;
-
-	public string Name{
-		get{
-			return _name;
-		}
-		set{
-			_name = value;
-		}
-	}
-	
 	public enum task{
 		Scout,
-		Heal,
+		Heal, 
 		Defend,
 		Scavenge,
 		Raiding, //special one, can't always be used
@@ -34,6 +28,58 @@ public class Survivor : MonoBehaviour {
 		Count
 	}
 
+	// ======================================================== accessor
+	/// <summary>
+	/// Gets or sets the name.
+	/// </summary>
+	/// <value>The name.</value>
+	public string Name{
+		get{
+			return _name;
+		}
+		set{
+			_name = value;
+		}
+	}
+
+	/// <summary>
+	/// Gets the proficiency for the passed task.
+	/// </summary>
+	/// <returns>The proficiency.</returns>
+	/// <param name="t">The task.</param>
+	public int GetProficiency(task t){
+		return _proficiencies[(int)t];
+	}
+
+	/// <summary>
+	/// Gets or sets the assigned task.
+	/// </summary>
+	/// <value>The assigned task.</value>
+	public task AssignedTask
+	{
+		set{
+			this._task = value;
+		}
+		get{
+			return this._task;
+		}
+	}
+	
+	/// <summary>
+	/// Gets the number of conversations had.
+	/// </summary>
+	/// <value>The conversations had.</value>
+	public int ConversationsHad
+	{
+		get{
+			return this._conversationsHad;
+		}
+		set{
+			this._conversationsHad = value;
+		}
+	}
+
+	// =================================================== action
 	/// <summary>
 	/// Performs the task.
 	/// </summary>
@@ -62,10 +108,24 @@ public class Survivor : MonoBehaviour {
 			break;
 		case task.Scout:
 			break;
-		}
-
+		}// end of switch
 	}
 
+	/// <summary>
+	/// Converse with this survivor.
+	/// </summary>
+	public void Converse(){
+		_conversationsHad++;
+	}
+
+	/// <summary>
+	/// Reset Conversation.
+	/// </summary>
+	public void ConvReset(){
+		_conversationsHad = 0;
+	}
+
+	// ================================================= initialization
 	/// <summary>
 	/// Init this instance.
 	/// </summary>
@@ -86,47 +146,4 @@ public class Survivor : MonoBehaviour {
 			_proficiencies[t] = Random.Range(-10,10);
 		}
 	}
-
-	/// <summary>
-	/// Gets the proficiency for the passed task.
-	/// </summary>
-	/// <returns>The proficiency.</returns>
-	/// <param name="t">The task.</param>
-	public int GetProficiency(task t){
-		return _proficiencies[(int)t];
-	}
-
-
-	/// <summary>
-	/// Gets or sets the assigned task.
-	/// </summary>
-	/// <value>The assigned task.</value>
-	public task AssignedTask
-	{
-		set{
-			this._task = value;
-		}
-		get{
-			return this._task;
-		}
-	}
-
-	/// <summary>
-	/// Gets the number of conversations had.
-	/// </summary>
-	/// <value>The conversations had.</value>
-	public int ConversationsHad
-	{
-		get{
-			return this._conversationsHad;
-		}
-	}
-
-	/// <summary>
-	/// Converse with this survivor.
-	/// </summary>
-	public void Converse(){
-		_conversationsHad++;
-	}
-
 }
