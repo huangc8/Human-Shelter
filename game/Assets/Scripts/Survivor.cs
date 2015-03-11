@@ -274,7 +274,9 @@ public class Survivor : ScriptableObject
 
 	public void Eat(Shelter s)
 	{
-		s.EatFood(Random.Range (1,_appetite));
+		if(s.EatFood(Random.Range (1,_appetite)) == false){
+			_health--;
+		}
 	}
 
 		/// <summary>

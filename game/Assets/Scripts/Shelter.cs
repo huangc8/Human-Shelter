@@ -45,6 +45,7 @@ public class Shelter : MonoBehaviour
 			_medicine -= useAmount;
 		}
 
+
 		// ================================================================= accessor
 		/// <summary>
 		/// Gets or sets the luxuries.
@@ -101,11 +102,12 @@ public class Shelter : MonoBehaviour
 		return _attackStrength;
 	}
 
-	public void EatFood(int toEat){
+	public bool EatFood(int toEat){
 		_storage.Food = _storage.Food - toEat;
 		if(_storage.Food < 0){
-			Application.CancelQuit();
+			return false;
 		}
+		return true;
 	}
 
     
