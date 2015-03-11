@@ -16,9 +16,9 @@ public class Visitor : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		_personList = new Survivor[30];
-		_personList [0] = CreateSurvivor ("ab");
+		//_personList [0] = CreateSurvivor ("");
 		_personList [1] = CreateSurvivor ("Jill");
-		_personList [2] = CreateSurvivor ("ba");
+		//_personList [2] = CreateSurvivor ("");
 		_personList [3] = CreateSurvivor ("Frank");
 		
 

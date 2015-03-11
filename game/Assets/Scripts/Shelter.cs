@@ -209,9 +209,9 @@ public class Shelter : MonoBehaviour
 	{
 		//create basic survivor
 		_survivors [0] = CreateSurvivor("Brian");
-		_survivors [1] = CreateSurvivor("Marina");
-		_survivors [2] = CreateSurvivor("Jimbob");
-		_survivors [3] = CreateSurvivor("Jones");
+		//_survivors [1] = CreateSurvivor("Marina");
+		//_survivors [2] = CreateSurvivor("Jimbob");
+		//_survivors [3] = CreateSurvivor("Jones");
 
 		for(int s = 0; s < _numSurvivors; s++){
 			Debug.Log(_survivors[s].AssignedTask.ToString());
