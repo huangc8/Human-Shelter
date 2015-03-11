@@ -87,50 +87,6 @@ public class GameTime : MonoBehaviour
 				}
 		}
 
-
-
-		// ================================================ helper
-		/// <summary>
-		/// Evaluates the tasks. Carry out the task for each survivor
-		/// </summary>
-		void evaluateTasks ()
-		{
-				//Evaluate each task
-				for (int s = 0; s < _shelter.NumberOfSurvivors; s++) {
-						//carry out the task
-						Report r = new Report ();
-						switch (_shelter._survivors [s].AssignedTask) {
-						case Survivor.task.Scout:
-								r = _shelter._survivors [s].Scout (_shelter);
-								break;
-						case Survivor.task.Heal:
-								r = _shelter._survivors [s].Heal (_shelter);
-								break;
-						case Survivor.task.Defend:
-								r = _shelter._survivors [s].Defend (_shelter);
-								break;
-						case Survivor.task.Scavenge:
-								r = _shelter._survivors [s].Scavenge (_shelter);
-								break;
-						case Survivor.task.Raiding:
-								break;
-						case Survivor.task.Unassigned:
-								goto case Survivor.task.Resting;
-						case Survivor.task.Resting:
-								r = _shelter._survivors [s].Rest (_shelter);
-								break;
-						}
-						_reports.Enqueue (r);
-				}
-
-				//Set each task to unassigned
-				for (int s = 0; s < _shelter.NumberOfSurvivors; s++) {
-						_shelter._survivors [s].Exhaust ();
-						_shelter._survivors [s].AssignedTask = Survivor.task.Unassigned;
-				}
-		}
-
-
 		// ================================================= update / GUI
 		// Update is called once per frame
 		void Update ()
