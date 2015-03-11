@@ -197,9 +197,9 @@ public class Survivor : ScriptableObject
 				if (Random.Range (-10, proficiency) < -8 && Random.Range (0,10) < 1) {
 						s.KillSurvivor (this);
 				} else {
-						s.Food += Random.Range (0, 10) * proficiency;
-						s.Medicine += Random.Range (0, 10) * proficiency;
-						s.Luxuries += Random.Range (0, 10) * proficiency;
+			s.Food += 1 + (int)Random.Range (0, 10) * (proficiency+11) * .1f;
+			s.Medicine += 1 + (int)Random.Range (0, 10) * (proficiency + 11)* .1f;
+			s.Luxuries += 1 + (int)Random.Range (0, 10) * (proficiency + 11) * .1f;
 						r.SetMessage (_name + " Scavenged supplies are now Food:" + s.Food + " Medicine:" + s.Medicine + " Luxuries:" + s.Luxuries);
 				}
 				return r;
