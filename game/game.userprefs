@@ -5,7 +5,7 @@
       <File FileName="Assets/Scripts/Report.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Survivor.cs" Line="310" Column="1" />
       <File FileName="Assets/Scripts/Visitor.cs" Line="20" Column="1" />
-      <File FileName="Assets/Scripts/GameTime.cs" Line="181" Column="5" />
+      <File FileName="Assets/Scripts/GameTime.cs" Line="206" Column="38" />
       <File FileName="Assets/Scripts/Shelter.cs" Line="253" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
