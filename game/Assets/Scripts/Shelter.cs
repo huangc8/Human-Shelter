@@ -14,7 +14,7 @@ public class Shelter : MonoBehaviour
 	private int _numSurvivors; // current number of survivors
 	private Stores _storage; // the storage
 	int _defenses; // the defense of the building (depend on guard
-
+	int _attackStrength; 
 	public class Stores
 	{
 		// =============================================================== data
@@ -37,13 +37,14 @@ public class Shelter : MonoBehaviour
 		{
 			this._parent = parent;
 			_luxuries = 0;
-			_food = 0;
+			_food = 50;
 			_medicine = 0;
 		}
 
 		public void UseMedicine(int useAmount){
 			_medicine -= useAmount;
 		}
+
 
 		// ================================================================= accessor
 		/// <summary>
@@ -95,6 +96,21 @@ public class Shelter : MonoBehaviour
 		_defenses += proficiency;
 		return _defenses;
     }
+
+	public int BolsterAttack(int proficiency){
+		_attackStrength += proficiency;
+		return _attackStrength;
+	}
+
+	public bool EatFood(int toEat){
+		_storage.Food = _storage.Food - toEat;
+		if(_storage.Food < 0){
+			_storage.Food = 0;
+			return false;
+		}
+		return true;
+	}
+
     
     // ================================================================ helper
 	/// <summary>
@@ -102,6 +118,7 @@ public class Shelter : MonoBehaviour
 	/// </summary>
 	public void NewDay(){
 		_defenses = 0;
+		_attackStrength = 0;
     }
 
 	//================================================== Modifier

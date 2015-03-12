@@ -9,4 +9,8 @@ public class Report : MonoBehaviour{
 	public void SetMessage(string message){
 		_message = message;
 	}
+
+	public void Log(){
+		Debug.Log (_message);
+	}
 }
