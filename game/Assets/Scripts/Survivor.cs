@@ -16,6 +16,7 @@ public class Survivor : ScriptableObject
 		// personal info
 		private string _name; // name of the survivor
 		private int _health = 10; // health of survivor
+	private int _appetite = 10;
 		private int _fatigue = 10; // fatigue level of survivor
 		private int[] _proficiencies; //array, stores skill at each task
 		private int _conversationsHad; //how many times the player has talked to this character
@@ -92,6 +93,9 @@ public class Survivor : ScriptableObject
 				get {
 						return _health;
 				}
+		set{
+			_health = value;
+		}
 		}
 
 	/// <summary>
@@ -120,8 +124,20 @@ public class Survivor : ScriptableObject
 				get {
 						return _fatigue;
 				}
+			set{
+				_fatigue = value;
+			}
 		}
-	
+
+	public int Appetitie{
+		get{
+			return _appetite;
+		}
+		set{
+			_appetite = value;
+		}
+	}
+
 		// =================================================== action
 		/// <summary>
 		/// Converse with this survivor.
@@ -141,7 +157,9 @@ public class Survivor : ScriptableObject
 	/// <param name="s">Shelter</param>
 	public Report Defend (Shelter s)
 	{
-		int proficiency = GetProficiency (task.Defend);
+		int fatigueModifier = (100/(10+Fatigue))*10;
+
+		int proficiency = GetProficiency (task.Defend) + fatigueModifier;
 		int newDefenses = s.BolsterDefenses(proficiency);
 
 		Report r = new Report ();
@@ -156,6 +174,17 @@ public class Survivor : ScriptableObject
 		{
 				_health += healAmount;
 		}
+	public Report Raid(Shelter s)
+	{
+		int fatigueModifier = (100/(10+Fatigue))*10;
+		
+		int proficiency = GetProficiency (task.Raiding) + fatigueModifier;
+		int newAttack = s.BolsterAttack(proficiency);
+		
+		Report r = new Report ();
+		r.SetMessage (_name + " Bolstered attack strength to " + newAttack);
+		return r;
+	}
 
 	public Report Evict(Shelter s)
 	{
@@ -189,21 +218,21 @@ public class Survivor : ScriptableObject
 		/// Scavenge  for the shelter s.
 		/// </summary>
 		/// <param name="s">S.</param>
-		public Report Scavenge (Shelter s)
-		{
-				Report r = new Report ();
-		
-				int proficiency = GetProficiency(task.Scavenge);
-				if (Random.Range (-10, proficiency) < -8 && Random.Range (0,10) < 1) {
-						s.KillSurvivor (this);
-				} else {
-						s.Food += Random.Range (0, 10) * proficiency;
-						s.Medicine += Random.Range (0, 10) * proficiency;
-						s.Luxuries += Random.Range (0, 10) * proficiency;
-						r.SetMessage (_name + " Scavenged supplies are now Food:" + s.Food + " Medicine:" + s.Medicine + " Luxuries:" + s.Luxuries);
-				}
-				return r;
+	public Report Scavenge (Shelter s)
+	{
+		Report r = new Report ();
+		int fatigueModifier = (100/(10+Fatigue))*10;
+		int proficiency = GetProficiency(task.Scavenge);
+		if (Random.Range (-10, proficiency + fatigueModifier) < -8 && Random.Range (0,10) < 3) {
+			s.KillSurvivor (this);
+		} else {
+			s.Food += 1 + (int) (Random.Range (0, 10) * (proficiency+fatigueModifier+11) * .1f);
+			s.Medicine += 1 + (int) (Random.Range (0, 10) * (proficiency +fatigueModifier+ 11)* .1f);
+			s.Luxuries += 1 + (int) (Random.Range (0, 10) * (proficiency +fatigueModifier+ 11) * .1f);
+			r.SetMessage (_name + " Scavenged supplies are now Food:" + s.Food + " Medicine:" + s.Medicine + " Luxuries:" + s.Luxuries);
 		}
+		return r;
+	}
 
 		public Report Rest (Shelter s)
 		{
@@ -221,17 +250,18 @@ public class Survivor : ScriptableObject
 	{
 		Report r = new Report ();
 		int heals = 0;
+		int fatigueModifier = (100/(10+Fatigue))*10;
 		
 		int proficiency = GetProficiency(task.Heal);
 
-		int medicineUsed = 5-proficiency;
+		int medicineUsed = 20-(proficiency+fatigueModifier);
 
         for (int i = 0; i < s.NumberOfSurvivors; i++) {
 			if(s.Medicine >= medicineUsed)
 			{
 				if (s._survivors [i]._task == task.Resting) {
 					heals++;
-					s._survivors [i].HealMe (proficiency);
+					s._survivors [i].HealMe (proficiency + fatigueModifier);
 				}
 				s.UseMedicine(medicineUsed);
 			}
@@ -241,6 +271,13 @@ public class Survivor : ScriptableObject
 	}
 
 		// ===================================================== helper
+
+	public void Eat(Shelter s)
+	{
+		if(s.EatFood(Random.Range (1,_appetite)) == false){
+			_health--;
+		}
+	}
 
 		/// <summary>
 		/// Reset Conversation.
@@ -255,7 +292,7 @@ public class Survivor : ScriptableObject
 		/// </summary>
 		public void Exhaust ()
 		{
-				_fatigue++;
+				_fatigue += 10;
 		}
 
 		/// <summary>
@@ -263,7 +300,7 @@ public class Survivor : ScriptableObject
 		/// </summary>
 		public int RestMe ()
 		{
-				_fatigue -= 5;
+				_fatigue -= 30;
 				return _fatigue;
 		}
 
@@ -280,6 +317,13 @@ public class Survivor : ScriptableObject
 				}
 		}
 
+	/// <summary>
+	/// Randomizes the characteristics.
+	/// </summary>
+	public void RandomizeCharacteristics(){
+		_appetite = Random.Range(3,10);
+	}
+
 		// ================================================= initialization
 		
 	public void CopyInit(Survivor sCopy)
@@ -295,15 +339,19 @@ public class Survivor : ScriptableObject
 		_fatigue = sCopy.Fatigue;
 		_proficiencies = sCopy.GetProficiencies();
 		_conversationsHad = sCopy.ConversationsHad;
+		_appetite = sCopy.Appetitie;
 	}
+
+
 
 		/// <summary>
 		/// Init this survivor.
 		/// </summary>
-		public void Init ()
-		{
-				_assignedTask = false;
-				_enabled = true;
-				RandomizeProficiences ();
-		}
+	public void Init ()
+	{
+		_assignedTask = false;
+		_enabled = true;
+		RandomizeProficiences ();
+		RandomizeCharacteristics();
+	}
 }
