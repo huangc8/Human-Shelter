@@ -494,7 +494,7 @@ namespace PixelCrushers.DialogueSystem {
 					command.Initialize(this, endMessage, args);
 					activeCommands.Add(command);
 				} else {
-					if (DialogueDebug.LogWarnings) Debug.LogWarning(string.Format("{0}: Can't find any built-in sequencer command named {1}() or a sequencer command component named SequencerCommand{1}()", new System.Object[] { DialogueDebug.Prefix, commandName }));
+					//if (DialogueDebug.LogWarnings) Debug.LogWarning(string.Format("{0}: Can't find any built-in sequencer command named {1}() or a sequencer command component named SequencerCommand{1}()", new System.Object[] { DialogueDebug.Prefix, commandName }));
 				}
 			}
 		}
