@@ -8,6 +8,7 @@ using System.Collections;
 public class Shelter : MonoBehaviour
 {
 	public Survivor[] _survivors; //array of survivors, maximum capacity is 6
+	public GameObject[] _images; //array of corrisponding images
 	public Survivor[] _evictedSurvivors; //Array of survivors who have been kicked out of the shelter
 
 	private int _numEvictedSurvivors; //current number of survivors who have been evicted
@@ -178,10 +179,11 @@ public class Shelter : MonoBehaviour
 
 	// ================================================== create
 
-	private Survivor CreateSurvivor(string name){
+	private Survivor CreateSurvivor(string name, GameObject image){
 		Survivor stmp = new Survivor ();
 		stmp.Init ();
 		stmp.Name = name;
+		stmp.image = image;
 		_numSurvivors++;
 		return stmp;
 	}
@@ -233,8 +235,13 @@ public class Shelter : MonoBehaviour
 
 	private void DefaultSetup ()
 	{
+		//assign images
+		_images [0] = GameObject.FindWithTag ("Brian");
+
+
+
 		//create basic survivor
-		_survivors [0] = CreateSurvivor("Brian");
+		_survivors [0] = CreateSurvivor("Brian", _images[0]);
 		//_survivors [1] = CreateSurvivor("Marina");
 		//_survivors [2] = CreateSurvivor("Jimbob");
 		//_survivors [3] = CreateSurvivor("Jones");
@@ -251,6 +258,7 @@ public class Shelter : MonoBehaviour
 		
 		_defenses = 0;
 		_survivors = new Survivor[6];
+		_images = new GameObject[6];
 		_evictedSurvivors = new Survivor[100];
 
 

@@ -20,6 +20,7 @@ public class Survivor : ScriptableObject
 		private int _fatigue = 10; // fatigue level of survivor
 		private int[] _proficiencies; //array, stores skill at each task
 		private int _conversationsHad; //how many times the player has talked to this character
+		public GameObject image;
 
 		public enum task
 		{
@@ -341,7 +342,7 @@ public class Survivor : ScriptableObject
 		_conversationsHad = sCopy.ConversationsHad;
 		_appetite = sCopy.Appetitie;
 	}
-
+	
 
 
 		/// <summary>

@@ -441,6 +441,7 @@
      <Compile Include="Assets\Scripts\Survivor.cs" />
      <Compile Include="Assets\Scripts\UI.cs" />
      <Compile Include="Assets\Scripts\Visitor.cs" />
+     <Compile Include="Assets\Scripts\clickChar.cs" />
      <None Include="Assets\Dialogue System\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Mobile Test\_README.txt" />
      <None Include="Assets\Dialogue System\Scripts\Lua Interpreter\_README.txt" />
