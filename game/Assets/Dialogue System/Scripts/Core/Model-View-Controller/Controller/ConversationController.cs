@@ -9,6 +9,14 @@ namespace PixelCrushers.DialogueSystem {
 	/// </summary>
 	public class ConversationController {
 
+		// ================================================== MY CODE
+		public int endID = -1; // id of where the conversation ended
+
+		public int getStatID(){
+			return endID;
+		}
+		// ==================================================
+
 		/// <summary>
 		/// The data model of the conversation.
 		/// </summary>
@@ -162,6 +170,7 @@ namespace PixelCrushers.DialogueSystem {
 		/// Selected response event args.
 		/// </param>
 		private void OnSelectedResponse(object sender, SelectedResponseEventArgs e) {
+			endID = e.DestinationEntry.id;
 			GotoState(model.GetState(e.DestinationEntry));
 		}
 
@@ -192,10 +201,6 @@ namespace PixelCrushers.DialogueSystem {
 		public void SetActorPortraitTexture(string actorName, Texture2D portraitTexture) {
 			model.SetActorPortraitTexture(actorName, portraitTexture);
 			view.SetActorPortraitTexture(actorName, portraitTexture);
-		}
-
-		public int getStatID(){
-			return state.subtitle.getEntryID ();
 		}
 
 	}// end of conversationController
