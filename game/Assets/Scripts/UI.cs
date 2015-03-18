@@ -2,14 +2,12 @@
 using System.Collections;
 
 public class UI : MonoBehaviour {
-	private Texture2D map;
-	SpriteRenderer renderer;
+	SpriteRenderer rend;
 
 
 	// Use this for initialization
 	void Start () {
-		map = Resources.Load ("map") as Texture2D;
-		renderer = gameObject.GetComponent<SpriteRenderer>();
+		rend = gameObject.AddComponent(typeof(SpriteRenderer)) as SpriteRenderer;
 
 
 
@@ -17,9 +15,6 @@ public class UI : MonoBehaviour {
 
 	void OnGUI (){
 
-		//display background
-		Sprite background = Sprite.Create(map, new Rect(0, 0, Screen.width, Screen.height), new Vector2(0, 0), 100.0f);
-		renderer.sprite = background;
 
 
 	}
