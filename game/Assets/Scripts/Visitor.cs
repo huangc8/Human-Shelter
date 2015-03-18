@@ -16,6 +16,7 @@ public class Visitor : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		_personList = new Survivor[30];
+		//index maps to day of arrival, game starts on day 0
 		_personList [1] = CreateSurvivor ("Jill");
 		_personList [3] = CreateSurvivor ("Frank");
 		
