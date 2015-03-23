@@ -12,6 +12,8 @@ public class clickChar : MonoBehaviour {
 	bool BrianTalked;
 	public GameObject g;
 
+	private UI _ui;
+
 	bool showButtons;
 	int arrayIndex; // location of this character in shelter.survivor
 
@@ -26,7 +28,10 @@ public class clickChar : MonoBehaviour {
 			_visitors = g.GetComponent<Visitor> ();
 			
 		}
-
+		if (_ui == null) {
+			_ui = g.GetComponent<UI> ();
+			
+		}
 		showButtons = false;
 
 
@@ -35,7 +40,7 @@ public class clickChar : MonoBehaviour {
 	
 	private void OnMouseDown()
 	{
-
+		//find corresponding character within shelter
 		arrayIndex = -1;
 		for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
 			if (this.tag == _shelter._survivors[i].Name)
@@ -46,16 +51,17 @@ public class clickChar : MonoBehaviour {
 		}
 		if (arrayIndex == -1)
 		{
-			Debug.Log ("Couldn't find index for " + this.tag + ".  Make sure they have exactly the same name.");
+			Debug.Log ("Couldn't find index for " + this.tag + ".  Make sure this this tag is exactly the same as the character's name.");
 		}
 
 
-		//toggle
-		if (!showButtons) {
-						showButtons = true;
-				} else {
-						showButtons = false;
-				}
+		Vector3 pos = Camera.main.WorldToViewportPoint(this.transform.position);
+		
+		float x = pos.x;
+		float y = 1-pos.y;
+		
+		_ui.charClick(arrayIndex, x, y);
+
 
 
 		/*
@@ -76,41 +82,6 @@ public class clickChar : MonoBehaviour {
 		*/
 	}
 	
-	void OnGUI()
-	{
-		if(showButtons)
-		{
-			//center buttons
-			//not using this at the moment because it doesn't really work
-			GUIStyle style = GUI.skin.GetStyle("align");
-			style.alignment = TextAnchor.MiddleCenter;
-
-
-			Vector3 pos = Camera.main.WorldToViewportPoint(this.transform.position);
-			//Vector2 pos2 = GUIUtility.ScreenToGUIPoint(new Vector2(transform.position.x, transform.position.y));
-			//Vector2 pos2 = GUIUtility.ScreenToGUIPoint(new Vector2(pos.x, pos.y));
-
-
-			float x = pos.x;
-			float y = 1-pos.y;
-			//Debug.Log(y);
-			//Debug.Log(Input.mousePosition.x);
-
-			
-			int buttonWidth = 300;
-			int buttonHeight = 30;
-			string name = _shelter._survivors[arrayIndex].Name;
-			
-
-			if (GUI.Button (new Rect (Screen.width*x*.8f, Screen.height*y*.8f, buttonWidth, buttonHeight),"Talk to " + name)) {
-				
-			}
-			if (GUI.Button (new Rect (Screen.width*x*.8f, Screen.height*y*.85f, buttonWidth, buttonHeight),"Assign task")) {
-			
-			}
-		}
-	}
-
 
 	// Update is called once per frame
 	void Update () {
