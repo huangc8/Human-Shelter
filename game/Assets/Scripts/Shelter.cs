@@ -237,12 +237,13 @@ public class Shelter : MonoBehaviour
 	{
 		//assign images
 		_images [0] = GameObject.FindWithTag ("Brian");
+		_images [1] = GameObject.FindWithTag ("Marina");
 
 
 
 		//create basic survivor
 		_survivors [0] = CreateSurvivor("Brian", _images[0]);
-		//_survivors [1] = CreateSurvivor("Marina");
+		_survivors [1] = CreateSurvivor("Marina", _images[1]);
 		//_survivors [2] = CreateSurvivor("Jimbob");
 		//_survivors [3] = CreateSurvivor("Jones");
 
