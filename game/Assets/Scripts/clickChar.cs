@@ -4,12 +4,7 @@ using System.Collections;
 public class clickChar : MonoBehaviour {
 
 	Shelter _shelter; // the shelter data
-	string _newDay; // newDay text
-	int _currentDay; // current day
 	Visitor _visitors; //grab info about newcomers
-	public int _conversationsLeft; // converstation points left
-	public Dialogue _dialogue;
-	bool BrianTalked;
 	public GameObject g;
 
 	private UI _ui;
@@ -62,24 +57,6 @@ public class clickChar : MonoBehaviour {
 		
 		_ui.charClick(arrayIndex, x, y);
 
-
-
-		/*
-				for (int i = 0; i < numSurvivors; i++) {
-						itY = startY;
-						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), _shelter._survivors [i].Name)) {
-						}
-						itY += buttonHeight;
-						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Converse: " + _shelter._survivors [i].ConversationsHad) && _conversationsLeft > 0) {
-								_shelter._survivors [i].Converse ();
-								_conversationsLeft--;
-								if (!BrianTalked) {
-										_dialogue.startConv ("Conv_1", false);
-										BrianTalked = true;
-								}
-						}
-				}
-		*/
 	}
 	
 
