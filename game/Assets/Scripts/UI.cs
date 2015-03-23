@@ -7,7 +7,7 @@ public class UI : MonoBehaviour {
 	Shelter _shelter; // the shelter data
 
 	//these are needed for showing and hiding buttons
-	private bool hideButtons, charButtons, sideButtons;
+	private bool charButtons, sideButtons, showButtons;
 	private float x, y;
 	private int index;
 
@@ -16,7 +16,7 @@ public class UI : MonoBehaviour {
 		if (_shelter == null) {
 			_shelter = g.GetComponent<Shelter> ();
 		}
-		charButtons = sideButtons = hideButtons = false;
+		charButtons = sideButtons = showButtons = false;
 
 	}
 
@@ -30,10 +30,9 @@ public class UI : MonoBehaviour {
 		x = ax;
 		y = ay;
 		index = aindex;
-
-
 		
 		charButtons = true;
+		showButtons = true;
 
 
 	}
@@ -46,22 +45,24 @@ public class UI : MonoBehaviour {
 			string name = _shelter._survivors[index].Name;
 
 			if (GUI.Button (new Rect (Screen.width*x*.8f, Screen.height*y*.8f, buttonWidth, buttonHeight),"Talk to " + name)) {
-				
+				showButtons=true;
 			}
 			if (GUI.Button (new Rect (Screen.width*x*.8f, Screen.height*y*.85f, buttonWidth, buttonHeight),"Assign task")) {
-				
+				showButtons=true;
 			}
-			hideButtons=true;
 		}
+
 	}
 
 	// Update is called once per frame
 	void Update () {
+		
 		//this will get rid of buttons when you click anywhere other than a button
-		if (Input.GetMouseButtonDown(0)) {
-			if(hideButtons){
-				charButtons = sideButtons = hideButtons = false;
+		if (Input.GetMouseButtonUp(0)) {
+			if(!showButtons){
+				charButtons = sideButtons = false;
 			}
+			showButtons = false;
 		}
 	}
 }
