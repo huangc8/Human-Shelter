@@ -43,6 +43,7 @@ public class UI : MonoBehaviour {
 		
 		charButtons = true;
 		showButtons = true;
+		sideButtons = false;
 
 
 	}
@@ -120,6 +121,7 @@ public class UI : MonoBehaviour {
 			if (GUI.Button (new Rect (Screen.width*x*.8f, Screen.height*y*.85f, buttonWidth, buttonHeight),"Assign task")) {
 				showButtons=true;
 				sideButtons=true;
+				charButtons=false;
 			}
 		}
 
