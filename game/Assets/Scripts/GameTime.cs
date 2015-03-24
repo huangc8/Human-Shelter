@@ -17,8 +17,6 @@ public class GameTime : MonoBehaviour
 		Queue<Report> _reports; // the reports of assign task
 		Visitor _visitors; //grab info about newcomers
 		public int _conversationsLeft; // converstation points left
-		public Dialogue _dialogue;
-		bool BrianTalked;
 
 		// =============================================== initialization
 		// Use this for initialization
@@ -27,7 +25,6 @@ public class GameTime : MonoBehaviour
 				_conversationsLeft = 5;
 				_currentDay = 0;
 				_reports = new Queue<Report> ();
-				BrianTalked = false;
 		}
 
 		// =============================================== action
