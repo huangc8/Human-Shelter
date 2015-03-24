@@ -14,7 +14,7 @@ public class GameTime : MonoBehaviour
 		Queue <Event> _events; // today's events
 		string _newDay; // newDay text
 		public int _currentDay; // current day
-		List<Report> _reports; // the reports of assign task
+		List <Report> _reports; // the reports of assign task
 		Visitor _visitors; //grab info about newcomers
 		public Dialogue _dialogue; // the dialogue system
 		public Conditions _cond; // the conditions data base

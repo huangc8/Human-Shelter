@@ -141,43 +141,44 @@ public class UI : MonoBehaviour {
 			itY = Screen.height*.1f;
 			xLoc = Screen.width*.8f + animateSide;
 
-			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), _shelter._survivors[index].Name)) {
-				showButtons=true;
-
-			}
-
-			itY += buttonHeight;
-			for (int t = 0; t < (int) Survivor.task.Count; t++) {
-				if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), ((Survivor.task)t).ToString ())) {
+			if(_shelter.NumberOfSurvivors > 0){ //if we have no survivors don't try to do this
+				if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), _shelter._survivors[index].Name)) {
 					showButtons=true;
-					_shelter._survivors [index].AssignedTask = ((Survivor.task)t);
+
+				}
+
+				itY += buttonHeight;
+				for (int t = 0; t < (int) Survivor.task.Count; t++) {
+					if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), ((Survivor.task)t).ToString ())) {
+						showButtons=true;
+						_shelter._survivors [index].AssignedTask = ((Survivor.task)t);
+					}
+					itY += buttonHeight;
+				}
+				
+				if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Assigned Task: " + _shelter._survivors [index].AssignedTask.ToString ())) {
+					showButtons=true;
+
+				}
+				itY += buttonHeight * 2;
+				if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Health: " + _shelter._survivors [index].Health)) {
+					showButtons=true;
+
 				}
 				itY += buttonHeight;
-			}
-			
-			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Assigned Task: " + _shelter._survivors [index].AssignedTask.ToString ())) {
-				showButtons=true;
+				
+				if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Fatigue: " + _shelter._survivors [index].Fatigue)) {
+					showButtons=true;
 
-			}
-			itY += buttonHeight * 2;
-			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Health: " + _shelter._survivors [index].Health)) {
-				showButtons=true;
+				}
 
+				itY += buttonHeight * 2;
+				
+				if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Close")) {
+					showButtons=true;
+					sideButtons=false;
+				}
 			}
-			itY += buttonHeight;
-			
-			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Fatigue: " + _shelter._survivors [index].Fatigue)) {
-				showButtons=true;
-
-			}
-
-			itY += buttonHeight * 2;
-			
-			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Close")) {
-				showButtons=true;
-				sideButtons=false;
-			}
-
 
 		}
 

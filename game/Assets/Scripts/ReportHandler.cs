@@ -9,6 +9,8 @@ using System.Collections;
 public class ReportHandler : MonoBehaviour
 {
 	public TextMesh ReportText;
+	//List <Report> _reports; // the reports of assign task
+
 	// Use this for initialization
 	void Start ()
 	{
