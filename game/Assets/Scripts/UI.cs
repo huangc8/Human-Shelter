@@ -4,6 +4,7 @@ using System.Collections;
 public class UI : MonoBehaviour {
 
 	public GameObject g;
+	public Dialogue _diag;
 	Shelter _shelter; // the shelter data
 	Visitor _visitors;
 	GameTime _gametime;
@@ -79,6 +80,7 @@ public class UI : MonoBehaviour {
 			}
 			itY += buttonHeight;
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Talk to " + visitorAtGate.Name.ToString ())) {
+				_diag.startConv("Conv_1", false);
 			}
 			itY += buttonHeight;
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Invite")) {
