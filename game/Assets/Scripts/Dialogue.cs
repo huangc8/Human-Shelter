@@ -24,9 +24,9 @@ public class Dialogue : MonoBehaviour
 		// parsing choices made in conversation
 		public void parseChoice (int choiceID)
 		{
-			switch (choiceID) {
+				switch (choiceID) {
 
-			}
+				}
 		}
 
 		// ==================================================== update
@@ -36,20 +36,20 @@ public class Dialogue : MonoBehaviour
 		{
 				// if conversation is going on, update choice
 				if (_DiagCon.IsConversationActive) {
-					if (diaChoice) {
-						choiceID = _DiagCon.getID ();
-					}
+						if (diaChoice) {
+								choiceID = _DiagCon.getID ();
+						}
 				} else {
-					// if choice,  
-					if (choiceID != -1) {
-						lastID = choiceID;
-						choiceID = -1;
-					}
+						// if choice,  
+						if (choiceID != -1) {
+								lastID = choiceID;
+								choiceID = -1;
+						}
 				}
 
 				// parse condition
 				if (lastID != -1) {
-						parseChoice(lastID);
+						parseChoice (lastID);
 						lastID = -1;
 				}
 		}
