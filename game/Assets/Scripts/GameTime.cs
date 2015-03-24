@@ -19,11 +19,13 @@ public class GameTime : MonoBehaviour
 		public Dialogue _dialogue; // the dialogue system
 		public Conditions _cond; // the conditions data base
 		public int _conversationsLeft; // converstation points left
+		public static ReportHandler _rh;
 
 		// =============================================== initialization
 		// Use this for initialization
 		void Start ()
 		{
+				_rh = this.GetComponent<ReportHandler> ();
 				_conversationsLeft = 5;
 				_currentDay = 0;
 				_reports = new List<Report> ();
@@ -94,6 +96,7 @@ public class GameTime : MonoBehaviour
 						r.Log ();
 						_reports.Add (r);
 				}
+				_rh.PassReports (_reports);
 
 
 		}

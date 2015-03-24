@@ -13,6 +13,11 @@ public class Report : ScriptableObject
 				_message = message;
 		}
 
+		public string GetMessage ()
+		{
+				return _message;
+		}
+
 		public void Log ()
 		{
 				Debug.Log (_message);
