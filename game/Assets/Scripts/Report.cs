@@ -4,13 +4,17 @@
 using UnityEngine;
 using System.Collections;
 
-public class Report : MonoBehaviour{
-	string _message = "";
-	public void SetMessage(string message){
-		_message = message;
-	}
+public class Report : ScriptableObject
+{
+		string _message = "";
 
-	public void Log(){
-		Debug.Log (_message);
-	}
+		public void SetMessage (string message)
+		{
+				_message = message;
+		}
+
+		public void Log ()
+		{
+				Debug.Log (_message);
+		}
 }
