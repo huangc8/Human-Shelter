@@ -30,11 +30,13 @@ public class ReportHandler : MonoBehaviour
 
 	public void PassReports(List<Report> reports)
 	{
+		Debug.Log("Passing Reports");
 		if(reports.Count > 0){
 			_hasReports = true;
 			_reports = reports;
 			_currentReportIndex = 0;
 			_reportString = reports[_currentReportIndex].GetMessage();
+			Debug.Log ("_reportString set to:");
 		}
 		else
 		{
@@ -49,17 +51,56 @@ public class ReportHandler : MonoBehaviour
 	{
 		if(_hasReports)
 		{
-			//Print the report text
-			GUI.Label(new Rect(100,100,500,500), "Report: " + _reportString);
+			int x = 100;
+			int y = 100;
+			int w = 500;
+			int h = 500;
 
+			//Print the report text
+			GUI.Label(new Rect(x,y,w,h), "Report: " + _reportString);
+			x += w;
+			w = 200;
+			h = 100;
 
 			//check for buttons allowing to delete report,
+			if(GUI.Button(new Rect(x,y,w,h),"Dismiss Report")){
+				_reports.RemoveAt(_currentReportIndex);
+				if(_reports.Count == 0){
+					_hasReports = false;
+				}
+				if(_currentReportIndex >= _reports.Count-1){
+					_currentReportIndex = _reports.Count-1;
+				}
+				_reportString = _reports[_currentReportIndex].GetMessage();
+            }
+            x += w;
 
 			//move to next report
+			if(GUI.Button(new Rect(x,y,w,h),"Next Report")){
+				_currentReportIndex++;
+				if(_currentReportIndex >= _reports.Count-1){
+					_currentReportIndex = _reports.Count-1;
+				}
+				_reportString = _reports[_currentReportIndex].GetMessage();
+			}
+			x += w;
 
 			//move to previous report
+			if(GUI.Button(new Rect(x,y,w,h),"Previous Report")){
+				_currentReportIndex--;
+				if(_currentReportIndex < 0){
+					_currentReportIndex = 0;
+				}
+				_reportString = _reports[_currentReportIndex].GetMessage();
+            }
+            x += w;
 
 			//dismiss all reports
-		}
-	}
+			//check for buttons allowing to delete report,
+			if(GUI.Button(new Rect(x,y,w,h),"Dismiss All")){
+				_reports = new List<Report>();
+				_hasReports = false;
+            }
+        }
+    }
 }
