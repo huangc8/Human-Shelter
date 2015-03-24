@@ -97,6 +97,7 @@ public class GameTime : MonoBehaviour
 						_reports.Add (r);
 				}
 				_rh.PassReports (_reports);
+				_reports = new List<Report> ();
 
 
 		}
