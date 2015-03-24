@@ -10,7 +10,7 @@ public class UI : MonoBehaviour {
 
 	//these are needed for showing and hiding buttons
 	private bool charButtons, sideButtons, showButtons;
-	private float x, y;
+	private float x, y, animateSide;
 	private int index;
 
 	// Use this for initialization
@@ -28,6 +28,7 @@ public class UI : MonoBehaviour {
 		charButtons = sideButtons = showButtons = false;
 
 		index = 0;
+		animateSide = 400;
 	}
 
 	public void charClick(int aindex, float ax, float ay)
@@ -126,9 +127,19 @@ public class UI : MonoBehaviour {
 		}
 
 		//side assign buttons
-		if (sideButtons) {
+		if (true) {
+			if(animateSide > 0 && sideButtons)
+			{
+				animateSide -=20;
+			}
+			if(animateSide < 400 && !sideButtons)
+			{
+				animateSide +=20;
+			}
+
+
 			itY = Screen.height*.1f;
-			xLoc = Screen.width*.8f;
+			xLoc = Screen.width*.8f + animateSide;
 
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), _shelter._survivors[index].Name)) {
 				showButtons=true;
