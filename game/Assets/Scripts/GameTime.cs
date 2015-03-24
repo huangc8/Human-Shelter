@@ -14,7 +14,7 @@ public class GameTime : MonoBehaviour
 		Queue <Event> _events; // today's events
 		string _newDay; // newDay text
 		public int _currentDay; // current day
-		Queue<Report> _reports; // the reports of assign task
+		List<Report> _reports; // the reports of assign task
 		Visitor _visitors; //grab info about newcomers
 		public Dialogue _dialogue; // the dialogue system
 		public Conditions _cond; // the conditions data base
@@ -26,7 +26,7 @@ public class GameTime : MonoBehaviour
 		{
 				_conversationsLeft = 5;
 				_currentDay = 0;
-				_reports = new Queue<Report> ();
+				_reports = new List<Report> ();
 		}
 
 		// =============================================== action
@@ -92,8 +92,10 @@ public class GameTime : MonoBehaviour
 						}
 						_shelter._survivors [s].Eat (_shelter);
 						r.Log ();
-						_reports.Enqueue (r);
+						_reports.Add (r);
 				}
+
+
 		}
 
 		// ================================================= update / GUI
