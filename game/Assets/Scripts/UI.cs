@@ -55,6 +55,21 @@ public class UI : MonoBehaviour {
 		float xLoc = Screen.width*.8f;
 
 
+		//top bar
+		if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.02f, Screen.width*.9f, buttonHeight), 
+		                "Day Survived: " + _gametime._currentDay.ToString () + "      Food: " + _shelter.Food + 
+		                "      Medicine: " + _shelter.Medicine + "      Luxuries: " + _shelter.Luxuries)) {
+			
+		}
+
+		if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.07f, 100, buttonHeight),  "Next Day")) {
+			_gametime.newDay();
+		}
+		
+
+
+
+
 		//new survivor arrives
 		Survivor visitorAtGate = _visitors._personList [_gametime._currentDay];
 		if (visitorAtGate != null) {

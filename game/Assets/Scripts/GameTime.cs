@@ -117,8 +117,8 @@ public class GameTime : MonoBehaviour
 				}
 		}
 
-		// GUI
-		void OnGUI ()
+		// GUI has moved to UI.cs
+		/*void OnGUI ()
 		{
 				if (GUI.Button (new Rect (10, 45, 100, 30), _newDay)) {
 						newDay ();
@@ -135,7 +135,7 @@ public class GameTime : MonoBehaviour
 				int buttonHeight = 30;
 
 				int numSurvivors = _shelter.NumberOfSurvivors;
-		/*
+
 				for (int i = 0; i < numSurvivors; i++) {
 						itY = startY;
 						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), _shelter._survivors [i].Name)) {
@@ -218,8 +218,8 @@ public class GameTime : MonoBehaviour
 						}
 				}
 
-		*/
-		}
+
+		}*/
 
 }
 
