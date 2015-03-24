@@ -16,8 +16,17 @@ public class Conditions : MonoBehaviour {
 		_conditionBase = new Dictionary<int, bool>();
 
 		// ==================== PLEASE CREATE BOOLEAN HERE!!!! =====================
+		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 		// add conditions index	value	  condition detail
 		_conditionBase.Add (0, false); // Whether Marina is invited into camp
+
+
+
+
+
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// ==========================================================================
 	}
 
 	// ============================================== functions
