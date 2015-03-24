@@ -1,10 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Conditions.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\UI.cs">
     <Files>
-      <File FileName="Assets\Scripts\Conditions.cs" Line="58" Column="1" />
-      <File FileName="Assets\Scripts\Conditions.cs" Line="26" Column="3" />
-      <File FileName="Assets\Scripts\Dialogue.cs" Line="22" Column="4" />
+      <File FileName="Assets\Scripts\UI.cs" Line="81" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

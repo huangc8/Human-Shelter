@@ -483,7 +483,7 @@ namespace PixelCrushers.DialogueSystem {
 		private void ActivateCommand(string commandName, string endMessage, string[] args) {
 			float duration = 0;
 			if (string.IsNullOrEmpty(commandName)) {
-				if (DialogueDebug.LogWarnings) Debug.LogWarning(string.Format("{0}: Sequencer received a blank string as a command name", new System.Object[] { DialogueDebug.Prefix }));
+				//if (DialogueDebug.LogWarnings) Debug.LogWarning(string.Format("{0}: Sequencer received a blank string as a command name", new System.Object[] { DialogueDebug.Prefix }));
 			} else if (HandleCommandInternally(commandName, args, out duration)) {
 				if (!string.IsNullOrEmpty(endMessage)) StartCoroutine(SendTimedSequencerMessage(endMessage, duration));
 			} else {
