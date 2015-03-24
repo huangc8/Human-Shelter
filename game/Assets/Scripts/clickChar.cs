@@ -16,6 +16,9 @@ public class clickChar : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		//invisible at first
+		renderer.enabled = false;
+
 		if (_shelter == null) {
 			_shelter = g.GetComponent<Shelter> ();
 		}

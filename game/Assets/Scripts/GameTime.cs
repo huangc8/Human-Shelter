@@ -13,7 +13,7 @@ public class GameTime : MonoBehaviour
 		Shelter _shelter; // the shelter data
 		Queue <Event> _events; // today's events
 		string _newDay; // newDay text
-		int _currentDay; // current day
+		public int _currentDay; // current day
 		Queue<Report> _reports; // the reports of assign task
 		Visitor _visitors; //grab info about newcomers
 		public int _conversationsLeft; // converstation points left

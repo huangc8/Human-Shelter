@@ -184,6 +184,10 @@ public class Shelter : MonoBehaviour
 		stmp.Init ();
 		stmp.Name = name;
 		stmp.image = image;
+		//show on map
+		stmp.image.renderer.enabled = true;
+		stmp.image.layer = 0;
+
 		_numSurvivors++;
 		return stmp;
 	}
@@ -204,6 +208,7 @@ public class Shelter : MonoBehaviour
 	public void EvictSurvivor(Survivor s){
 		_evictedSurvivors[_numEvictedSurvivors] = CopySurvivor(s);
 		_numEvictedSurvivors++;
+		Destroy (s.image);
 		Destroy (s);
 	}
 
@@ -220,12 +225,18 @@ public class Shelter : MonoBehaviour
 			}
 		}
 		Debug.Log ("Killing Survivor: " + s.Name + " sPosition: " + sPosition);
+
 		//Swap him with the survivor at the end of the list
-		Debug.Log (_survivors[sPosition].Name);
-		_survivors[sPosition] = CopySurvivor(_survivors[_numSurvivors-1]);
-		Debug.Log (_survivors[sPosition].Name);
-		_numSurvivors--;
-		Debug.Log (_numSurvivors);
+		//Edit: Don't do this or it will break the map images.  Just leave them at the same index.
+
+		//Debug.Log (_survivors[sPosition].Name);
+		//_survivors[sPosition] = CopySurvivor(_survivors[_numSurvivors-1]);
+		//Debug.Log (_survivors[sPosition].Name);
+		//_numSurvivors--;
+		//Debug.Log (_numSurvivors);
+		Destroy (s.image);
+		Destroy (s);
+
 	}
 
 	// ================================================== initialization
@@ -236,14 +247,14 @@ public class Shelter : MonoBehaviour
 	private void DefaultSetup ()
 	{
 		//assign images
-		_images [0] = GameObject.FindWithTag ("Brian");
-		_images [1] = GameObject.FindWithTag ("Marina");
+		//_images [0] = GameObject.FindWithTag ("Brian");
+		//_images [1] = GameObject.FindWithTag ("Marina");
 
 
 
 		//create basic survivor
-		_survivors [0] = CreateSurvivor("Brian", _images[0]);
-		_survivors [1] = CreateSurvivor("Marina", _images[1]);
+		//_survivors [0] = CreateSurvivor("Brian", _images[0]);
+		//_survivors [1] = CreateSurvivor("Marina", _images[1]);
 		//_survivors [2] = CreateSurvivor("Jimbob");
 		//_survivors [3] = CreateSurvivor("Jones");
 

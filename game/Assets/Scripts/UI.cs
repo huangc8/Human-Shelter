@@ -5,6 +5,8 @@ public class UI : MonoBehaviour {
 
 	public GameObject g;
 	Shelter _shelter; // the shelter data
+	Visitor _visitors;
+	GameTime _gametime;
 
 	//these are needed for showing and hiding buttons
 	private bool charButtons, sideButtons, showButtons;
@@ -16,6 +18,13 @@ public class UI : MonoBehaviour {
 		if (_shelter == null) {
 			_shelter = g.GetComponent<Shelter> ();
 		}
+		if (_visitors == null) {
+			_visitors = g.GetComponent<Visitor> ();
+		}
+		if (_gametime == null) {
+			_gametime = g.GetComponent<GameTime> ();
+		}
+
 		charButtons = sideButtons = showButtons = false;
 
 		index = 0;
@@ -41,12 +50,53 @@ public class UI : MonoBehaviour {
 	void OnGUI (){
 		int buttonWidth = 300;
 		int buttonHeight = 30;
+		
+		float itY = Screen.height*.8f;
+		float xLoc = Screen.width*.8f;
 
-		string name = _shelter._survivors[index].Name;
 
+		//new survivor arrives
+		Survivor visitorAtGate = _visitors._personList [_gametime._currentDay];
+		if (visitorAtGate != null) {
+			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "There is someone at the gate!")) {
+			}
+			itY += buttonHeight;
+			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Talk to " + visitorAtGate.Name.ToString ())) {
+			}
+			itY += buttonHeight;
+			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Invite")) {
+				_shelter._survivors [_shelter.NumberOfSurvivors] = visitorAtGate;
+				//show on map
+				visitorAtGate.image.renderer.enabled = true;
+				visitorAtGate.image.layer = 0;
+
+				_shelter.NumberOfSurvivors++;
+				_visitors._personList [_gametime._currentDay] = null;
+			}
+			itY += buttonHeight;
+			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Reject")) {
+				_visitors._personList [_gametime._currentDay] = null;
+			}
+			itY += buttonHeight;
+			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Kill")) {
+				_visitors._personList [_gametime._currentDay] = null;
+				
+			}
+			itY += buttonHeight;
+		} 
+		/*else {
+			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Nobody is at the gate")) {
+			}
+		}*/
+
+
+
+
+
+		//above character's head
 		if(charButtons){
 
-			if (GUI.Button (new Rect (Screen.width*x*.8f, Screen.height*y*.8f, buttonWidth, buttonHeight),"Talk to " + name)) {
+			if (GUI.Button (new Rect (Screen.width*x*.8f, Screen.height*y*.8f, buttonWidth, buttonHeight),"Talk to " + _shelter._survivors[index].Name)) {
 				showButtons=true;
 
 				_shelter._survivors [index].Converse ();
@@ -58,12 +108,12 @@ public class UI : MonoBehaviour {
 			}
 		}
 
+		//side assign buttons
 		if (sideButtons) {
+			itY = Screen.height*.1f;
+			xLoc = Screen.width*.8f;
 
-			float itY = Screen.height*.1f;
-			float xLoc = Screen.width*.8f;
-
-			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), name)) {
+			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), _shelter._survivors[index].Name)) {
 				showButtons=true;
 
 			}
