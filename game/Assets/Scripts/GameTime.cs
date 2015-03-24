@@ -16,6 +16,8 @@ public class GameTime : MonoBehaviour
 		public int _currentDay; // current day
 		Queue<Report> _reports; // the reports of assign task
 		Visitor _visitors; //grab info about newcomers
+		public Dialogue _dialogue; // the dialogue system
+		public Conditions _cond; // the conditions data base
 		public int _conversationsLeft; // converstation points left
 
 		// =============================================== initialization

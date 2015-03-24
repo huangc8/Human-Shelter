@@ -1,8 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameTime.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Dialogue.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameTime.cs" Line="15" Column="3" />
+      <File FileName="Assets\Scripts\Conditions.cs" Line="31" Column="33" />
+      <File FileName="Assets\Scripts\Dialogue.cs" Line="10" Column="56" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -433,6 +433,7 @@
      <Compile Include="Assets\Dialogue System\Scripts\Templates\TemplateDialogueUI.cs" />
      <Compile Include="Assets\Dialogue System\Scripts\Templates\TemplateQuestLogWindow.cs" />
      <Compile Include="Assets\Dialogue System\Scripts\Templates\TemplateTextFieldUI.cs" />
+     <Compile Include="Assets\Scripts\Conditions.cs" />
      <Compile Include="Assets\Scripts\Dialogue.cs" />
      <Compile Include="Assets\Scripts\Event.cs" />
      <Compile Include="Assets\Scripts\GameTime.cs" />
