@@ -80,21 +80,22 @@ public class Conditions : MonoBehaviour
 	void CheckConditions(Survivor character){
 		if(getCondition("execute " + character.Name)){
 			setCondition("execute " + character.Name, false);
+
 			//kill this character
 			_shelter.KillSurvivor(character);
 		}
 		if(getCondition("decline " + character.Name)){
 			setCondition("decline " + character.Name, false);
+
 			//decline entry to this character
 			//set the survivor at gate to null
-			
 			_visitor.RejectSurvivorAtGate(character.Name);
 		}
 		if(getCondition("invite " + character.Name)){
 			setCondition("invite " + character.Name, false);
-			
-			_shelter.InviteSurvivor(character);
+
 			//invite this character to the base
+			_shelter.InviteSurvivor(character);
 		}
 		if(getCondition("kill " + character.Name)){
 			setCondition("kill " + character.Name, false);
@@ -161,7 +162,6 @@ public class Conditions : MonoBehaviour
 				Debug.Log ("Error: No such condition"); // return error message
 				return false;
 			}
-			break;
 		case "invite": //invite the survivor in
 			if (_invitations.TryGetValue (key, out tmp)) {
 				return tmp; // return boolean
@@ -169,7 +169,6 @@ public class Conditions : MonoBehaviour
 				Debug.Log ("Error: No such condition"); // return error message
 				return false;
 			}
-			break;
 		case "kill": //invite the survivor in
 			if (_kills.TryGetValue (key, out tmp)) {
 				return tmp; // return boolean
@@ -177,8 +176,8 @@ public class Conditions : MonoBehaviour
 				Debug.Log ("Error: No such condition"); // return error message
 				return false;
 			}
-			break;
 		}
+
 		return false;
 	}
 
@@ -191,7 +190,7 @@ public class Conditions : MonoBehaviour
 		
 		//First half of the string should be the command, second half should
 		//be the name
-		Debug.Log("getCondition: Command:" + words[0] + " name:" + words[1]);
+		Debug.Log("setCondition: Command:" + words[0] + " name:" + words[1]);
 		
 		
 		bool tmp = false; // tmp value

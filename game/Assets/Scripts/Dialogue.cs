@@ -25,7 +25,7 @@ public class Dialogue : MonoBehaviour
 		public void parseChoice (int choiceID)
 		{
 				switch (choiceID) {
-
+				// setting condition according to ID
 				}
 		}
 
