@@ -77,44 +77,54 @@ public class Conditions : MonoBehaviour
 		// ==========================================================================
 	}
 
+	void CheckConditions(Survivor character){
+		if(getCondition("execute " + character.Name)){
+			setCondition("execute " + character.Name, false);
+			//kill this character
+			_shelter.KillSurvivor(character);
+		}
+		if(getCondition("decline " + character.Name)){
+			setCondition("decline " + character.Name, false);
+			//decline entry to this character
+			//set the survivor at gate to null
+			
+			_visitor.RejectSurvivorAtGate(character.Name);
+		}
+		if(getCondition("invite " + character.Name)){
+			setCondition("invite " + character.Name, false);
+			
+			_shelter.InviteSurvivor(character);
+			//invite this character to the base
+		}
+		if(getCondition("kill " + character.Name)){
+			setCondition("kill " + character.Name, false);
+			
+			//kill this character at the gate
+			_visitor.KillSurvivorAtGate(character.Name);
+		}
+	}
+
 	void Update()
 	{
+		if(_visitor._personList != null){
 
-		Debug.LogWarning("_personList.Length" + _visitor._personList.Length + " _personList[0]:" + _visitor._personList[0].Name + " _personList[1]:" + _visitor._personList[1].Name);
-		Debug.LogWarning("--Printing out PersonList");
-		for(int i = 0; i < _visitor._personList.Length; i++){
-			Debug.LogWarning("i = "+ i + " " + _visitor._personList[i].Name);
-		}
-
-		if(_visitor != null){
-			foreach(Survivor character in _visitor._personList){
-
-
-				if(getCondition("execute " + character.Name)){
-					setCondition("execute " + character.Name, false);
-					//kill this character
-					_shelter.KillSurvivor(character);
+			if(_visitor != null){
+				foreach(Survivor character in _visitor._personList){
+					if(character != null){
+						CheckConditions(character);
+					}
 				}
-				if(getCondition("decline " + character.Name)){
-					setCondition("decline " + character.Name, false);
-					//decline entry to this character
-					//set the survivor at gate to null
 
-					_visitor.RejectSurvivorAtGate(character.Name);
-				}
-				if(getCondition("invite " + character.Name)){
-					setCondition("invite " + character.Name, false);
-					
-					_shelter.InviteSurvivor(character);
-					//invite this character to the base
-				}
-				if(getCondition("kill " + character.Name)){
-					setCondition("kill " + character.Name, false);
-					
-					//kill this character at the gate
-					_visitor.KillSurvivorAtGate(character.Name);
+				foreach(Survivor character in _shelter._survivors){
+					if(character != null){
+						CheckConditions(character);
+					}
 				}
 			}
+		}
+		else{
+			Debug.LogWarning("Getting visitor reference");
+			_visitor = this.GetComponent<Visitor>();
 		}
 	}
 

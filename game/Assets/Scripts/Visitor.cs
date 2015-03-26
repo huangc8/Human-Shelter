@@ -4,6 +4,7 @@ using System.Collections;
 
 public class Visitor : MonoBehaviour {
 	public Survivor[] _personList;
+	public Survivor[] _originalPersonList;
 	public GameObject[] _images;
 
 	public GameTime _gametime;
