@@ -96,11 +96,11 @@ public class UI : MonoBehaviour {
 			}
 			itY += buttonHeight;
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Reject")) {
-				_visitors._personList [_gametime._currentDay] = null;
+				_visitors.RejectSurvivorAtGate(visitorAtGate.Name);
 			}
 			itY += buttonHeight;
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Kill")) {
-				_visitors._personList [_gametime._currentDay] = null;
+				_visitors.KillSurvivorAtGate(visitorAtGate.Name);
 				
 			}
 			itY += buttonHeight;

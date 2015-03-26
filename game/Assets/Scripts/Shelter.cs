@@ -234,6 +234,24 @@ public class Shelter : MonoBehaviour
 				Destroy (s); //destory the script
 		}
 
+	/// <summary>
+	/// Kills the survivor.
+	/// </summary>
+	public void KillSurvivor (string s)
+	{
+		//Find the survivors position
+		int sPosition = -1;
+		for (int i = 0; i < _numSurvivors; i++) {
+			if (_survivors [i].Name == s) {
+				sPosition = i;
+			}
+		}
+		Debug.Log ("Killing Survivor: " + s + " sPosition: " + sPosition);
+		
+		KillSurvivor(_survivors[sPosition]);
+		
+	}
+
 		/// <summary>
 		/// Kills the survivor.
 		/// </summary>

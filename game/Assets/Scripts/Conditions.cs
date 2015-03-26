@@ -4,8 +4,9 @@
 /// These dictionary will map strings to boolean values that are either true or false. The boolean values will operate as basic commands.
 /// The three different commands we are starting with include
 /// 
-/// execute <name>
-/// decline <name>
+/// execute <name> (execute in camp)
+/// kill <name> (execute at gate)
+/// decline <name> 
 /// invite <name>
 /// 
 /// gainApproval <name>
@@ -21,8 +22,10 @@ public class Conditions : MonoBehaviour
 
 	// ============================================== data
 	public Visitor _visitor; //our reference to the visitor class
+	public Shelter _shelter; //our reference to the shelter class
 
 	private Dictionary <string, bool> _executions; //characters to be executed
+	private Dictionary <string, bool> _kills;
 	private Dictionary <string, bool> _declinations; //characters which have been declined invitation
 	private Dictionary <string, bool> _invitations; //characters invited into the camp
 
@@ -36,12 +39,14 @@ public class Conditions : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		_shelter = this.GetComponent<Shelter>(); //get our reference to the shelter class
 		_visitor = this.GetComponent<Visitor>(); //get our reference to the visitor class
 
 		// initiate data base
 		_executions = new Dictionary<string, bool>();
 		_declinations = new Dictionary<string, bool>();
 		_invitations = new Dictionary<string, bool>();
+		_kills = new Dictionary<string, bool>();
 
 #if approval
 		_gainApproval = new Dictionary<string, int>();
@@ -59,6 +64,7 @@ public class Conditions : MonoBehaviour
 			_executions.Add(character.Name,false);
 			_declinations.Add(character.Name,false);
 			_invitations.Add(character.Name,false);
+			_kills.Add(character.Name, false);
 #if approval
 			_gainApproval.Add(character.Name,0);
 			_loseApproval.Add(character.Name,0);
@@ -82,17 +88,31 @@ public class Conditions : MonoBehaviour
 
 		if(_visitor != null){
 			foreach(Survivor character in _visitor._personList){
+
+
 				if(getCondition("execute " + character.Name)){
 					setCondition("execute " + character.Name, false);
 					//kill this character
+					_shelter.KillSurvivor(character);
 				}
 				if(getCondition("decline " + character.Name)){
 					setCondition("decline " + character.Name, false);
 					//decline entry to this character
+					//set the survivor at gate to null
+
+					_visitor.RejectSurvivorAtGate(character.Name);
 				}
 				if(getCondition("invite " + character.Name)){
 					setCondition("invite " + character.Name, false);
+					
+					_shelter.InviteSurvivor(character);
 					//invite this character to the base
+				}
+				if(getCondition("kill " + character.Name)){
+					setCondition("kill " + character.Name, false);
+					
+					//kill this character at the gate
+					_visitor.KillSurvivorAtGate(character.Name);
 				}
 			}
 		}
@@ -140,9 +160,18 @@ public class Conditions : MonoBehaviour
 				return false;
 			}
 			break;
+		case "kill": //invite the survivor in
+			if (_kills.TryGetValue (key, out tmp)) {
+				return tmp; // return boolean
+			} else {
+				Debug.Log ("Error: No such condition"); // return error message
+				return false;
+			}
+			break;
 		}
 		return false;
 	}
+
 
 	// set conditions
 	public void setCondition (string key, bool cond)
