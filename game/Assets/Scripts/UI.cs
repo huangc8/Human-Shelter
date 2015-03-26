@@ -84,13 +84,15 @@ public class UI : MonoBehaviour {
 			}
 			itY += buttonHeight;
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Invite")) {
+				_shelter.InviteSurvivor(visitorAtGate);
+				/*
 				_shelter._survivors [_shelter.NumberOfSurvivors] = visitorAtGate;
 				//show on map
 				visitorAtGate.image.renderer.enabled = true;
 				visitorAtGate.image.layer = 0;
 
 				_shelter.NumberOfSurvivors++;
-				_visitors._personList [_gametime._currentDay] = null;
+				_visitors._personList [_gametime._currentDay] = null;*/
 			}
 			itY += buttonHeight;
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Reject")) {

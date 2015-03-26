@@ -11,6 +11,9 @@ public class Shelter : MonoBehaviour
 		public GameObject[] _images; //array of corrisponding images
 		public Survivor[] _evictedSurvivors; //Array of survivors who have been kicked out of the shelter
 
+	public Visitor _visitors;
+	public GameTime _gametime;
+
 		private int _numEvictedSurvivors; //current number of survivors who have been evicted
 		private int _numSurvivors; // current number of survivors
 		private Stores _storage; // the storage
@@ -128,6 +131,16 @@ public class Shelter : MonoBehaviour
 		}
 
 		//================================================== Modifier
+	public void InviteSurvivor(Survivor visitorAtGate){
+		this._survivors [this.NumberOfSurvivors] = visitorAtGate;
+		//show on map
+		visitorAtGate.image.renderer.enabled = true;
+		visitorAtGate.image.layer = 0;
+		
+		this.NumberOfSurvivors++;
+		_visitors._personList [_gametime._currentDay] = null;
+	}
+
 		public void UseMedicine (int useAmount)
 		{
 				_storage.UseMedicine (useAmount);
@@ -276,7 +289,9 @@ public class Shelter : MonoBehaviour
 		// Use this for initialization
 		void Start ()
 		{
-		
+		_visitors = this.GetComponent<Visitor>();
+		_gametime = this.GetComponent<GameTime>();
+
 				_defenses = 0;
 				_survivors = new Survivor[6];
 				_images = new GameObject[6];
