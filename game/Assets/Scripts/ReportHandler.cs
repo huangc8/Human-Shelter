@@ -53,14 +53,40 @@ public class ReportHandler : MonoBehaviour
 		{
 			int x = 100;
 			int y = 100;
-			int w = 500;
-			int h = 500;
+			int w = 200;
+			int h = 100;
 
+			if(_currentReportIndex > 0){
+				//move to previous report
+				if(GUI.Button(new Rect(x,y,w,h),"Previous Report")){
+					_currentReportIndex--;
+					if(_currentReportIndex < 0){
+						_currentReportIndex = 0;
+					}
+					_reportString = _reports[_currentReportIndex].GetMessage();
+				}
+				x += w;
+			}
+
+			w = 500;
+			h = 500;
 			//Print the report text
 			GUI.Label(new Rect(x,y,w,h), "Report: " + _reportString);
 			x += w;
 			w = 200;
 			h = 100;
+
+			if(_currentReportIndex < _reports.Count-1){
+				//move to next report
+				if(GUI.Button(new Rect(x,y,w,h),"Next Report")){
+					_currentReportIndex++;
+					if(_currentReportIndex >= _reports.Count-1){
+						_currentReportIndex = _reports.Count-1;
+					}
+					_reportString = _reports[_currentReportIndex].GetMessage();
+				}
+				x += w;
+			}
 
 			//check for buttons allowing to delete report,
 			if(GUI.Button(new Rect(x,y,w,h),"Dismiss Report")){
@@ -75,32 +101,17 @@ public class ReportHandler : MonoBehaviour
             }
             x += w;
 
-			//move to next report
-			if(GUI.Button(new Rect(x,y,w,h),"Next Report")){
-				_currentReportIndex++;
-				if(_currentReportIndex >= _reports.Count-1){
-					_currentReportIndex = _reports.Count-1;
-				}
-				_reportString = _reports[_currentReportIndex].GetMessage();
+
+
+
+			if(_reports.Count > 1){
+				//dismiss all reports
+				//check for buttons allowing to delete report,
+				if(GUI.Button(new Rect(x,y,w,h),"Dismiss All")){
+					_reports = new List<Report>();
+					_hasReports = false;
+	            }
 			}
-			x += w;
-
-			//move to previous report
-			if(GUI.Button(new Rect(x,y,w,h),"Previous Report")){
-				_currentReportIndex--;
-				if(_currentReportIndex < 0){
-					_currentReportIndex = 0;
-				}
-				_reportString = _reports[_currentReportIndex].GetMessage();
-            }
-            x += w;
-
-			//dismiss all reports
-			//check for buttons allowing to delete report,
-			if(GUI.Button(new Rect(x,y,w,h),"Dismiss All")){
-				_reports = new List<Report>();
-				_hasReports = false;
-            }
         }
     }
 }
