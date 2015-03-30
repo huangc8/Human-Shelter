@@ -20,11 +20,15 @@ public class GameTime : MonoBehaviour
 		public Conditions _cond; // the conditions data base
 		public int _conversationsLeft; // converstation points left
 		public static ReportHandler _rh;
+		private GameWorld _gameWorld;
 
 		// =============================================== initialization
 		// Use this for initialization
 		void Start ()
 		{
+
+				_gameWorld = this.GetComponent<GameWorld> ();
+
 				_rh = this.GetComponent<ReportHandler> ();
 				_conversationsLeft = 5;
 				_currentDay = 0;
@@ -46,6 +50,7 @@ public class GameTime : MonoBehaviour
 				}
 				_currentDay++;
 				_shelter.NewDay ();
+		_gameWorld.NewDay();
 
 		}
 

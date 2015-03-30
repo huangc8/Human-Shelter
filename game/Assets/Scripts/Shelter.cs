@@ -19,6 +19,7 @@ public class Shelter : MonoBehaviour
 		private Stores _storage; // the storage
 		int _defenses; // the defense of the building (depend on guard
 		int _attackStrength; 
+
 		public class Stores
 		{
 				// =============================================================== data

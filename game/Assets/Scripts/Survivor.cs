@@ -209,15 +209,15 @@ public class Survivor : ScriptableObject
 				return r;
 		
 		}
-		/// <summary>
-		/// Have this survivor scout, return info about surroundings on report
-		/// </summary>
-		public Report Scout (Shelter s)
-		{
-				Report r = new Report ();
-				r.SetMessage (_name + " successfully scouted");
-				return r;
-		}
+	/// <summary>
+	/// Have this survivor scout, return info about surroundings on report
+	/// </summary>
+	public Report Scout (Shelter s)
+	{
+		Report r = new Report ();
+		r.SetMessage (_name + " successfully scouted");
+		return r;
+	}
 	
 		/// <summary>
 		/// Scavenge  for the shelter s.
