@@ -228,7 +228,6 @@ public class Survivor : ScriptableObject
 		ArrayList NewReps = _gameWorld.ScoutForShelters(proficiency);
 		NewReps.Add(r);
 
-
 		return NewReps;
 	}
 	

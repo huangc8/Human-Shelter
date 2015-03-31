@@ -15,6 +15,7 @@ public class GameWorld : MonoBehaviour {
 	/// in the form of rival camps
 	public class Enemy{
 		int _strength; //how much power they have
+		int _readiness; //how likely they are to attack you, counts up to five, resets after each attack
 		int _visibility; //how easy they are to see
 		int _aggressiveness; //how likely they are to attack you
 
@@ -25,6 +26,8 @@ public class GameWorld : MonoBehaviour {
 			_strength = Random.Range(0,10);
 			_visibility = Random.Range (0,10);
 			_aggressiveness = Random.Range (0,10);
+
+			_readiness = -5;
 		}
 
 		//Generate an enemy around a certain difficulty level
@@ -32,6 +35,8 @@ public class GameWorld : MonoBehaviour {
 			_strength = Random.Range (difficulty-2,difficulty+2);
 			_visibility = Random.Range (difficulty-2,difficulty+2);
 			_aggressiveness = Random.Range (difficulty-2,difficulty+2);
+
+			_readiness = -5;
 		}
 
 		public void inflictDamage(int damage){
@@ -51,11 +56,13 @@ public class GameWorld : MonoBehaviour {
 		}
 
 		public bool ShouldAttack(){
-			int attackChance = Random.Range(0,10) + _aggressiveness;
+			int attackChance = Random.Range(0,4) + _aggressiveness + _readiness;
 
 			if(attackChance > 11){
+				_readiness = -5;
 				return true;
 			}
+			_readiness+= 2;
 			return false;
 		}
 
@@ -67,6 +74,20 @@ public class GameWorld : MonoBehaviour {
 			_located = true;
 		}
 
+		public Report AttackLikeliness(){
+			Report rep = new Report();
+			if(_readiness >5){
+				rep.SetMessage("An enemy is prepared to attack you.");
+			}
+			else if(_readiness <2){
+				rep.SetMessage("An enemy will soon be ready to attack you.");
+			}
+			else{
+				rep.SetMessage("An enemy is not ready to attack you.");
+			}
+
+			return rep;
+		}
 
 		public void LoseStrength(){
 			_strength -= Random.Range (1,4);
@@ -175,6 +196,9 @@ public class GameWorld : MonoBehaviour {
 						reports.Add(r);
 					}
 				}
+			}
+			else{
+				reports.Add(e.AttackLikeliness());
 			}
 		}
 		return reports;
