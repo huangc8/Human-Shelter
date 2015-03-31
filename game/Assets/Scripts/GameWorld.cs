@@ -206,7 +206,9 @@ public class GameWorld : MonoBehaviour {
 					int playerDamage = _shelter.RaidingStrength + Random.Range (-2,2);
 					if(playerDamage < camp.Strength){ //50% of losing 1 character
 						if(Random.Range (0,10) < 5){
-							_shelter.KillRandomSurvivor();
+							Report repo = new Report();
+							string name = _shelter.KillRandomSurvivor();
+							repo.SetMessage(name+ " died in an attempted raid on an enemy attack.")
 						}
 					}
 					else{
@@ -241,15 +243,23 @@ public class GameWorld : MonoBehaviour {
 			if(camp.ShouldAttack()){
 				//If no one is home lose 50% of resources
 				if(_shelter.DefensivePower == 0){
+					Report rep = new Report();
+					rep.SetMessage("Your camp was attacked, but no one was there, so they took some of your stores.");
+					reports.Add(rep);
 					_shelter.LoseHalfResources();
 				}
 				//else calculate your defense chances, calculate a chance to lose  a survivor and some resources
 				else{
 					if(_shelter.DefensivePower + Random.Range (-5,5) < camp.Strength){
-						_shelter.KillRandomSurvivor();
+						string deadSurvivor = _shelter.KillRandomSurvivor();
 						_shelter.LoseHalfResources();
+						Report rep = new Report();
+						rep.SetMessage(deadSurvivor + " was killed in a raid on your camp. Some of your stores were taken.");
+						reports.Add(rep);
 					}
 					else{
+						Report rep = new Report("Your camp was attacked, but you defended yourself.");
+						reports.Add (rep);
 						camp.LoseStrength();
 					}
 				}

@@ -282,8 +282,11 @@ public class Shelter : MonoBehaviour
 	/// <summary>
 	/// Kills a random survivor.
 	/// </summary>
-	public void KillRandomSurvivor(){
-		KillSurvivor(_survivors[(int)Random.Range (0,_numSurvivors)].Name);
+	public string KillRandomSurvivor(){
+
+		name = _survivors[(int)Random.Range (0,_numSurvivors)].Name;
+		KillSurvivor(name);
+		return name;
 	}
 
 		/// <summary>
