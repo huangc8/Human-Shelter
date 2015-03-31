@@ -111,8 +111,12 @@ public class GameTime : MonoBehaviour
 						r.Log ();
 						_reports.Add (r);
 				}
-		Report rep = _gameWorld.NewDay();
-		_reports.Add(rep);
+
+		ArrayList reps = _gameWorld.NewDay();
+
+		foreach(Report rep in reps){
+			_reports.Add(rep);
+		}
 
 				_rh.PassReports (_reports);
 				_reports = new List<Report> ();

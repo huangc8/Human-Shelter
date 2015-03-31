@@ -8,6 +8,31 @@ public class GameWorld : MonoBehaviour {
 
 	int _scoutingBonus;
 
+	ArrayList Enemies = new ArrayList();
+
+	/// Enemy. Encapsulated class that manages threats to your camp
+	/// in the form of rival camps
+	public class Enemy{
+		int _strength; //how much power they have
+		int _visibility; //how easy they are to see
+		int _aggressiveness; //how likely they are to attack you
+
+		//Randomly generate an enemy
+		public Enemy(){
+			_strength = Random.Range(0,10);
+			_visibility = Random.Range (0,10);
+			_aggressiveness = Random.Range (0,10);
+		}
+
+		//Generate an enemy around a certain difficulty level
+		public Enemy(int difficulty){
+			_strength = Random.Range (difficulty-2,difficulty+2);
+			_visibility = Random.Range (difficulty-2,difficulty+2);
+			_aggressiveness = Random.Range (difficulty-2,difficulty+2);
+		}
+	}
+
+
 	public enum ScavengeableLocation{
 		Hospital, //Gives food and medicine
 		GroceryStore, //Gives food only
@@ -51,7 +76,12 @@ public class GameWorld : MonoBehaviour {
 	void Start () {
 
 	}
-	
+
+	void AddEnemy(){
+		Enemy e = new Enemy();
+		Enemies.Add(e);
+	}
+
 	// Update is called once per frame
 	void Update () {
 	
@@ -82,11 +112,23 @@ public class GameWorld : MonoBehaviour {
 	/// <summary>
 	/// Start a new Day
 	/// </summary>
-	public Report NewDay(){
+	public ArrayList NewDay(){
 		//change which structure we can scavenge
 		selectScavengeTarget();
 		Report r = new Report();
 		r.SetMessage("Today we can raid a " + _scavengeTarget.ToString() + " with a " + _scavengeQuality.ToString() +  " number of resources.");
-		return r;
+
+		ArrayList reports = new ArrayList();
+		reports.Add(r);
+
+		//Spawn an enemy camp
+		if(Random.Range(0,10) < 2){
+			AddEnemy();
+			Report eReport = new Report();
+			eReport.SetMessage("There's been rumors of a new camp in the area");
+			reports.Add(eReport);
+		}
+
+		return reports;
 	}
 }
