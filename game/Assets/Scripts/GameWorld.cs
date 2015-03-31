@@ -208,7 +208,7 @@ public class GameWorld : MonoBehaviour {
 						if(Random.Range (0,10) < 5){
 							Report repo = new Report();
 							string name = _shelter.KillRandomSurvivor();
-							repo.SetMessage(name+ " died in an attempted raid on an enemy attack.")
+							repo.SetMessage(name+ " died in an attempted raid on an enemy.");
 						}
 					}
 					else{
@@ -258,7 +258,8 @@ public class GameWorld : MonoBehaviour {
 						reports.Add(rep);
 					}
 					else{
-						Report rep = new Report("Your camp was attacked, but you defended yourself.");
+						Report rep = new Report();
+						rep.SetMessage("Your camp was attacked, but you defended yourself.");
 						reports.Add (rep);
 						camp.LoseStrength();
 					}
