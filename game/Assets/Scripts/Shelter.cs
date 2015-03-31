@@ -93,6 +93,12 @@ public class Shelter : MonoBehaviour
 								_medicine = value;
 						}
 				}
+
+		public void LoseHalfResources(){
+			_medicine =(int)(_medicine * Random.Range (.4f,.6f));
+			_food =(int)(_food * Random.Range (.4f,.6f));
+			_luxuries =(int)(_luxuries * Random.Range (.4f,.6f));
+		}
 		}
 
 	
@@ -150,6 +156,13 @@ public class Shelter : MonoBehaviour
 		}
 
 		//================================================== accessor
+	public int RaidingStrength{
+		get{
+			return _attackStrength;
+		}
+	}
+
+
 		/// <summary>
 		/// Gets or sets the medicine.
 		/// </summary>
@@ -199,6 +212,13 @@ public class Shelter : MonoBehaviour
 				}
 		}
 
+	public int DefensivePower{
+		get{
+			return _defenses;
+		}
+
+	}
+
 		// ================================================== create
 
 		private Survivor CreateSurvivor (string name, GameObject image)
@@ -237,6 +257,10 @@ public class Shelter : MonoBehaviour
 				Destroy (s); //destory the script
 		}
 
+	public void LoseHalfResources(){
+		_storage.LoseHalfResources();
+	}
+
 	/// <summary>
 	/// Kills the survivor.
 	/// </summary>
@@ -253,6 +277,13 @@ public class Shelter : MonoBehaviour
 		
 		KillSurvivor(_survivors[sPosition]);
 		
+	}
+
+	/// <summary>
+	/// Kills a random survivor.
+	/// </summary>
+	public void KillRandomSurvivor(){
+		KillSurvivor(_survivors[(int)Random.Range (0,_numSurvivors)].Name);
 	}
 
 		/// <summary>

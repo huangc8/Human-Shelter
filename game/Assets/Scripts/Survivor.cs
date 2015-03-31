@@ -165,7 +165,7 @@ public class Survivor : ScriptableObject
 		{
 				int fatigueModifier = (100 / (10 + Fatigue)) * 10;
 
-				int proficiency = GetProficiency (task.Defend) + fatigueModifier;
+				int proficiency = (GetProficiency (task.Defend) + 10) + fatigueModifier;
 				int newDefenses = s.BolsterDefenses (proficiency);
 
 				Report r = new Report ();
@@ -214,7 +214,7 @@ public class Survivor : ScriptableObject
 	/// <summary>
 	/// Have this survivor scout, return info about surroundings on report
 	/// </summary>
-	public Report Scout (Shelter s)
+	public ArrayList Scout (Shelter s)
 	{
 		Report r = new Report ();
 
@@ -223,7 +223,13 @@ public class Survivor : ScriptableObject
 		int locationBonus =  (int)Mathf.Pow(Random.Range (1.0f,4.0f)*proficiency,.36f);
 		_gameWorld.AddScoutingBonus(locationBonus);
 		r.SetMessage (_name + " successfully scouted and helped to locate a scavenging target");
-		return r;
+
+		//Look for enemy camps
+		ArrayList NewReps = _gameWorld.ScoutForShelters(proficiency);
+		NewReps.Add(r);
+
+
+		return NewReps;
 	}
 	
 	/// <summary>
@@ -282,7 +288,11 @@ public class Survivor : ScriptableObject
 		{
 				Report r = new Report ();
 				int restoration = RestMe ();
-		
+
+		int proficiency = GetProficiency(task.Defend);
+
+		s.BolsterDefenses(proficiency/4);
+
 				r.SetMessage (_name + "'s fatigue is restored to " + restoration);
 				return r;
 		}

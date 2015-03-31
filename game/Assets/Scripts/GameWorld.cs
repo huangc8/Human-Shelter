@@ -7,6 +7,7 @@ using System.Collections;
 public class GameWorld : MonoBehaviour {
 
 	int _scoutingBonus;
+	Shelter _shelter;
 
 	ArrayList Enemies = new ArrayList();
 
@@ -16,6 +17,8 @@ public class GameWorld : MonoBehaviour {
 		int _strength; //how much power they have
 		int _visibility; //how easy they are to see
 		int _aggressiveness; //how likely they are to attack you
+
+		bool _located = false;
 
 		//Randomly generate an enemy
 		public Enemy(){
@@ -29,6 +32,47 @@ public class GameWorld : MonoBehaviour {
 			_strength = Random.Range (difficulty-2,difficulty+2);
 			_visibility = Random.Range (difficulty-2,difficulty+2);
 			_aggressiveness = Random.Range (difficulty-2,difficulty+2);
+		}
+
+		public void inflictDamage(int damage){
+			_strength -= damage;
+		}
+
+		public int Strength{
+			get{
+				return _strength;
+			}
+		}
+
+		public int Visibility{
+			get{
+				return _visibility;
+			}
+		}
+
+		public bool ShouldAttack(){
+			int attackChance = Random.Range(0,10) + _aggressiveness;
+
+			if(attackChance > 11){
+				return true;
+			}
+			return false;
+		}
+
+		public bool IsUnscouted(){
+			return _located == false;
+		}
+
+		public void MakeCampVisibile(){
+			_located = true;
+		}
+
+
+		public void LoseStrength(){
+			_strength -= Random.Range (1,4);
+			if(_strength < 1){
+				_strength = 1;
+			}
 		}
 	}
 
@@ -74,7 +118,7 @@ public class GameWorld : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		_shelter = this.GetComponent<Shelter>();
 	}
 
 	void AddEnemy(){
@@ -109,6 +153,33 @@ public class GameWorld : MonoBehaviour {
 		_scoutingBonus = 0;
 	}
 
+	public ArrayList ScoutForShelters(int proficiency){
+		ArrayList reports = new ArrayList();
+		foreach(Enemy e in Enemies){
+			if(e.IsUnscouted()){
+				if(e.Visibility < proficiency){
+					//Let us see it
+					e.MakeCampVisibile();
+
+					Report r = new Report();
+					r.SetMessage("Your scouts have found an enemy camp.");
+					reports.Add(r);
+				}
+				else{
+					if(Random.Range (0,10) + proficiency > Random.Range (0,5) + e.Visibility){
+						//Let us see it
+						e.MakeCampVisibile();
+						
+						Report r = new Report();
+						r.SetMessage("Your scouts have found an enemy camp.");
+						reports.Add(r);
+					}
+				}
+			}
+		}
+		return reports;
+	}
+
 	/// <summary>
 	/// Start a new Day
 	/// </summary>
@@ -119,7 +190,72 @@ public class GameWorld : MonoBehaviour {
 		r.SetMessage("Today we can raid a " + _scavengeTarget.ToString() + " with a " + _scavengeQuality.ToString() +  " number of resources.");
 
 		ArrayList reports = new ArrayList();
+		
 		reports.Add(r);
+		///Check for raiding camps
+		int raidStrength = _shelter.RaidingStrength;
+
+		ArrayList deadCamps = new ArrayList();
+
+		if(raidStrength > 0){ //Attempt Raid
+			//check for located camp, else scout for the camp
+			foreach(Enemy camp in Enemies){
+				if(camp.IsUnscouted() == false){
+					//Attempt raid
+
+					int playerDamage = _shelter.RaidingStrength + Random.Range (-2,2);
+					if(playerDamage < camp.Strength){ //50% of losing 1 character
+						if(Random.Range (0,10) < 5){
+							_shelter.KillRandomSurvivor();
+						}
+					}
+					else{
+						camp.inflictDamage(playerDamage);
+
+						if(camp.Strength < 0){
+							Report raidReport = new Report();
+							int newFood = Random.Range(0,20);
+							int newMedicine = Random.Range(0,20);
+							int newLuxuries = Random.Range(0,20);
+
+							_shelter.Food += newFood;
+							_shelter.Medicine += newMedicine;
+							_shelter.Luxuries += newLuxuries;
+
+							raidReport.SetMessage("Your raiders have destroyed a camp gaining you " + newFood + " food, " + newMedicine + " medicine and " + newLuxuries + " luxuries.");
+							reports.Add(raidReport);
+							deadCamps.Add(camp);
+						}
+					}
+				}
+			}
+			
+			foreach(Enemy deadCamp in deadCamps){
+				Enemies.Remove(deadCamp);
+			}
+
+		}
+
+		//Have the camps attack the player
+		foreach(Enemy camp in Enemies){
+			if(camp.ShouldAttack()){
+				//If no one is home lose 50% of resources
+				if(_shelter.DefensivePower == 0){
+					_shelter.LoseHalfResources();
+				}
+				//else calculate your defense chances, calculate a chance to lose  a survivor and some resources
+				else{
+					if(_shelter.DefensivePower + Random.Range (-5,5) < camp.Strength){
+						_shelter.KillRandomSurvivor();
+						_shelter.LoseHalfResources();
+					}
+					else{
+						camp.LoseStrength();
+					}
+				}
+				//if you triumph decrease the enemies resources instead
+			}
+		}
 
 		//Spawn an enemy camp
 		if(Random.Range(0,10) < 2){
