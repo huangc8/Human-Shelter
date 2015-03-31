@@ -8,19 +8,36 @@ public class GameWorld : MonoBehaviour {
 	public enum ScavengeableLocation{
 		Hospital, //Gives food and medicine
 		GroceryStore, //Gives food only
-		Mall, //Gives luxuries and foodS
-		Count
+		Mall //Gives luxuries and foodS
 	}
 
 	public enum ScavengeQuality{
-		Abundant,
+		Plentiful,
 		Good,
-		Scarce,
-		Count
+		Scarce
 	}
 
 	private ScavengeableLocation _scavengeTarget;
 	private ScavengeQuality _scavengeQuality;
+
+	public ScavengeableLocation ScavengeTarget{
+		get{
+			return _scavengeTarget;
+		}
+	}
+
+	public ScavengeQuality ScavengeQualityLevel{
+		get{
+			return _scavengeQuality;
+		}
+	}
+
+	static T GetRandomEnum<T>()
+	{
+		System.Array A = System.Enum.GetValues(typeof(T));
+		T V = (T)A.GetValue(UnityEngine.Random.Range (0,A.Length));
+		return V;
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -32,17 +49,22 @@ public class GameWorld : MonoBehaviour {
 	
 	}
 
+
+
 	private void selectScavengeTarget(){
-		_scavengeTarget = (ScavengeableLocation) Random.Range(0,ScavengeableLocation.Count);
-		_scavengeQuality = (ScavengeQuality) Random.Range(0, ScavengeQuality.Count);
+		_scavengeTarget = GetRandomEnum<ScavengeableLocation>();
+		_scavengeQuality = GetRandomEnum<ScavengeQuality>();
 	}
 
 	/// <summary>
 	/// Start a new Day
 	/// </summary>
-	public void NewDay(){
+	public Report NewDay(){
 
 		//change which structure we can scavenge
 		selectScavengeTarget();
+		Report r = new Report();
+		r.SetMessage("Today we can raid a " + _scavengeTarget.ToString() + " with a " + _scavengeQuality.ToString() +  " number of resources.");
+		return r;
 	}
 }

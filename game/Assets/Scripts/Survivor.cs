@@ -11,6 +11,7 @@ public class Survivor : ScriptableObject
 		// public info
 		public bool _assignedTask; //if the character is not on a mission, idle is true
 		public task _task = task.Unassigned;
+	public GameWorld _gameWorld;
 		public bool _enabled = false;
 
 		// personal info
@@ -219,27 +220,57 @@ public class Survivor : ScriptableObject
 		return r;
 	}
 	
-		/// <summary>
-		/// Scavenge  for the shelter s.
-		/// </summary>
-		/// <param name="s">S.</param>
-		public Report Scavenge (Shelter s)
-		{
-				Report r = new Report ();
-				int fatigueModifier = (100 / (10 + Fatigue)) * 10;
-				int proficiency = GetProficiency (task.Scavenge);
-				if (Random.Range (-10, proficiency + fatigueModifier) < -8 && Random.Range (0, 10) < 3) {
-						s.KillSurvivor (this);
-				} else {
+	/// <summary>
+	/// Scavenge  for the shelter s.
+	/// </summary>
+	/// <param name="s">S.</param>
+	public Report Scavenge (Shelter s)
+	{
+		Report r = new Report ();
+		int fatigueModifier = (100 / (10 + Fatigue)) * 10;
+		int proficiency = GetProficiency (task.Scavenge);
+		if (Random.Range (-10, proficiency + fatigueModifier) < -8 && Random.Range (0, 10) < 3) {
+			s.KillSurvivor (this);
+		} else {
+			int sFood = 0;
+			int sMedicine = 0;
+			int sLuxuries = 0;
+
+			int qualityMultiplier = 1 + (int)_gameWorld.ScavengeQualityLevel;
+
+			switch(_gameWorld.ScavengeTarget){
+			case GameWorld.ScavengeableLocation.GroceryStore:
+				sFood += 1 + qualityMultiplier*(int)(Random.Range (0, 10) * (proficiency + fatigueModifier + 11) * .1f);
+				r.SetMessage (_name + " scavenged " + sFood +" food.");
+				s.Food += sFood;
+
+				break;
+				
+			case GameWorld.ScavengeableLocation.Hospital:
+				sMedicine += 1 + qualityMultiplier*(int)(Random.Range (0, 10) * (proficiency + fatigueModifier + 11) * .1f);
+				r.SetMessage (_name + " scavenged " + sMedicine +" medicine.");
+				s.Medicine += sMedicine;
+				break;
+
+				
+			case GameWorld.ScavengeableLocation.Mall:
+				sLuxuries += 1 + qualityMultiplier*(int)(Random.Range (0, 10) * (proficiency + fatigueModifier + 11) * .1f);
+				r.SetMessage (_name + " scavenged " + sLuxuries +" luxuries.");
+				s.Luxuries += sLuxuries;
+				break;
+
+			}
+			/*
 						s.Food += 1 + (int)(Random.Range (0, 10) * (proficiency + fatigueModifier + 11) * .1f);
 						s.Medicine += 1 + (int)(Random.Range (0, 10) * (proficiency + fatigueModifier + 11) * .1f);
 						s.Luxuries += 1 + (int)(Random.Range (0, 10) * (proficiency + fatigueModifier + 11) * .1f);
 						r.SetMessage (_name + " Scavenged supplies are now Food:" + s.Food + " Medicine:" + s.Medicine + " Luxuries:" + s.Luxuries);
-				}
-				return r;
+			*/
 		}
+		return r;
+	}
 
-		public Report Rest (Shelter s)
+	public Report Rest (Shelter s)
 		{
 				Report r = new Report ();
 				int restoration = RestMe ();
@@ -352,8 +383,9 @@ public class Survivor : ScriptableObject
 		/// <summary>
 		/// Init this survivor.
 		/// </summary>
-		public void Init ()
+		public void Init (GameWorld gw)
 		{
+		_gameWorld = gw;
 				_assignedTask = false;
 				_enabled = true;
 				RandomizeProficiences ();

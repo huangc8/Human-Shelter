@@ -11,6 +11,8 @@ public class Shelter : MonoBehaviour
 		public GameObject[] _images; //array of corrisponding images
 		public Survivor[] _evictedSurvivors; //Array of survivors who have been kicked out of the shelter
 
+	public GameWorld _gameWorld;
+
 	public Visitor _visitors;
 	public GameTime _gametime;
 
@@ -202,7 +204,7 @@ public class Shelter : MonoBehaviour
 		private Survivor CreateSurvivor (string name, GameObject image)
 		{
 				Survivor stmp = new Survivor ();
-				stmp.Init ();
+				stmp.Init (_gameWorld);
 				stmp.Name = name;
 				stmp.image = image;
 				//show on map
@@ -308,6 +310,7 @@ public class Shelter : MonoBehaviour
 		// Use this for initialization
 		void Start ()
 		{
+		_gameWorld = this.GetComponent<GameWorld>();
 		_visitors = this.GetComponent<Visitor>();
 		_gametime = this.GetComponent<GameTime>();
 

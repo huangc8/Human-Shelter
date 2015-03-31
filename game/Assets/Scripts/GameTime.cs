@@ -35,24 +35,25 @@ public class GameTime : MonoBehaviour
 				_reports = new List<Report> ();
 		}
 
-		// =============================================== action
-		/// <summary>
-		/// Start a new day, reset all of your values that reset over night
-		/// Complete all of the tasks the survivors were sent on
-		/// </summary>
-		public void newDay ()
-		{
-				//process the tasks
-				evaluateTasks ();
-				_conversationsLeft = 5;
-				for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
-						_shelter._survivors [i].ConvReset ();
-				}
-				_currentDay++;
-				_shelter.NewDay ();
-		_gameWorld.NewDay();
-
+	// =============================================== action
+	/// <summary>
+	/// Start a new day, reset all of your values that reset over night
+	/// Complete all of the tasks the survivors were sent on
+	/// </summary>
+	public void newDay ()
+	{
+		//process the tasks
+		evaluateTasks ();
+		_conversationsLeft = 5;
+		for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
+			_shelter._survivors [i].ConvReset ();
 		}
+		_currentDay++;
+		_shelter.NewDay ();
+		Report r = _gameWorld.NewDay();
+		_reports.Add(r);
+
+	}
 
 
 		// ================================================ helper

@@ -9,9 +9,11 @@ public class Visitor : MonoBehaviour {
 
 	public GameTime _gametime;
 
+	public GameWorld _gameWorld;
+
 	private Survivor CreateSurvivor(string name, GameObject image){
 		Survivor stmp = new Survivor ();
-		stmp.Init ();
+		stmp.Init (_gameWorld);
 		stmp.Name = name;
 		stmp.image = image;
 		return stmp;
@@ -36,6 +38,7 @@ public class Visitor : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		_gameWorld = this.GetComponent<GameWorld>();
 		_gametime = this.GetComponent<GameTime>();
 
 		//images
