@@ -5,6 +5,9 @@ using UnityEngine;
 using System.Collections;
 
 public class GameWorld : MonoBehaviour {
+
+	int _scoutingBonus;
+
 	public enum ScavengeableLocation{
 		Hospital, //Gives food and medicine
 		GroceryStore, //Gives food only
@@ -19,6 +22,11 @@ public class GameWorld : MonoBehaviour {
 
 	private ScavengeableLocation _scavengeTarget;
 	private ScavengeQuality _scavengeQuality;
+
+
+	public void AddScoutingBonus(int scoutingBonus){
+		_scoutingBonus += scoutingBonus;
+	}
 
 	public ScavengeableLocation ScavengeTarget{
 		get{
@@ -50,15 +58,25 @@ public class GameWorld : MonoBehaviour {
 	}
 
 
-	public void printTarget(){
-		Debug.Log("Today we can raid a " + _scavengeTarget.ToString() + " with a " + _scavengeQuality.ToString() +  " number of resources.");
 
-	}
 
 
 	private void selectScavengeTarget(){
 		_scavengeTarget = GetRandomEnum<ScavengeableLocation>();
-		_scavengeQuality = GetRandomEnum<ScavengeQuality>();
+		//_scavengeQuality = GetRandomEnum<ScavengeQuality>();
+		int scav = Random.Range (0,10);
+		scav += _scoutingBonus;
+		if(scav > 9){
+			_scavengeQuality = ScavengeQuality.Plentiful ;
+		}
+		else if(scav > 6){
+			_scavengeQuality = ScavengeQuality.Good ;
+		}
+		else{
+			_scavengeQuality = ScavengeQuality.Scarce;
+		}
+
+		_scoutingBonus = 0;
 	}
 
 	/// <summary>

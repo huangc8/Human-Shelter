@@ -71,7 +71,6 @@ public class GameTime : MonoBehaviour
 		/// </summary>
 		void evaluateTasks ()
 		{
-		_gameWorld.printTarget();
 				//Evaluate each task
 				for (int s = 0; s < _shelter.NumberOfSurvivors; s++) {
 #if debuglog

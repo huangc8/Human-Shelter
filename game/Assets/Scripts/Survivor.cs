@@ -14,6 +14,7 @@ public class Survivor : ScriptableObject
 	public GameWorld _gameWorld;
 		public bool _enabled = false;
 
+
 		// personal info
 		private string _name; // name of the survivor
 		private int _health = 10; // health of survivor
@@ -216,7 +217,12 @@ public class Survivor : ScriptableObject
 	public Report Scout (Shelter s)
 	{
 		Report r = new Report ();
-		r.SetMessage (_name + " successfully scouted");
+
+		int proficiency = GetProficiency(task.Scout) + 10;
+
+		int locationBonus =  (int)Mathf.Pow(Random.Range (1.0f,4.0f)*proficiency,.36f);
+		_gameWorld.AddScoutingBonus(locationBonus);
+		r.SetMessage (_name + " successfully scouted and helped to locate a scavenging target");
 		return r;
 	}
 	
