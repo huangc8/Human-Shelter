@@ -22,18 +22,20 @@ public class GameTime : MonoBehaviour
 		public static ReportHandler _rh;
 		private GameWorld _gameWorld;
 
-		// =============================================== initialization
-		// Use this for initialization
-		void Start ()
-		{
+	// =============================================== initialization
+	// Use this for initialization
+	void Start ()
+	{
 
-				_gameWorld = this.GetComponent<GameWorld> ();
+		_gameWorld = this.GetComponent<GameWorld> ();
 
-				_rh = this.GetComponent<ReportHandler> ();
-				_conversationsLeft = 5;
-				_currentDay = 0;
-				_reports = new List<Report> ();
-		}
+		_rh = this.GetComponent<ReportHandler> ();
+		_conversationsLeft = 5;
+		_currentDay = 0;
+		_reports = new List<Report> ();
+		_shelter = this.GetComponent<Shelter>();
+
+	}
 
 	// =============================================== action
 	/// <summary>
@@ -42,6 +44,8 @@ public class GameTime : MonoBehaviour
 	/// </summary>
 	public void newDay ()
 	{
+
+
 		//process the tasks
 		evaluateTasks ();
 		_conversationsLeft = 5;
@@ -49,9 +53,14 @@ public class GameTime : MonoBehaviour
 			_shelter._survivors [i].ConvReset ();
 		}
 		_currentDay++;
+
+
 		_shelter.NewDay ();
-		Report r = _gameWorld.NewDay();
-		_reports.Add(r);
+
+		
+
+
+
 
 	}
 
@@ -62,6 +71,7 @@ public class GameTime : MonoBehaviour
 		/// </summary>
 		void evaluateTasks ()
 		{
+		_gameWorld.printTarget();
 				//Evaluate each task
 				for (int s = 0; s < _shelter.NumberOfSurvivors; s++) {
 #if debuglog
@@ -102,6 +112,9 @@ public class GameTime : MonoBehaviour
 						r.Log ();
 						_reports.Add (r);
 				}
+		Report rep = _gameWorld.NewDay();
+		_reports.Add(rep);
+
 				_rh.PassReports (_reports);
 				_reports = new List<Report> ();
 

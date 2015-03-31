@@ -50,6 +50,11 @@ public class GameWorld : MonoBehaviour {
 	}
 
 
+	public void printTarget(){
+		Debug.Log("Today we can raid a " + _scavengeTarget.ToString() + " with a " + _scavengeQuality.ToString() +  " number of resources.");
+
+	}
+
 
 	private void selectScavengeTarget(){
 		_scavengeTarget = GetRandomEnum<ScavengeableLocation>();
@@ -60,7 +65,6 @@ public class GameWorld : MonoBehaviour {
 	/// Start a new Day
 	/// </summary>
 	public Report NewDay(){
-
 		//change which structure we can scavenge
 		selectScavengeTarget();
 		Report r = new Report();

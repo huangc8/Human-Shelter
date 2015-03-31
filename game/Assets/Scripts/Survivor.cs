@@ -230,6 +230,8 @@ public class Survivor : ScriptableObject
 		int fatigueModifier = (100 / (10 + Fatigue)) * 10;
 		int proficiency = GetProficiency (task.Scavenge);
 		if (Random.Range (-10, proficiency + fatigueModifier) < -8 && Random.Range (0, 10) < 3) {
+			
+			r.SetMessage(_name + " died scavenging.");
 			s.KillSurvivor (this);
 		} else {
 			int sFood = 0;
