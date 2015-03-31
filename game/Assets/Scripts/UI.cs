@@ -74,6 +74,7 @@ public class UI : MonoBehaviour {
 
 
 		//new survivor arrives
+		try{
 		Survivor visitorAtGate = _visitors._personList [_gametime._currentDay];
 		if (visitorAtGate != null) {
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "There is someone at the gate!")) {
@@ -105,6 +106,10 @@ public class UI : MonoBehaviour {
 			}
 			itY += buttonHeight;
 		} 
+		}
+		catch{
+
+		}
 		/*else {
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Nobody is at the gate")) {
 			}
