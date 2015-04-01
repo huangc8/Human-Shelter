@@ -8,6 +8,7 @@ public class UI : MonoBehaviour {
 	Shelter _shelter; // the shelter data
 	Visitor _visitors;
 	GameTime _gametime;
+	StartNewConversation _startNewConversation;
 
 	//these are needed for showing and hiding buttons
 	private bool charButtons, sideButtons, showButtons;
@@ -16,6 +17,7 @@ public class UI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		_startNewConversation = this.GetComponent<StartNewConversation>();
 		if (_shelter == null) {
 			_shelter = g.GetComponent<Shelter> ();
 		}
@@ -82,6 +84,7 @@ public class UI : MonoBehaviour {
 			itY += buttonHeight;
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Talk to " + visitorAtGate.Name.ToString ())) {
 				_diag.startConv("Conv_1", false);
+				_startNewConversation.ClickCheck("gate");
 			}
 			itY += buttonHeight;
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Invite")) {
@@ -124,6 +127,7 @@ public class UI : MonoBehaviour {
 
 			if (GUI.Button (new Rect (Screen.width*x*.8f, Screen.height*y*.8f, buttonWidth, buttonHeight),"Talk to " + _shelter._survivors[index].Name)) {
 				showButtons=true;
+				_startNewConversation.ClickCheck(_shelter._survivors[index].Name);
 
 				_shelter._survivors [index].Converse ();
 				_shelter._survivors[index]._conversationsLeft--;

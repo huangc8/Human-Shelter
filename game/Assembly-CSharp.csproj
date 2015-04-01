@@ -441,6 +441,7 @@
      <Compile Include="Assets\Scripts\Report.cs" />
      <Compile Include="Assets\Scripts\ReportHandler.cs" />
      <Compile Include="Assets\Scripts\Shelter.cs" />
+     <Compile Include="Assets\Scripts\StartNewConversation.cs" />
      <Compile Include="Assets\Scripts\Survivor.cs" />
      <Compile Include="Assets\Scripts\UI.cs" />
      <Compile Include="Assets\Scripts\Visitor.cs" />

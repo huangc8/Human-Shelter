@@ -7,6 +7,7 @@ using System.Collections;
 public class GameWorld : MonoBehaviour {
 
 	int _scoutingBonus;
+	int _daysSinceSpawn = 0;
 	Shelter _shelter;
 
 	ArrayList Enemies = new ArrayList();
@@ -293,11 +294,15 @@ public class GameWorld : MonoBehaviour {
 		}
 
 		//Spawn an enemy camp
-		if(Random.Range(0,10) < 2){
+		if(Random.Range(0,10)*Enemies.Count < 2+_daysSinceSpawn){
+			_daysSinceSpawn = 0;
 			AddEnemy();
 			Report eReport = new Report();
 			eReport.SetMessage("There's been rumors of a new camp in the area");
 			reports.Add(eReport);
+		}
+		else{
+			_daysSinceSpawn++;
 		}
 
 		return reports;

@@ -122,7 +122,7 @@ public class GameTime : MonoBehaviour
 				_rh.PassReports (_reports);
 				_reports = new List<Report> ();
 
-
+		_shelter.playerEat();
 		}
 
 		// ================================================= update / GUI

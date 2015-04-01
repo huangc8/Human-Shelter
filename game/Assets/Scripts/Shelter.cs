@@ -48,6 +48,10 @@ public class Shelter : MonoBehaviour
 						_medicine = 0;
 				}
 
+		public void playerEat(){
+			_food -=5;
+		}
+
 				public void UseMedicine (int useAmount)
 				{
 						_medicine -= useAmount;
@@ -256,6 +260,11 @@ public class Shelter : MonoBehaviour
 				Destroy (s.image); //destroy the sprite
 				Destroy (s); //destory the script
 		}
+
+
+	public void playerEat(){
+		_storage.playerEat();
+	}
 
 	public void LoseHalfResources(){
 		_storage.LoseHalfResources();
