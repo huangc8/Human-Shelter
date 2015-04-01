@@ -21,12 +21,11 @@ public class GameTime : MonoBehaviour
 		public int _conversationsLeft; // converstation points left
 		public static ReportHandler _rh;
 		private GameWorld _gameWorld;
-
 	// =============================================== initialization
+
 	// Use this for initialization
 	void Start ()
 	{
-
 		_gameWorld = this.GetComponent<GameWorld> ();
 
 		_rh = this.GetComponent<ReportHandler> ();
