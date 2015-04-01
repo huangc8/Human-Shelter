@@ -24,6 +24,8 @@ public class Conditions : MonoBehaviour
 	public Visitor _visitor; //our reference to the visitor class
 	public Shelter _shelter; //our reference to the shelter class
 
+	float TimePassed = 0.0f;
+
 	private Dictionary <string, bool> _executions; //characters to be executed
 	private Dictionary <string, bool> _kills;
 	private Dictionary <string, bool> _declinations; //characters which have been declined invitation
@@ -107,26 +109,29 @@ public class Conditions : MonoBehaviour
 
 	void Update()
 	{
-		if(_visitor._personList != null){
+		TimePassed += Time.deltaTime;
+		if (TimePassed > 2.0f) {
+						if (_visitor._personList != null) {
 
-			if(_visitor != null){
-				foreach(Survivor character in _visitor._personList){
-					if(character != null){
-						CheckConditions(character);
-					}
-				}
+								if (_visitor != null) {
+										foreach (Survivor character in _visitor._personList) {
+												if (character != null) {
+														CheckConditions (character);
+												}
+										}
 
-				foreach(Survivor character in _shelter._survivors){
-					if(character != null){
-						CheckConditions(character);
-					}
+										foreach (Survivor character in _shelter._survivors) {
+												if (character != null) {
+														CheckConditions (character);
+												}
+										}
+								}
+						} else {
+								Debug.LogWarning ("Getting visitor reference");
+								_visitor = this.GetComponent<Visitor> ();
+						}
+			TimePassed = 0.0f;
 				}
-			}
-		}
-		else{
-			Debug.LogWarning("Getting visitor reference");
-			_visitor = this.GetComponent<Visitor>();
-		}
 	}
 
 	// ============================================== functions
