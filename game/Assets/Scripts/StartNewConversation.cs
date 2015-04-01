@@ -42,6 +42,7 @@ public class StartNewConversation : MonoBehaviour {
 			if(hadConversation["Conv_1_1"] == false){
 				hadConversation["Conv_1_1"] = true;
 				//start conv
+				_dialogue.startConv("Conv_1_1", false);
 			}
 			break;
 		case 2:
