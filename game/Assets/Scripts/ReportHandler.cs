@@ -54,7 +54,7 @@ public class ReportHandler : MonoBehaviour
 			int x = 100;
 			int y = 100;
 			int w = 200;
-			int h = 100;
+			int h = 30;
 
 			if(_currentReportIndex > 0){
 				//move to previous report
@@ -69,12 +69,12 @@ public class ReportHandler : MonoBehaviour
 			}
 
 			w = 500;
-			h = 500;
+			h = 50;
 			//Print the report text
 			GUI.Label(new Rect(x,y,w,h), "Report: " + _reportString);
 			x += w;
 			w = 200;
-			h = 100;
+			h = 30;
 
 			if(_currentReportIndex < _reports.Count-1){
 				//move to next report

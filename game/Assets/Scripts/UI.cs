@@ -125,14 +125,14 @@ public class UI : MonoBehaviour {
 		//above character's head
 		if(charButtons){
 
-			if (GUI.Button (new Rect (Screen.width*x*.8f, Screen.height*y*.8f, buttonWidth, buttonHeight),"Talk to " + _shelter._survivors[index].Name)) {
+			if (GUI.Button (new Rect (Screen.width*x-110, Screen.height*y-120, 100, 50),"Talk to " + _shelter._survivors[index].Name)) {
 				showButtons=true;
 				_startNewConversation.ClickCheck(_shelter._survivors[index].Name);
 
 				_shelter._survivors [index].Converse ();
 				_shelter._survivors[index]._conversationsLeft--;
 			}
-			if (GUI.Button (new Rect (Screen.width*x*.8f, Screen.height*y*.85f, buttonWidth, buttonHeight),"Assign task")) {
+			if (GUI.Button (new Rect (Screen.width*x+10, Screen.height*y-120, 100, 50),"Assign task")) {
 				showButtons=true;
 				sideButtons=true;
 				charButtons=false;
