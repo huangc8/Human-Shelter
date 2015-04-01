@@ -83,7 +83,6 @@ public class UI : MonoBehaviour {
 			}
 			itY += buttonHeight;
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Talk to " + visitorAtGate.Name.ToString ())) {
-				_diag.startConv("Conv_1_1", false);
 				_startNewConversation.ClickCheck("gate");
 			}
 			itY += buttonHeight;

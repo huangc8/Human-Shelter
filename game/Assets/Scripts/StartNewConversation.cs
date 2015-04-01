@@ -5,12 +5,14 @@ using System.Collections.Generic;
 public class StartNewConversation : MonoBehaviour {
 	GameTime _gameTime;
 
-	private Dictionary<string,bool> hadConversation;
+	private Dictionary<string,bool> hadConversation; // the 
 	public Dialogue _dialogue; // the dialogue system
 
 	// Use this for initialization
 	void Start () {
+
 		hadConversation = new Dictionary<string, bool>();
+
 		_gameTime = this.GetComponent<GameTime>();
 		hadConversation["Conv_1_1"] = false;
 		hadConversation["Conv_1_2"] = false;
