@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: b5beb127870fa4e9594a8d1e8255d7a0
+guid: cc47990ecb5f64232a90048b42859c6e
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Marina Idle Sprite_0
-    21300002: Marina Idle Sprite_1
-    21300004: Marina Idle Sprite_2
-    21300006: Marina Idle Sprite_3
-    21300008: Marina Idle Sprite_4
-    21300010: Marina Idle Sprite_5
-    21300012: Marina Idle Sprite_6
-    21300014: Marina Idle Sprite_7
+    21300000: MarinaIdleSprite_0
+    21300002: MarinaIdleSprite_1
+    21300004: MarinaIdleSprite_2
+    21300006: MarinaIdleSprite_3
+    21300008: MarinaIdleSprite_4
+    21300010: MarinaIdleSprite_5
+    21300012: MarinaIdleSprite_6
+    21300014: MarinaIdleSprite_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -51,83 +51,83 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Marina Idle Sprite_0
+    - name: MarinaIdleSprite_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 2
-        width: 169
-        height: 243
+        x: 5
+        y: 0
+        width: 173
+        height: 245
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Marina Idle Sprite_1
+    - name: MarinaIdleSprite_1
       rect:
         serializedVersion: 2
-        x: 192
-        y: 2
-        width: 169
-        height: 243
+        x: 190
+        y: 0
+        width: 173
+        height: 245
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Marina Idle Sprite_2
+    - name: MarinaIdleSprite_2
       rect:
         serializedVersion: 2
-        x: 377
-        y: 2
-        width: 169
-        height: 243
+        x: 375
+        y: 0
+        width: 173
+        height: 245
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Marina Idle Sprite_3
+    - name: MarinaIdleSprite_3
       rect:
         serializedVersion: 2
-        x: 562
-        y: 2
-        width: 169
-        height: 243
+        x: 560
+        y: 0
+        width: 173
+        height: 245
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Marina Idle Sprite_4
+    - name: MarinaIdleSprite_4
       rect:
         serializedVersion: 2
-        x: 747
-        y: 2
-        width: 169
-        height: 243
+        x: 745
+        y: 0
+        width: 173
+        height: 245
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Marina Idle Sprite_5
+    - name: MarinaIdleSprite_5
       rect:
         serializedVersion: 2
-        x: 932
-        y: 2
-        width: 169
-        height: 243
+        x: 930
+        y: 0
+        width: 173
+        height: 245
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Marina Idle Sprite_6
+    - name: MarinaIdleSprite_6
       rect:
         serializedVersion: 2
-        x: 1117
-        y: 2
-        width: 169
-        height: 243
+        x: 1115
+        y: 0
+        width: 173
+        height: 245
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Marina Idle Sprite_7
+    - name: MarinaIdleSprite_7
       rect:
         serializedVersion: 2
-        x: 1302
-        y: 2
-        width: 169
-        height: 243
+        x: 1300
+        y: 0
+        width: 173
+        height: 245
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
