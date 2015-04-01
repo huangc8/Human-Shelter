@@ -328,8 +328,32 @@ public class Survivor : ScriptableObject
 		{
 				if (s.EatFood (Random.Range (1, _appetite)) == false) {
 						_health--;
+			if(_health < 0){
+				s.KillSurvivor(this);
+			}
 				}
 		}
+
+	public void ConsumeMedicine(Shelter s){
+		if(_health < 10){
+			if(s.Medicine < 2){
+				_health--;
+			}
+			else{
+				s.UseMedicine(2); //consume to stabilize
+			}
+		}
+		if(s.Medicine < 1){
+			_health--;
+		}
+		else{
+			s.UseMedicine(1); //consume just cause
+		}
+
+		if(_health < 0){
+			s.KillSurvivor(this);
+		}
+	}
 
 		/// <summary>
 		/// Reset Conversation.
