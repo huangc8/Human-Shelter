@@ -30,7 +30,7 @@ public class GameTime : MonoBehaviour
 
 		_rh = this.GetComponent<ReportHandler> ();
 		_conversationsLeft = 5;
-		_currentDay = 0;
+		_currentDay = 1;
 		_reports = new List<Report> ();
 		_shelter = this.GetComponent<Shelter>();
 
