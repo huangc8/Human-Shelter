@@ -9,6 +9,7 @@ public class StartNewConversation : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		hadConversation = new Dictionary<string, bool>();
 		_gameTime = this.GetComponent<GameTime>();
 		hadConversation["Conv_1_1"] = false;
 		hadConversation["Conv_1_2"] = false;

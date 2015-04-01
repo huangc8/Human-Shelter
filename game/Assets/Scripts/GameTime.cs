@@ -107,7 +107,8 @@ public class GameTime : MonoBehaviour
 								r.Add(_shelter._survivors [s].Rest (_shelter));
 								break;
 						}
-						_shelter._survivors [s].Eat (_shelter);
+			_shelter._survivors [s].Eat (_shelter);
+			_shelter._survivors [s].ConsumeMedicine (_shelter);
 			foreach(Report rep in r){
 						_reports.Add (rep);
 			}
