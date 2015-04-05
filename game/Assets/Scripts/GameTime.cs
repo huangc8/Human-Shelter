@@ -8,246 +8,139 @@ using System.Collections.Generic;
 
 public class GameTime : MonoBehaviour
 {
+	// =============================================== data
 
-		// =============================================== data
-		Shelter _shelter; // the shelter data
-		Queue <Event> _events; // today's events
-		string _newDay; // newDay text
-		public int _currentDay; // current day
-		List <Report> _reports; // the reports of assign task
-		Visitor _visitors; //grab info about newcomers
-		public Dialogue _dialogue; // the dialogue system
-		public Conditions _cond; // the conditions data base
-		public int _conversationsLeft; // converstation points left
-		public static ReportHandler _rh;
-		private GameWorld _gameWorld;
+	private Shelter _shelter; 					// the shelter data
+	private Visitor _visitors; 					// grab info about newcomers
+	private GameWorld _gameWorld;				// game world class 
+
+	public Dialogue _dialogue; 					// the dialogue system
+	public Conditions _cond; 					// the conditions data base
+	public static ReportHandler _rh;			// report handler
+		
+	Queue <Event> _events; 						// today's events
+	List <Report> _reports; 					// the reports of assign task
+		
+	public int _currentDay; 					// current day
+	string _newDay; 							// newDay text
+	int _conversationsLeft; 					// converstation points left
+		
 	// =============================================== initialization
-
 	// Use this for initialization
 	void Start ()
 	{
 		_gameWorld = this.GetComponent<GameWorld> ();
-
+		_shelter = this.GetComponent<Shelter> ();
 		_rh = this.GetComponent<ReportHandler> ();
-		_conversationsLeft = 5;
-		_currentDay = 1;
 		_reports = new List<Report> ();
-		_shelter = this.GetComponent<Shelter>();
 
+		// starting values
+		_conversationsLeft = 5;
+		_currentDay = 0;
 	}
 
 	// =============================================== action
 	/// <summary>
-	/// Start a new day, reset all of your values that reset over night
+	/// Start a new day, reset all of values that reset over night
 	/// Complete all of the tasks the survivors were sent on
 	/// </summary>
 	public void newDay ()
 	{
-
-
 		//process the tasks
 		evaluateTasks ();
+
+		// reset values + update values
 		_conversationsLeft = 5;
 		for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
 			_shelter._survivors [i].ConvReset ();
 		}
+
 		_currentDay++;
-
-
 		_shelter.NewDay ();
-
-		
-
-
-
-
 	}
 
 
-		// ================================================ helper
-		/// <summary>
-		/// Evaluates the tasks. Carry out the task for each survivor
-		/// </summary>
-		void evaluateTasks ()
-		{
-				//Evaluate each task
-				for (int s = 0; s < _shelter.NumberOfSurvivors; s++) {
-#if debuglog
-			Debug.Log ("Evaluating task for survivor number " + s + " name:" + _shelter._survivors[s].Name);
-#endif
-						//carry out the task
-						ArrayList r = new ArrayList();
-						_shelter._survivors [s].Exhaust ();
-						switch (_shelter._survivors [s].AssignedTask) {
-						case Survivor.task.Scout:
-								r = _shelter._survivors [s].Scout (_shelter);
-								break;
-						case Survivor.task.Heal:
-								r.Add (_shelter._survivors [s].Heal (_shelter));
-								break;
-						case Survivor.task.Defend:
-								r.Add (_shelter._survivors [s].Defend (_shelter));
-								break;
-						case Survivor.task.Scavenge:
-								r.Add(_shelter._survivors [s].Scavenge (_shelter));
-								break;
-						case Survivor.task.Execute:
-								r.Add(_shelter._survivors [s].Execute (_shelter));
-								break;
-						case Survivor.task.Evict:
-								r.Add(_shelter._survivors [s].Evict (_shelter));
-								break;
-						case Survivor.task.Raiding:
-								r.Add(_shelter._survivors [s].Raid (_shelter));
-								break;
-						case Survivor.task.Unassigned:
-								goto case Survivor.task.Resting;
-						case Survivor.task.Resting:
-								r.Add(_shelter._survivors [s].Rest (_shelter));
-								break;
-						}
-			_shelter._survivors [s].Eat (_shelter);
-			_shelter._survivors [s].ConsumeMedicine (_shelter);
-			foreach(Report rep in r){
-						_reports.Add (rep);
-			}
-				}
+	// ================================================ helper
+	/// <summary>
+	/// Evaluates the tasks. Carry out the task for each survivor
+	/// </summary>
+	void evaluateTasks ()
+	{
+		//Evaluate each task
+		for (int s = 0; s < _shelter.NumberOfSurvivors; s++) {
 
-		ArrayList reps = _gameWorld.NewDay();
-
-		foreach(Report rep in reps){
-			_reports.Add(rep);
-		}
-
-				_rh.PassReports (_reports);
-				_reports = new List<Report> ();
-
-		_shelter.playerEat();
-		}
-
-		// ================================================= update / GUI
-		// Update is called once per frame
-		void Update ()
-		{
-				if (_shelter == null) {
-						_shelter = this.GetComponent<Shelter> ();
-
-				}
-				if (_visitors == null) {
-						_visitors = this.GetComponent<Visitor> ();
-
-				}
-
-				if (_conversationsLeft > 0) {
-						_newDay = "New Day";
-				} else {
-						_newDay = "New Day*";
-				}
-		}
-
-		// GUI has moved to UI.cs
-		/*void OnGUI ()
-		{
-				if (GUI.Button (new Rect (10, 45, 100, 30), _newDay)) {
-						newDay ();
-				}
-
-				if (GUI.Button (new Rect (20, 10, 1000, 30), "Day Survived: " + _currentDay.ToString ())) {
-				}
-		
-				int startX = 200;
-				int startY = 200;
-				int itY;
-
-				int buttonWidth = 300;
-				int buttonHeight = 30;
-
-				int numSurvivors = _shelter.NumberOfSurvivors;
-
-				for (int i = 0; i < numSurvivors; i++) {
-						itY = startY;
-						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), _shelter._survivors [i].Name)) {
-						}
-						itY += buttonHeight;
-						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Converse: " + _shelter._survivors [i].ConversationsHad) && _conversationsLeft > 0) {
-								_shelter._survivors [i].Converse ();
-								_conversationsLeft--;
-								if (!BrianTalked) {
-								_dialogue.startConv("Conv_1", false);
-										BrianTalked = true;
-								}
-						}
-
-						itY += buttonHeight;
-						for (int t = 0; t < (int) Survivor.task.Count; t++) {
-								if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), ((Survivor.task)t).ToString ())) {
-										_shelter._survivors [i].AssignedTask = ((Survivor.task)t);
-								}
-								itY += buttonHeight;
-						}
-			
-						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Assigned Task: " + _shelter._survivors [i].AssignedTask.ToString ())) {
-						}
-						itY += buttonHeight * 2;
-						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Health: " + _shelter._survivors [i].Health)) {
-						}
-						itY += buttonHeight;
-
-						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Fatigue: " + _shelter._survivors [i].Fatigue)) {
-						}
-
-						startX += buttonWidth;
-				}
-				startX += buttonWidth;
-				itY = startY;
-				if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Food: " + _shelter.Food)) {
-				}
-				itY += buttonHeight;
-				if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Luxuries: " + _shelter.Luxuries)) {
-				}
-				itY += buttonHeight;
-				if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Medicine: " + _shelter.Medicine)) {
-				}
-				itY += buttonHeight;
-				if (BrianTalked) {
-					if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Door: " + _shelter.Medicine)) {
-						_dialogue.startConv("Conv_2", true);
+			//carry out the task
+			switch (_shelter._survivors [s].AssignedTask) {
+			case Survivor.task.Scout:
+				ArrayList rtmp = (_shelter._survivors [s].Scout (_shelter));
+				if (rtmp != null) {
+					foreach (Report r in rtmp) {
+						_reports.Add (r);
 					}
 				}
+				break;
+			case Survivor.task.Heal:
+				_reports.Add (_shelter._survivors [s].Heal (_shelter));
+				break;
+			case Survivor.task.Defend:
+				_reports.Add (_shelter._survivors [s].Defend (_shelter));
+				break;
+			case Survivor.task.Scavenge:
+				_reports.Add (_shelter._survivors [s].Scavenge (_shelter));
+				break;
+			case Survivor.task.Execute:
+				_reports.Add (_shelter._survivors [s].Execute (_shelter));
+				break;
+			case Survivor.task.Evict:
+				_reports.Add (_shelter._survivors [s].Evict (_shelter));
+				break;
+			case Survivor.task.Raiding:
+				_reports.Add (_shelter._survivors [s].Raid (_shelter));
+				break;
+			case Survivor.task.Unassigned:
+				goto case Survivor.task.Resting;
+			case Survivor.task.Resting:
+				_reports.Add (_shelter._survivors [s].Rest (_shelter));
+				break;
+			}
 
-				//new survivor arrives
-				startX += buttonWidth;
-				itY = startY;
-				Survivor visitorAtGate = _visitors._personList [_currentDay];
-				if (visitorAtGate != null) {
-						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "There is someone at the gate!")) {
-						}
-						itY += buttonHeight;
-						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Talk to " + visitorAtGate.Name.ToString ())) {
-						}
-						itY += buttonHeight;
-						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Invite")) {
-								_shelter._survivors [_shelter.NumberOfSurvivors] = visitorAtGate;
-								_shelter.NumberOfSurvivors++;
-								_visitors._personList [_currentDay] = null;
-						}
-						itY += buttonHeight;
-						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Reject")) {
-								_visitors._personList [_currentDay] = null;
-						}
-						itY += buttonHeight;
-						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Kill")) {
-								_visitors._personList [_currentDay] = null;
+			// increase survivor status
+			_shelter._survivors [s].Exhaust ();
+			_shelter._survivors [s].Eat (_shelter);
+			_shelter._survivors [s].ConsumeMedicine (_shelter);
+		}
 
-						}
-						itY += buttonHeight;
-				} else {
-						if (GUI.Button (new Rect (startX, itY, buttonWidth, buttonHeight), "Nobody is at the gate")) {
-						}
-				}
+		// update report from gameworld
+		ArrayList rt = _gameWorld.NewDay ();
+		foreach (Report r in rt) {
+			_reports.Add (r);
+		}
 
+		// pass report
+		_rh.PassReports (_reports);
 
-		}*/
+		// reset report
+		_reports = new List<Report> ();
 
+		// player update
+		_shelter.playerEat ();
+	}
+
+	// ================================================= update / GUI
+	// Update is called once per frame
+	void Update ()
+	{
+		if (_shelter == null) {
+			//_shelter = this.GetComponent<Shelter> ();
+		}
+		if (_visitors == null) {
+			_visitors = this.GetComponent<Visitor> ();
+		}
+		if (_conversationsLeft > 0) {
+			_newDay = "New Day";
+		} else {
+			_newDay = "New Day*";
+		}
+	}
 }
 

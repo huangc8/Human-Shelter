@@ -4,307 +4,346 @@
 using UnityEngine;
 using System.Collections;
 
-public class GameWorld : MonoBehaviour {
+public class GameWorld : MonoBehaviour
+{
 
-	int _scoutingBonus;
-	int _daysSinceSpawn = 0;
-	Shelter _shelter;
-
-	ArrayList Enemies = new ArrayList();
-
+	// ------------------------------ begin of enemy class ---------------------------------------
 	/// Enemy. Encapsulated class that manages threats to your camp
 	/// in the form of rival camps
-	public class Enemy{
-		int _strength; //how much power they have
-		int _readiness; //how likely they are to attack you, counts up to five, resets after each attack
-		int _visibility; //how easy they are to see
-		int _aggressiveness; //how likely they are to attack you
+	public class Enemy
+	{
+		int _strength; 			// how much power they have
+		int _readiness; 		// how likely they are to attack you, counts up to five, resets after each attack
+		int _visibility; 		// how easy they are to see
+		int _aggressiveness; 	// how likely they are to attack you
+		bool _located = false;	// whether is aware by player
 
-		bool _located = false;
-
-		//Randomly generate an enemy
-		public Enemy(){
-			_strength = Random.Range(0,10);
-			_visibility = Random.Range (0,10);
-			_aggressiveness = Random.Range (0,10);
-
-			_readiness = -5;
-		}
-
-		//Generate an enemy around a certain difficulty level
-		public Enemy(int difficulty){
-			_strength = Random.Range (difficulty-2,difficulty+2);
-			_visibility = Random.Range (difficulty-2,difficulty+2);
-			_aggressiveness = Random.Range (difficulty-2,difficulty+2);
+		// =========================================================== constructor
+		// Randomly generate an enemy
+		public Enemy ()
+		{
+			_strength = Random.Range (0, 10);
+			_visibility = Random.Range (0, 10);
+			_aggressiveness = Random.Range (0, 10);
 
 			_readiness = -5;
 		}
 
-		public void inflictDamage(int damage){
-			_strength -= damage;
+		// Generate an enemy around a certain difficulty level
+		public Enemy (int difficulty)
+		{
+			_strength = Random.Range (difficulty - 2, difficulty + 2);
+			_visibility = Random.Range (difficulty - 2, difficulty + 2);
+			_aggressiveness = Random.Range (difficulty - 2, difficulty + 2);
+
+			_readiness = -5;
 		}
 
-		public int Strength{
-			get{
+		// ============================================================ accessor
+		// get current strength
+		public int Strength {
+			get {
 				return _strength;
 			}
 		}
 
-		public int Visibility{
-			get{
+		// get visibility
+		public int Visibility {
+			get {
 				return _visibility;
 			}
 		}
 
-		public bool ShouldAttack(){
-			int attackChance = Random.Range(0,4) + _aggressiveness + _readiness;
-
-			if(attackChance > 11){
-				_readiness = -5;
-				return true;
-			}
-			_readiness+= 2;
-			return false;
-		}
-
-		public bool IsUnscouted(){
+		// whether aware by player
+		public bool IsUnscouted ()
+		{
 			return _located == false;
 		}
 
-		public void MakeCampVisibile(){
+		// ============================================================ action
+		// damage the enemy
+		public void inflictDamage (int damage)
+		{
+			_strength -= damage;
+		}
+
+		// scouted by player
+		public void MakeCampVisibile ()
+		{
 			_located = true;
 		}
 
-		public Report AttackLikeliness(){
-			Report rep = new Report();
-			if(_readiness >5){
-				rep.SetMessage("An enemy is prepared to attack you.");
+		// whether the enemy camp will attack you
+		public bool ShouldAttack ()
+		{
+			int attackChance = Random.Range (0, 4) + _aggressiveness + _readiness;
+			if (attackChance > 11) {
+				_readiness = -5;
+				return true;
 			}
-			else if(_readiness <2){
-				rep.SetMessage("An enemy will soon be ready to attack you.");
-			}
-			else{
-				rep.SetMessage("An enemy is not ready to attack you.");
-			}
-
-			return rep;
+			_readiness += 2;
+			return false;
 		}
 
-		public void LoseStrength(){
-			_strength -= Random.Range (1,4);
-			if(_strength < 1){
+		// natural decrease of strength
+		public void LoseStrength ()
+		{
+			_strength -= Random.Range (1, 4);
+			if (_strength < 1) {
 				_strength = 1;
 			}
 		}
-	}
 
+		// ============================================================ helper
+		// info player got from scouting
+		public Report AttackLikeliness ()
+		{
+			Report rep = new Report ();
+			if (_readiness > 5) {
+				rep.SetMessage ("An enemy is prepared to attack you.");
+			} else if (_readiness < 2) {
+				rep.SetMessage ("An enemy will soon be ready to attack you.");
+			} else {
+				rep.SetMessage ("An enemy is not ready to attack you.");
+			}
+			return rep;
+		}
+	} 
+	// ------------------------------ end of enemy class ---------------------------------------
 
-	public enum ScavengeableLocation{
+	// ========================================================= data
+	Shelter _shelter;						// shelter class
+	int _daysSinceSpawn = 0;				// 
+	int _scoutingBonus;						// 	
+	ArrayList Enemies = new ArrayList ();	// enemy list
+
+	private ScavengeableLocation _scavengeTarget;
+	private ScavengeQuality _scavengeQuality;
+
+	// scavenge location enum
+	public enum ScavengeableLocation
+	{
 		Hospital, //Gives food and medicine
 		GroceryStore, //Gives food only
 		Mall //Gives luxuries and foodS
 	}
 
-	public enum ScavengeQuality{
+	// scavenge quality enum
+	public enum ScavengeQuality
+	{
 		Plentiful,
 		Good,
 		Scarce
 	}
-
-	private ScavengeableLocation _scavengeTarget;
-	private ScavengeQuality _scavengeQuality;
-
-
-	public void AddScoutingBonus(int scoutingBonus){
+	// =========================================================== initi
+	// Use this for initialization
+	void Start ()
+	{
+		_shelter = this.GetComponent<Shelter> ();
+	}
+	
+	// =========================================================== accessor
+	// add scouting bonus
+	public void AddScoutingBonus (int scoutingBonus)
+	{
 		_scoutingBonus += scoutingBonus;
 	}
-
-	public ScavengeableLocation ScavengeTarget{
-		get{
+	
+	public ScavengeableLocation ScavengeTarget {
+		get {
 			return _scavengeTarget;
 		}
 	}
-
-	public ScavengeQuality ScavengeQualityLevel{
-		get{
+	
+	public ScavengeQuality ScavengeQualityLevel {
+		get {
 			return _scavengeQuality;
 		}
 	}
 
-	static T GetRandomEnum<T>()
+	// =========================================================== action
+	/// <summary>
+	/// Start a new Day, do all the raiding, been raid, and spawning new enemy camp
+	/// </summary>
+	public ArrayList NewDay ()
 	{
-		System.Array A = System.Enum.GetValues(typeof(T));
-		T V = (T)A.GetValue(UnityEngine.Random.Range (0,A.Length));
+		// create return report
+		ArrayList reports = new ArrayList ();
+
+		// add which structure we can scavenge
+		selectScavengeTarget ();
+		Report r = new Report ();
+		r.SetMessage ("Today we can raid a " + _scavengeTarget.ToString () + " with a " + _scavengeQuality.ToString () + " number of resources.");
+		reports.Add (r);
+
+		// Check for raiding camps
+		int raidStrength = _shelter.RaidingStrength;
+		if (raidStrength > 0) { // other camp attempt to raid 
+
+			ArrayList deadCamps = new ArrayList ();
+
+			// check for located camp, else scout for the camp
+			foreach (Enemy camp in Enemies) {
+
+				// check if scouted
+				if (camp.IsUnscouted () == false) {
+
+					int playerDamage = _shelter.RaidingStrength + Random.Range (-2, 2);
+
+					// player attempt to raid other camp with not enough strength
+					if (playerDamage < camp.Strength) { //50% of losing 1 character
+						if (Random.Range (0, 10) < 5) {
+							Report repo = new Report ();
+							string name = _shelter.KillRandomSurvivor ();
+							repo.SetMessage (name + " died in an attempted raid on an enemy.");
+						}
+					} else { // player attempt to raid other camp with enough strength
+
+						// damage the enemy camp
+						camp.inflictDamage (playerDamage);
+
+						// check if camp dead
+						if (camp.Strength < 0) {
+							Report raidReport = new Report ();
+							int newFood = Random.Range (0, 20);
+							int newMedicine = Random.Range (0, 20);
+							int newLuxuries = Random.Range (0, 20);
+							
+							_shelter.Food += newFood;
+							_shelter.Medicine += newMedicine;
+							_shelter.Luxuries += newLuxuries;
+							
+							raidReport.SetMessage ("Your raiders have destroyed a camp gaining you " + newFood + " food, " + newMedicine + " medicine and " + newLuxuries + " luxuries.");
+							reports.Add (raidReport);
+							deadCamps.Add (camp);
+						}
+					}
+				}
+			}
+
+			// remove dead camps
+			foreach (Enemy deadCamp in deadCamps) {
+				Enemies.Remove (deadCamp);
+			}
+			
+		}
+		
+		//Have the camps attack the player
+		foreach (Enemy camp in Enemies) {
+			if (camp.ShouldAttack ()) {
+				//If no one is home lose 50% of resources
+				if (_shelter.DefensivePower == 0) {
+					Report rep = new Report ();
+					rep.SetMessage ("Your camp was attacked, but no one was there, so they took some of your stores.");
+					reports.Add (rep);
+					_shelter.LoseHalfResources ();
+				}
+				//else calculate your defense chances, calculate a chance to lose  a survivor and some resources
+				else {
+					if (_shelter.DefensivePower + Random.Range (-5, 5) < camp.Strength) {
+						string deadSurvivor = _shelter.KillRandomSurvivor ();
+						_shelter.LoseHalfResources ();
+						Report rep = new Report ();
+						rep.SetMessage (deadSurvivor + " was killed in a raid on your camp. Some of your stores were taken.");
+						reports.Add (rep);
+					} else {
+						Report rep = new Report ();
+						rep.SetMessage ("Your camp was attacked, but you defended yourself.");
+						reports.Add (rep);
+						camp.LoseStrength ();
+					}
+				}
+				//if you triumph decrease the enemies resources instead
+			}
+		}
+		
+		//Spawn an enemy camp
+		if (Random.Range (0, 10) * Enemies.Count < 2 + _daysSinceSpawn) {
+			_daysSinceSpawn = 0;
+			AddEnemy ();
+			Report eReport = new Report ();
+			eReport.SetMessage ("There's been rumors of a new camp in the area");
+			reports.Add (eReport);
+		} else {
+			_daysSinceSpawn++;
+		}
+		
+		return reports;
+	}
+
+	// =========================================================== helper
+	/// <summary>
+	/// Adds an enemy.
+	/// </summary>
+	void AddEnemy ()
+	{
+		Enemy e = new Enemy ();
+		Enemies.Add (e);
+	}
+
+	/// <summary>
+	/// Gets a random enum.
+	/// </summary>
+	/// <returns>The random enum.</returns>
+	/// <typeparam name="T">The 1st type parameter.</typeparam>
+	static T GetRandomEnum<T> ()
+	{
+		System.Array A = System.Enum.GetValues (typeof(T));
+		T V = (T)A.GetValue (UnityEngine.Random.Range (0, A.Length));
 		return V;
 	}
-
-	// Use this for initialization
-	void Start () {
-		_shelter = this.GetComponent<Shelter>();
-	}
-
-	void AddEnemy(){
-		Enemy e = new Enemy();
-		Enemies.Add(e);
-	}
-
-	// Update is called once per frame
-	void Update () {
 	
-	}
-
-
-
-
-
-	private void selectScavengeTarget(){
-		_scavengeTarget = GetRandomEnum<ScavengeableLocation>();
+	/// <summary>
+	/// Selects the scavenge target.
+	/// </summary>
+	private void selectScavengeTarget ()
+	{
+		_scavengeTarget = GetRandomEnum<ScavengeableLocation> ();
 		//_scavengeQuality = GetRandomEnum<ScavengeQuality>();
-		int scav = Random.Range (0,10);
+		int scav = Random.Range (0, 10);
 		scav += _scoutingBonus;
-		if(scav > 9){
-			_scavengeQuality = ScavengeQuality.Plentiful ;
-		}
-		else if(scav > 6){
-			_scavengeQuality = ScavengeQuality.Good ;
-		}
-		else{
+		if (scav > 9) {
+			_scavengeQuality = ScavengeQuality.Plentiful;
+		} else if (scav > 6) {
+			_scavengeQuality = ScavengeQuality.Good;
+		} else {
 			_scavengeQuality = ScavengeQuality.Scarce;
 		}
 
 		_scoutingBonus = 0;
 	}
 
-	public ArrayList ScoutForShelters(int proficiency){
-		ArrayList reports = new ArrayList();
-		foreach(Enemy e in Enemies){
-			if(e.IsUnscouted()){
-				if(e.Visibility < proficiency){
-					//Let us see it
-					e.MakeCampVisibile();
-
-					Report r = new Report();
-					r.SetMessage("Your scouts have found an enemy camp.");
-					reports.Add(r);
-				}
-				else{
-					if(Random.Range (0,10) + proficiency > Random.Range (0,5) + e.Visibility){
-						//Let us see it
-						e.MakeCampVisibile();
-						
-						Report r = new Report();
-						r.SetMessage("Your scouts have found an enemy camp.");
-						reports.Add(r);
-					}
-				}
-			}
-			else{
-				reports.Add(e.AttackLikeliness());
-			}
-		}
-		return reports;
-	}
-
 	/// <summary>
-	/// Start a new Day
+	/// Scouts for shelters.
 	/// </summary>
-	public ArrayList NewDay(){
-		//change which structure we can scavenge
-		selectScavengeTarget();
-		Report r = new Report();
-		r.SetMessage("Today we can raid a " + _scavengeTarget.ToString() + " with a " + _scavengeQuality.ToString() +  " number of resources.");
+	/// <returns>The for shelters.</returns>
+	/// <param name="proficiency">Proficiency.</param>
+	public ArrayList ScoutForShelters (int proficiency)
+	{
+		ArrayList reports = new ArrayList ();
+		foreach (Enemy e in Enemies) {
+			if (e.IsUnscouted ()) {
+				if (e.Visibility < proficiency) {
+					//Let us see it
+					e.MakeCampVisibile ();
 
-		ArrayList reports = new ArrayList();
-		
-		reports.Add(r);
-		///Check for raiding camps
-		int raidStrength = _shelter.RaidingStrength;
-
-		ArrayList deadCamps = new ArrayList();
-
-		if(raidStrength > 0){ //Attempt Raid
-			//check for located camp, else scout for the camp
-			foreach(Enemy camp in Enemies){
-				if(camp.IsUnscouted() == false){
-					//Attempt raid
-
-					int playerDamage = _shelter.RaidingStrength + Random.Range (-2,2);
-					if(playerDamage < camp.Strength){ //50% of losing 1 character
-						if(Random.Range (0,10) < 5){
-							Report repo = new Report();
-							string name = _shelter.KillRandomSurvivor();
-							repo.SetMessage(name+ " died in an attempted raid on an enemy.");
-						}
-					}
-					else{
-						camp.inflictDamage(playerDamage);
-
-						if(camp.Strength < 0){
-							Report raidReport = new Report();
-							int newFood = Random.Range(0,20);
-							int newMedicine = Random.Range(0,20);
-							int newLuxuries = Random.Range(0,20);
-
-							_shelter.Food += newFood;
-							_shelter.Medicine += newMedicine;
-							_shelter.Luxuries += newLuxuries;
-
-							raidReport.SetMessage("Your raiders have destroyed a camp gaining you " + newFood + " food, " + newMedicine + " medicine and " + newLuxuries + " luxuries.");
-							reports.Add(raidReport);
-							deadCamps.Add(camp);
-						}
+					Report r = new Report ();
+					r.SetMessage ("Your scouts have found an enemy camp.");
+					reports.Add (r);
+				} else {
+					if (Random.Range (0, 10) + proficiency > Random.Range (0, 5) + e.Visibility) {
+						//Let us see it
+						e.MakeCampVisibile ();
+						
+						Report r = new Report ();
+						r.SetMessage ("Your scouts have found an enemy camp.");
+						reports.Add (r);
 					}
 				}
-			}
-			
-			foreach(Enemy deadCamp in deadCamps){
-				Enemies.Remove(deadCamp);
-			}
-
-		}
-
-		//Have the camps attack the player
-		foreach(Enemy camp in Enemies){
-			if(camp.ShouldAttack()){
-				//If no one is home lose 50% of resources
-				if(_shelter.DefensivePower == 0){
-					Report rep = new Report();
-					rep.SetMessage("Your camp was attacked, but no one was there, so they took some of your stores.");
-					reports.Add(rep);
-					_shelter.LoseHalfResources();
-				}
-				//else calculate your defense chances, calculate a chance to lose  a survivor and some resources
-				else{
-					if(_shelter.DefensivePower + Random.Range (-5,5) < camp.Strength){
-						string deadSurvivor = _shelter.KillRandomSurvivor();
-						_shelter.LoseHalfResources();
-						Report rep = new Report();
-						rep.SetMessage(deadSurvivor + " was killed in a raid on your camp. Some of your stores were taken.");
-						reports.Add(rep);
-					}
-					else{
-						Report rep = new Report();
-						rep.SetMessage("Your camp was attacked, but you defended yourself.");
-						reports.Add (rep);
-						camp.LoseStrength();
-					}
-				}
-				//if you triumph decrease the enemies resources instead
+			} else {
+				reports.Add (e.AttackLikeliness ());
 			}
 		}
-
-		//Spawn an enemy camp
-		if(Random.Range(0,10)*Enemies.Count < 2+_daysSinceSpawn){
-			_daysSinceSpawn = 0;
-			AddEnemy();
-			Report eReport = new Report();
-			eReport.SetMessage("There's been rumors of a new camp in the area");
-			reports.Add(eReport);
-		}
-		else{
-			_daysSinceSpawn++;
-		}
-
 		return reports;
-	}
+	}	
 }
