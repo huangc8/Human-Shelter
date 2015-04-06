@@ -13,16 +13,15 @@ public class GameTime : MonoBehaviour
 	private Shelter _shelter; 					// the shelter data
 	private Visitor _visitors; 					// grab info about newcomers
 	private GameWorld _gameWorld;				// game world class 
+	private StartNewConversation _startConv; 	// startConversation class
 
 	public Dialogue _dialogue; 					// the dialogue system
 	public Conditions _cond; 					// the conditions data base
 	public static ReportHandler _rh;			// report handler
 		
-	Queue <Event> _events; 						// today's events
 	List <Report> _reports; 					// the reports of assign task
 		
 	public int _currentDay; 					// current day
-	string _newDay; 							// newDay text
 	int _conversationsLeft; 					// converstation points left
 		
 	// =============================================== initialization
@@ -33,6 +32,7 @@ public class GameTime : MonoBehaviour
 		_shelter = this.GetComponent<Shelter> ();
 		_rh = this.GetComponent<ReportHandler> ();
 		_reports = new List<Report> ();
+		_startConv = this.GetComponent<StartNewConversation> ();
 
 		// starting values
 		_conversationsLeft = 5;
@@ -46,17 +46,19 @@ public class GameTime : MonoBehaviour
 	/// </summary>
 	public void newDay ()
 	{
-		//process the tasks
-		evaluateTasks ();
+		if (_currentDay > 1) {
+			//process the tasks
+			evaluateTasks ();
 
-		// reset values + update values
-		_conversationsLeft = 5;
-		for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
-			_shelter._survivors [i].ConvReset ();
+			// reset values + update values
+			_conversationsLeft = 5;
+			for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
+				_shelter._survivors [i].ConvReset ();
+			}
+			_shelter.NewDay ();
 		}
-
 		_currentDay++;
-		_shelter.NewDay ();
+		_startConv.DayCheck (_currentDay);
 	}
 
 
@@ -135,11 +137,6 @@ public class GameTime : MonoBehaviour
 		}
 		if (_visitors == null) {
 			_visitors = this.GetComponent<Visitor> ();
-		}
-		if (_conversationsLeft > 0) {
-			_newDay = "New Day";
-		} else {
-			_newDay = "New Day*";
 		}
 	}
 }

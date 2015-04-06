@@ -7,10 +7,19 @@ public class Dialogue : MonoBehaviour
 
 		// ==================================================== data
 		public PixelCrushers.DialogueSystem.DialogueSystemController _DiagCon; // dialogue system
-		public Conditions _conditions; // condition data base
+		public Conditions _conditions; 	// condition data base
+		private Shelter _shelter; 	// shelter class reference
+		private Visitor _visitor;	// visitor class reference
 		private bool diaChoice = false; // whether the conversation have a choice
 		private int choiceID = -1; // what is current choice
 		private int lastID = -1; // what is last choice
+
+		// ==================================================== initialization
+		void Start ()
+		{
+				_shelter = this.GetComponent<Shelter> ();
+				_visitor = this.GetComponent<Visitor> ();
+		}
 
 		// ==================================================== functions
 
@@ -26,6 +35,10 @@ public class Dialogue : MonoBehaviour
 		{
 				switch (choiceID) {
 				// setting condition according to ID
+				case 34: // invite Brian in
+					Survivor visitorAtGate = _visitor._personList [0];
+					_shelter.InviteSurvivor(visitorAtGate);
+					break;
 				}
 		}
 
@@ -37,13 +50,13 @@ public class Dialogue : MonoBehaviour
 				// if conversation is going on, update choice
 				if (_DiagCon.IsConversationActive) {
 						if (diaChoice) {
-								choiceID = _DiagCon.getID ();
+							choiceID = _DiagCon.getID ();
 						}
 				} else {
 						// if choice,  
 						if (choiceID != -1) {
-								lastID = choiceID;
-								choiceID = -1;
+							lastID = choiceID;
+							choiceID = -1;
 						}
 				}
 

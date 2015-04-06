@@ -9,7 +9,6 @@ public class clickChar : MonoBehaviour
 	Visitor _visitors; 			// grab info about newcomers
 	private UI _ui;				// the UI class
 
-	bool showButtons;			// whether or not show buttons
 	int arrayIndex; 			// character index in shelter.survivor
 
 	// ====================================================================== init
@@ -27,7 +26,6 @@ public class clickChar : MonoBehaviour
 		}
 		//invisible at first
 		renderer.enabled = false;
-		showButtons = false;		
 	}
 
 	// ===================================================================== action
@@ -40,7 +38,6 @@ public class clickChar : MonoBehaviour
 			if (this.tag == _shelter._survivors [i].Name) {
 				arrayIndex = i;
 			}
-			
 		}
 		if (arrayIndex == -1) {
 			Debug.Log ("Couldn't find index for " + this.tag + ".  Make sure this this tag is exactly the same as the character's name.");

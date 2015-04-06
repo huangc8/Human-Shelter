@@ -1,8 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Conditions.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Shelter.cs">
     <Files>
-      <File FileName="Assets\Scripts\Conditions.cs" Line="130" Column="3" />
+      <File FileName="Assets\Scripts\GameTime.cs" Line="61" Column="37" />
+      <File FileName="Assets\Scripts\Visitor.cs" Line="59" Column="2" />
+      <File FileName="Assets\Scripts\Dialogue.cs" Line="41" Column="12" />
+      <File FileName="Assets\Scripts\StartNewConversation.cs" Line="158" Column="31" />
+      <File FileName="Assets\Scripts\Shelter.cs" Line="321" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

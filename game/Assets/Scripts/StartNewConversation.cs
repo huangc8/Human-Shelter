@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class StartNewConversation : MonoBehaviour {
-	GameTime _gameTime;
 
-	private Dictionary<string,bool> hadConversation; // the 
-	public Dialogue _dialogue; // the dialogue system
+	// ====================================================== data
+	GameTime _gameTime;									// game time reference
+	public Dialogue _dialogue; 							// the dialogue system
+	private Dictionary<string,bool> hadConversation; 	// whether conversation is triggered
 
+	// ====================================================== initialization
 	// Use this for initialization
 	void Start () {
 
@@ -35,33 +37,8 @@ public class StartNewConversation : MonoBehaviour {
 		hadConversation["Conv_7_2"] = false;
 		hadConversation["Conv_7_3"] = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		//Switch based off of day
-		switch(_gameTime._currentDay){
-		case 1:
-			if(hadConversation["Conv_1_1"] == false){
-				hadConversation["Conv_1_1"] = true;
-				//start conv
-				_dialogue.startConv("Conv_1_1", false);
-			}
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
-		case 5:
-			break;
-		case 6:
-			break;
-		case 7:
-			break;
-		}
-	}
 
+	// ====================================================== function
 	/// <summary>
 	/// Check for conversations after clicking on a thing.
 	/// </summary>
@@ -69,6 +46,7 @@ public class StartNewConversation : MonoBehaviour {
 	public void ClickCheck(string name){
 		//Switch based off of day
 		switch(_gameTime._currentDay){
+			// --------------------- day 1 -----------------------
 		case 1:
 			if(hadConversation["Conv_1_2"] == false && name == "gate"){
 				hadConversation["Conv_1_2"] = true;
@@ -76,6 +54,7 @@ public class StartNewConversation : MonoBehaviour {
 				_dialogue.startConv("Conv_1_2", true);
 			}
 			break;
+			// --------------------- day 2 -----------------------
 		case 2:
 			if(hadConversation["Conv_2_1"] == false && name == "Brian"){
 				hadConversation["Conv_2_1"] = true;
@@ -90,6 +69,7 @@ public class StartNewConversation : MonoBehaviour {
 			}
 
 			break;
+			// --------------------- day 3 -----------------------
 		case 3:
 			if(hadConversation["Conv_3_1"] == false && name == "Brian"){
 				hadConversation["Conv_3_1"] = true;
@@ -102,8 +82,8 @@ public class StartNewConversation : MonoBehaviour {
 				//start conv
 				_dialogue.startConv("Conv_3_2", false);
 			}
-
 			break;
+			// --------------------- day 4 -----------------------
 		case 4:
 			if(hadConversation["Conv_4_1"] == false && name == "Marina"){
 				hadConversation["Conv_4_1"] = true;
@@ -118,6 +98,7 @@ public class StartNewConversation : MonoBehaviour {
 				_dialogue.startConv("Conv_4_2", false);
 			}
 			break;
+			// --------------------- day 5 -----------------------
 		case 5:
 			
 			if(hadConversation["Conv_5_1"] == false && name == "Brian"){
@@ -132,16 +113,16 @@ public class StartNewConversation : MonoBehaviour {
 				_dialogue.startConv("Conv_5_2", false);
 			}
 			break;
+			// --------------------- day 6 -----------------------
 		case 6:
-			
 			if(hadConversation["Conv_6_1"] == false && name == "gate"){
 				hadConversation["Conv_6_1"] = true;
 				//start conv
 				_dialogue.startConv("Conv_6_1", false);
 			}
 			break;
+			// --------------------- day 7 -----------------------
 		case 7:
-			
 			if(hadConversation["Conv_7_1"] == false && name == "gate"){
 				hadConversation["Conv_7_1"] = true;
 				//start conv
@@ -159,6 +140,42 @@ public class StartNewConversation : MonoBehaviour {
 			}
 			break;
 		}
+	}
 
+	/// <summary>
+	/// Start Conversation at the beginning of day.
+	/// </summary>
+	/// <param name="day">Day.</param>
+	public void DayCheck(int day){
+		//Switch based off of day
+		switch(_gameTime._currentDay){
+			// --------------------- day 1 -----------------------
+		case 1:
+			if(hadConversation["Conv_1_1"] == false){
+				hadConversation["Conv_1_1"] = true;
+				//start conv
+				_dialogue.startConv("Conv_1_1", true);
+				_dialogue.parseChoice(34);
+			}
+			break;
+			// --------------------- day 2 -----------------------
+		case 2:
+			break;
+			// --------------------- day 3 -----------------------
+		case 3:
+			break;
+			// --------------------- day 4 -----------------------
+		case 4:
+			break;
+			// --------------------- day 5 -----------------------
+		case 5:
+			break;
+			// --------------------- day 6 -----------------------
+		case 6:
+			break;
+			// --------------------- day 7 -----------------------
+		case 7:
+			break;
+		}
 	}
 }

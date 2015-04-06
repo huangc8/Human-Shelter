@@ -7,7 +7,7 @@ using System.Collections;
 public class GameWorld : MonoBehaviour
 {
 
-	// ------------------------------ begin of enemy class ---------------------------------------
+	// ------------------------------ begin of Enemy class ---------------------------------------
 	/// Enemy. Encapsulated class that manages threats to your camp
 	/// in the form of rival camps
 	public class Enemy
@@ -109,7 +109,7 @@ public class GameWorld : MonoBehaviour
 			return rep;
 		}
 	} 
-	// ------------------------------ end of enemy class ---------------------------------------
+	// ------------------------------ end of Enemy class ---------------------------------------
 
 	// ========================================================= data
 	Shelter _shelter;						// shelter class
@@ -194,7 +194,7 @@ public class GameWorld : MonoBehaviour
 					if (playerDamage < camp.Strength) { //50% of losing 1 character
 						if (Random.Range (0, 10) < 5) {
 							Report repo = new Report ();
-							string name = _shelter.KillRandomSurvivor ();
+							string name = _shelter.KillRandomRaider();
 							repo.SetMessage (name + " died in an attempted raid on an enemy.");
 						}
 					} else { // player attempt to raid other camp with enough strength

@@ -9,25 +9,24 @@ using System.Collections.Generic; //needed for List
 
 public class ReportHandler : MonoBehaviour
 {
-	List <Report> _reports; // the reports of assign task
-	int _currentReportIndex = 0; // which report we are currently looking at
+	// ===================================================== data
+	List <Report> _reports; 				// the reports of assign task
+	int _currentReportIndex = 0; 			// which report we are currently looking at
+	bool _hasReports; 						// whether or not we have reports to display
+	string _reportString = "";				// tmp string
 
-	bool _hasReports; //whether or not we have reports to display
-
-	string _reportString = "";
-
+	// ===================================================== initialization
 	// Use this for initialization
 	void Start ()
 	{
 
 	}
 
-	// Update is called once per frame
-	void Update ()
-	{
-
-	}
-
+	// ===================================================== functions
+	/// <summary>
+	/// Passes the reports.
+	/// </summary>
+	/// <param name="reports">Reports.</param>
 	public void PassReports(List<Report> reports)
 	{
 		Debug.Log("Passing Reports");
@@ -44,6 +43,7 @@ public class ReportHandler : MonoBehaviour
 		}
 	}
 
+	// ====================================================== GUI
 	/// <summary>
 	/// Raises the GU event.
 	/// </summary>
@@ -100,9 +100,6 @@ public class ReportHandler : MonoBehaviour
 				_reportString = _reports[_currentReportIndex].GetMessage();
             }
             x += w;
-
-
-
 
 			if(_reports.Count > 1){
 				//dismiss all reports

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class UI : MonoBehaviour {
 
+	// ========================================================== data
 	public GameObject g;
 	public Dialogue _diag;
 	Shelter _shelter; // the shelter data
@@ -15,6 +16,7 @@ public class UI : MonoBehaviour {
 	private float x, y, animateSide;
 	private int index;
 
+	// ========================================================== initialization
 	// Use this for initialization
 	void Start () {
 		_startNewConversation = this.GetComponent<StartNewConversation>();
@@ -34,6 +36,7 @@ public class UI : MonoBehaviour {
 		animateSide = 400;
 	}
 
+	// ========================================================== helper
 	public void charClick(int aindex, float ax, float ay)
 	{
 		//center buttons
@@ -48,17 +51,15 @@ public class UI : MonoBehaviour {
 		charButtons = true;
 		showButtons = true;
 		sideButtons = false;
-
-
 	}
 
+	// ========================================================== GUI
 	void OnGUI (){
 		int buttonWidth = 300;
 		int buttonHeight = 30;
-		
+
 		float itY = Screen.height*.8f;
 		float xLoc = Screen.width*.8f;
-
 
 		//top bar
 		if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.02f, Screen.width*.9f, buttonHeight), 
@@ -67,17 +68,17 @@ public class UI : MonoBehaviour {
 			
 		}
 
+		// new day button
 		if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.07f, 100, buttonHeight),  "Next Day")) {
 			_gametime.newDay();
 		}
-		
-
-
-
 
 		//new survivor arrives
 		try{
 		Survivor visitorAtGate = _visitors._personList [_gametime._currentDay];
+		if(_gametime._currentDay == 0){
+				visitorAtGate = null;
+		}
 		if (visitorAtGate != null) {
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "There is someone at the gate!")) {
 			}
@@ -86,16 +87,17 @@ public class UI : MonoBehaviour {
 				_startNewConversation.ClickCheck("gate");
 			}
 			itY += buttonHeight;
+			/*
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Invite")) {
 				_shelter.InviteSurvivor(visitorAtGate);
-				/*
+				
 				_shelter._survivors [_shelter.NumberOfSurvivors] = visitorAtGate;
 				//show on map
 				visitorAtGate.image.renderer.enabled = true;
 				visitorAtGate.image.layer = 0;
 
 				_shelter.NumberOfSurvivors++;
-				_visitors._personList [_gametime._currentDay] = null;*/
+				_visitors._personList [_gametime._currentDay] = null;
 			}
 			itY += buttonHeight;
 			if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Reject")) {
@@ -107,6 +109,7 @@ public class UI : MonoBehaviour {
 				
 			}
 			itY += buttonHeight;
+			*/
 		} 
 		}
 		catch{
@@ -118,12 +121,8 @@ public class UI : MonoBehaviour {
 		}*/
 
 
-
-
-
 		//above character's head
 		if(charButtons){
-
 			if (GUI.Button (new Rect (Screen.width*x-110, Screen.height*y-120, 100, 50),"Talk to " + _shelter._survivors[index].Name)) {
 				showButtons=true;
 				_startNewConversation.ClickCheck(_shelter._survivors[index].Name);
@@ -193,10 +192,10 @@ public class UI : MonoBehaviour {
 			}
 
 		}
-
-
 	}
 
+
+	// ========================================================== Update
 	// Update is called once per frame
 	void Update () {
 		
