@@ -128,6 +128,16 @@ public class GameTime : MonoBehaviour
 		_shelter.playerEat ();
 	}
 
+	private bool GameWon(){
+		//check for the time and check for the number of required parts (luxuries)
+		return (_currentDay >= 30 && _shelter.HasSufficentParts());
+
+	}
+
+	private bool GameLost(){
+		return (_shelter.IsGameOver());
+	}
+
 	// ================================================= update / GUI
 	// Update is called once per frame
 	void Update ()
@@ -138,6 +148,15 @@ public class GameTime : MonoBehaviour
 		if (_visitors == null) {
 			_visitors = this.GetComponent<Visitor> ();
 		}
+
+		//Check for the end conditions
+		if(GameWon()){
+			Application.LoadLevel("WinGame");
+		}
+		else if(GameLost()){
+			Application.LoadLevel ("LoseGame");
+		}
+
 	}
 }
 

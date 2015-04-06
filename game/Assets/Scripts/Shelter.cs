@@ -82,7 +82,11 @@ public class Shelter : MonoBehaviour
 		{
 			_food -= 5;
 		}
-		
+
+		public bool SufficientParts(){
+			return _luxuries > 200;
+		}
+
 		/// <summary>
 		/// Uses the medicine.
 		/// </summary>
@@ -138,6 +142,15 @@ public class Shelter : MonoBehaviour
 		_numEvictedSurvivors = 0;
 	}
 
+	public bool HasSufficentParts(){
+		if(_storage.SufficientParts()){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 	//================================================== accessor
 	/// <summary>
 	/// Gets or sets the medicine.
@@ -176,6 +189,14 @@ public class Shelter : MonoBehaviour
 		set {
 			_storage.Luxuries = value;
 		}
+	}
+
+	public bool IsGameOver(){
+		//check to see if we are out of food
+		//check to see we are out of survivors
+
+		return _numSurvivors <=0 && _storage.Food <= 0;
+		//without either end the game
 	}
 	
 	/// <summary>
@@ -352,6 +373,7 @@ public class Shelter : MonoBehaviour
 		Debug.Log ("Killing Survivor: " + s + " sPosition: " + sPosition);
 		
 		KillSurvivor (_survivors [sPosition]);
+		_numSurvivors--;
 		
 	}
 
@@ -362,6 +384,7 @@ public class Shelter : MonoBehaviour
 	{
 		name = _survivors [(int)Random.Range (0, _numSurvivors)].Name;
 		KillSurvivor (name);
+		_numSurvivors--;
 		return name;
 	}
 
@@ -410,6 +433,7 @@ public class Shelter : MonoBehaviour
 		//Debug.Log (_numSurvivors);
 		Destroy (s.image);
 		Destroy (s);
+		_numSurvivors--;
 
 	}
 
