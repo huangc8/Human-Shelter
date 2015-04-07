@@ -234,6 +234,37 @@ public class Shelter : MonoBehaviour
 	}
 
 	//================================================== Modifier on shelter
+	public bool ConsumeFood(int maxConsumption){
+		if(maxConsumption > _storage.Food){
+			_storage.Food = 0;
+			return false;
+		}
+		_storage.Food -= maxConsumption;
+		return true;
+	}
+
+	public bool ConsumeParts(int maxConsumption){
+		if(maxConsumption > _storage.Luxuries){
+			_storage.Medicine = 0;
+			return false;
+		}
+		_storage.Medicine -= maxConsumption;
+		return true;
+
+	}
+
+	public bool ConsumeMedicine(int maxConsumption){
+		if(maxConsumption > _storage.Medicine){
+			_storage.Medicine = 0;
+			return false;
+		}
+
+		_storage.Luxuries -= maxConsumption;
+		return true;
+
+	}
+
+
 	/// <summary>
 	/// Bolsters the defenses.
 	/// </summary>

@@ -228,6 +228,11 @@ public class Survivor : ScriptableObject
 	/// </summary>
 	public ArrayList Scout (Shelter s)
 	{
+		int boost  = 0;
+		if(s.ConsumeFood(1)){
+			boost++;
+		}
+
 		Report r = new Report ();
 		
 		int proficiency = GetProficiency (task.Scout) + 10;
@@ -237,7 +242,7 @@ public class Survivor : ScriptableObject
 		r.SetMessage (_name + " successfully scouted and helped to locate a scavenging target");
 		
 		//Look for enemy camps
-		ArrayList NewReps = _gameWorld.ScoutForShelters (proficiency);
+		ArrayList NewReps = _gameWorld.ScoutForShelters (proficiency + boost);
 		NewReps.Add (r);
 		
 		return NewReps;
@@ -292,6 +297,7 @@ public class Survivor : ScriptableObject
 	public Report Scavenge (Shelter s)
 	{
 		Report r = new Report ();
+
 		int fatigueModifier = (100 / (10 + Fatigue)) * 10;
 		int proficiency = GetProficiency (task.Scavenge);
 		if (Random.Range (-10, proficiency + fatigueModifier) < -8 && Random.Range (0, 10) < 3) {
@@ -343,9 +349,23 @@ public class Survivor : ScriptableObject
 	/// <param name="s">S.</param>
 	public Report Raid (Shelter s)
 	{
+
+		//boost up to 3 points by using 3 food, 3 medicine and 3 luxuries
+		int boost = 0;
+		if(s.ConsumeFood(3)){
+			boost++;
+		}
+		if(s.ConsumeMedicine(3)){
+			boost++;
+		}
+		
+		if(s.ConsumeParts(3)){
+			boost++;
+		}
+
 		int fatigueModifier = (100 / (10 + Fatigue)) * 10;
 		
-		int proficiency = GetProficiency (task.Raiding) + fatigueModifier;
+		int proficiency = GetProficiency (task.Raiding) + fatigueModifier + boost;
 		int newAttack = s.BolsterAttack (proficiency);
 		
 		Report r = new Report ();
