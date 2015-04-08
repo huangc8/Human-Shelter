@@ -33,7 +33,11 @@ public class GameTime : MonoBehaviour
 		_rh = this.GetComponent<ReportHandler> ();
 		_reports = new List<Report> ();
 		_startConv = this.GetComponent<StartNewConversation> ();
-
+		
+		if (_visitors == null) {
+			_visitors = this.GetComponent<Visitor> ();
+		}
+		
 		// starting values
 		_conversationsLeft = 5;
 		_currentDay = 0;
@@ -142,13 +146,6 @@ public class GameTime : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (_shelter == null) {
-			//_shelter = this.GetComponent<Shelter> ();
-		}
-		if (_visitors == null) {
-			_visitors = this.GetComponent<Visitor> ();
-		}
-
 		//Check for the end conditions
 		if(GameWon()){
 			Application.LoadLevel("WinGame");
@@ -156,7 +153,6 @@ public class GameTime : MonoBehaviour
 		else if(GameLost()){
 			Application.LoadLevel ("LoseGame");
 		}
-
 	}
 }
 

@@ -13,6 +13,7 @@ public class UI : MonoBehaviour {
 
 	//these are needed for showing and hiding buttons
 	public bool showAllButtons;
+	public bool startScreen;
 	private bool charButtons, sideButtons, showButtons;
 	private float x, y, animateSide;
 	private int index;
@@ -32,7 +33,8 @@ public class UI : MonoBehaviour {
 		}
 
 		charButtons = sideButtons = showButtons = false;
-		showAllButtons = true;
+
+		showAllButtons = false;
 		
 		index = 0;
 		animateSide = 400;
@@ -63,9 +65,8 @@ public class UI : MonoBehaviour {
 		float itY = Screen.height*.8f;
 		float xLoc = Screen.width*.8f;
 
-		if(showAllButtons)
+		if(showAllButtons && _gametime._currentDay > 0)
 		{
-
 			//top bar
 			if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.02f, Screen.width*.9f, buttonHeight), 
 			                "Day Survived: " + _gametime._currentDay.ToString () + "      Food: " + _shelter.Food + 
@@ -197,10 +198,17 @@ public class UI : MonoBehaviour {
 						sideButtons=false;
 					}
 				}
-
 			}
 		}
-	}
+
+		// start screen
+		if (_gametime._currentDay == 0) {
+			// new day button
+			if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.07f, 100, buttonHeight),  "New Game")) {
+				_gametime.newDay();
+			}
+		}
+	}// end of GUI
 
 
 	// ========================================================== Update
