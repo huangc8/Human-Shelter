@@ -435,7 +435,7 @@ public class Survivor : ScriptableObject
 		
 		
 		//Not used:
-		_proficiencies[(int)Survivor.task.Count] = 0;
+		
 		_proficiencies[(int)Survivor.task.Unassigned] = 0;
 		
 		
@@ -462,7 +462,7 @@ public class Survivor : ScriptableObject
 		
 		
 		//Not used:
-		_proficiencies[(int)Survivor.task.Count] = 0;
+		
 		_proficiencies[(int)Survivor.task.Unassigned] = 0;
 		
 		
@@ -488,7 +488,7 @@ public class Survivor : ScriptableObject
 		
 		
 		//Not used:
-		_proficiencies[(int)Survivor.task.Count] = 0;
+		
 		_proficiencies[(int)Survivor.task.Unassigned] = 0;
 		
 		
@@ -514,7 +514,7 @@ public class Survivor : ScriptableObject
 		
 		
 		//Not used:
-		_proficiencies[(int)Survivor.task.Count] = 0;
+		
 		_proficiencies[(int)Survivor.task.Unassigned] = 0;
 		
 		
@@ -540,7 +540,7 @@ public class Survivor : ScriptableObject
 
 		_fatigue = 100;
 		//Not used:
-		_proficiencies[(int)Survivor.task.Count] = 0;
+		
 		_proficiencies[(int)Survivor.task.Unassigned] = 0;
 		
 		
@@ -566,7 +566,7 @@ public class Survivor : ScriptableObject
 
 
 		//Not used:
-		_proficiencies[(int)Survivor.task.Count] = 0;
+		
 		_proficiencies[(int)Survivor.task.Unassigned] = 0;
 
 
@@ -618,16 +618,22 @@ public class Survivor : ScriptableObject
 		Debug.Log ("Character name:" + _name);
 		switch(_name){
 		case "Brian":
+			InitializeBrianProficiencies();
 			break;
 		case "Marina":
+			InitializeMarinaProficiencies();
 			break;
 		case "Eric":
+			InitializeEricProficiencies();
 			break;
 		case "Danny":
+			InitializeDannyProficiencies();
 			break;
 		case "Bree":
+			InitializeBreeProficiencies();
 			break;
 		case "Shane":
+			InitializeShaneProficiencies();
 			break;
 		default:
 			RandomizeProficiences ();
