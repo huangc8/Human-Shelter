@@ -16,7 +16,7 @@ public class Shelter : MonoBehaviour
 		/// have in the shelter
 		/// </summary>
 		private Shelter _parent;
-		int _luxuries;//How much medicine we have
+		int _parts;//How much medicine we have
 		int _food;//how much food we have
 		int _medicine; //how much medicine we have
 
@@ -29,22 +29,22 @@ public class Shelter : MonoBehaviour
 		public Stores (Shelter parent)
 		{
 			this._parent = parent;
-			_luxuries = 0;
+			_parts = 0;
 			_food = 50;
 			_medicine = 0;
 		}
 		
 		// ================================================================= accessor
 		/// <summary>
-		/// Gets or sets the luxuries.
+		/// Gets or sets the parts.
 		/// </summary>
-		/// <value>The luxuries.</value>
-		public int Luxuries {
+		/// <value>The resource.</value>
+		public int Parts {
 			get {
-				return _luxuries;
+				return _parts;
 			}
 			set {
-				_luxuries = value;
+				_parts = value;
 			}
 		}
 
@@ -84,7 +84,7 @@ public class Shelter : MonoBehaviour
 		}
 
 		public bool SufficientParts(){
-			return _luxuries > 200;
+			return _parts > 200;
 		}
 
 		/// <summary>
@@ -97,13 +97,13 @@ public class Shelter : MonoBehaviour
 		}
 
 		/// <summary>
-		/// Loses half resources in store.
+		/// Loses half parts in store.
 		/// </summary>
 		public void LoseHalfResources ()
 		{
 			_medicine = (int)(_medicine * Random.Range (.4f, .6f));
 			_food = (int)(_food * Random.Range (.4f, .6f));
-			_luxuries = (int)(_luxuries * Random.Range (.4f, .6f));
+			_parts = (int)(_parts * Random.Range (.4f, .6f));
 		}
 	}
 	// ------------------------------ end of Stores class ---------------------------------------
@@ -179,15 +179,15 @@ public class Shelter : MonoBehaviour
 	}
 	
 	/// <summary>
-	/// Gets or sets the luxuries.
+	/// Gets or sets the parts.
 	/// </summary>
-	/// <value>The luxuries.</value>
-	public int Luxuries {
+	/// <value>The parts.</value>
+	public int Parts {
 		get {
-			return _storage.Luxuries;
+			return _storage.Parts;
 		}
 		set {
-			_storage.Luxuries = value;
+			_storage.Parts = value;
 		}
 	}
 
@@ -244,7 +244,7 @@ public class Shelter : MonoBehaviour
 	}
 
 	public bool ConsumeParts(int maxConsumption){
-		if(maxConsumption > _storage.Luxuries){
+		if(maxConsumption > _storage.Parts){
 			_storage.Medicine = 0;
 			return false;
 		}
@@ -259,7 +259,7 @@ public class Shelter : MonoBehaviour
 			return false;
 		}
 
-		_storage.Luxuries -= maxConsumption;
+		_storage.Parts -= maxConsumption;
 		return true;
 
 	}
@@ -319,7 +319,7 @@ public class Shelter : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Loses half of resources.
+	/// Loses half of parts.
 	/// </summary>
 	public void LoseHalfResources ()
 	{

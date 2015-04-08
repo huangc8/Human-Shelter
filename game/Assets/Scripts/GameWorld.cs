@@ -125,7 +125,7 @@ public class GameWorld : MonoBehaviour
 	{
 		Hospital, //Gives food and medicine
 		GroceryStore, //Gives food only
-		Mall //Gives luxuries and foodS
+		Mall //Gives parts and foodS
 	}
 
 	// scavenge quality enum
@@ -173,7 +173,7 @@ public class GameWorld : MonoBehaviour
 		// add which structure we can scavenge
 		selectScavengeTarget ();
 		Report r = new Report ();
-		r.SetMessage ("Today we can raid a " + _scavengeTarget.ToString () + " with a " + _scavengeQuality.ToString () + " number of resources.");
+		r.SetMessage ("Today we can raid a " + _scavengeTarget.ToString () + " with a " + _scavengeQuality.ToString () + " number of parts.");
 		reports.Add (r);
 
 		// Check for raiding camps
@@ -207,13 +207,13 @@ public class GameWorld : MonoBehaviour
 							Report raidReport = new Report ();
 							int newFood = Random.Range (0, 20);
 							int newMedicine = Random.Range (0, 20);
-							int newLuxuries = Random.Range (0, 20);
+							int newParts = Random.Range (0, 20);
 							
 							_shelter.Food += newFood;
 							_shelter.Medicine += newMedicine;
-							_shelter.Luxuries += newLuxuries;
+							_shelter.Parts += newParts;
 							
-							raidReport.SetMessage ("Your raiders have destroyed a camp gaining you " + newFood + " food, " + newMedicine + " medicine and " + newLuxuries + " luxuries.");
+							raidReport.SetMessage ("Your raiders have destroyed a camp gaining you " + newFood + " food, " + newMedicine + " medicine and " + newParts + " parts.");
 							reports.Add (raidReport);
 							deadCamps.Add (camp);
 						}
@@ -231,14 +231,14 @@ public class GameWorld : MonoBehaviour
 		//Have the camps attack the player
 		foreach (Enemy camp in Enemies) {
 			if (camp.ShouldAttack ()) {
-				//If no one is home lose 50% of resources
+				//If no one is home lose 50% of parts
 				if (_shelter.DefensivePower == 0) {
 					Report rep = new Report ();
 					rep.SetMessage ("Your camp was attacked, but no one was there, so they took some of your stores.");
 					reports.Add (rep);
 					_shelter.LoseHalfResources ();
 				}
-				//else calculate your defense chances, calculate a chance to lose  a survivor and some resources
+				//else calculate your defense chances, calculate a chance to lose  a survivor and some parts
 				else {
 					if (_shelter.DefensivePower + Random.Range (-5, 5) < camp.Strength) {
 						string deadSurvivor = _shelter.KillRandomSurvivor ();
@@ -253,7 +253,7 @@ public class GameWorld : MonoBehaviour
 						camp.LoseStrength ();
 					}
 				}
-				//if you triumph decrease the enemies resources instead
+				//if you triumph decrease the enemies parts instead
 			}
 		}
 		

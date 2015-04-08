@@ -73,7 +73,7 @@ public class UI : MonoBehaviour {
 			//top bar
 			if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.02f, Screen.width*.9f, buttonHeight), 
 			                "Day Survived: " + _gametime._currentDay.ToString () + "      Food: " + _shelter.Food + 
-			                "      Medicine: " + _shelter.Medicine + "      Luxuries: " + _shelter.Luxuries)) {
+			                "      Medicine: " + _shelter.Medicine + "      parts: " + _shelter.Parts)) {
 				
 			}
 
