@@ -424,7 +424,152 @@ public class Survivor : ScriptableObject
 	{
 		_conversationsHad = 0;
 	}
-	
+
+
+	/// <summary>
+	/// Initializes the brian proficiencies.
+	/// </summary>
+	public void InitializeBrianProficiencies(){
+		int taskCount = (int)Survivor.task.Count;
+		_proficiencies = new int[taskCount];
+		
+		
+		//Not used:
+		_proficiencies[Survivor.task.Count] = 0;
+		_proficiencies[Survivor.task.Unassigned] = 0;
+		
+		
+		_proficiencies[Survivor.task.Evict] = 0; //Skill at resisting eviction
+		_proficiencies[Survivor.task.Execute] = 0; //Skill in resisting execution (not being executed)
+		_proficiencies[Survivor.task.Defend] = 0;
+		_proficiencies[Survivor.task.Heal] = 0;
+		_proficiencies[Survivor.task.Raiding] = 0;
+		_proficiencies[Survivor.task.Resting] = 0;
+		_proficiencies[Survivor.task.Scavenge] = 0;
+		_proficiencies[Survivor.task.Scout] = 0;
+
+	}
+
+	/// <summary>
+	/// Initializes the marina proficiencies.
+	/// </summary>
+	public void InitializeMarinaProficiencies(){
+		int taskCount = (int)Survivor.task.Count;
+		_proficiencies = new int[taskCount];
+		
+		
+		//Not used:
+		_proficiencies[Survivor.task.Count] = 0;
+		_proficiencies[Survivor.task.Unassigned] = 0;
+		
+		
+		_proficiencies[Survivor.task.Evict] = 0; //Skill at resisting eviction
+		_proficiencies[Survivor.task.Execute] = 0; //Skill in resisting execution (not being executed)
+		_proficiencies[Survivor.task.Defend] = 0;
+		_proficiencies[Survivor.task.Heal] = 0;
+		_proficiencies[Survivor.task.Raiding] = 0;
+		_proficiencies[Survivor.task.Resting] = 0;
+		_proficiencies[Survivor.task.Scavenge] = 0;
+		_proficiencies[Survivor.task.Scout] = 0;
+
+	}
+
+	/// <summary>
+	/// Initializes the eric proficiencies.
+	/// </summary>
+	public void InitializeEricProficiencies(){
+		int taskCount = (int)Survivor.task.Count;
+		_proficiencies = new int[taskCount];
+		
+		
+		//Not used:
+		_proficiencies[Survivor.task.Count] = 0;
+		_proficiencies[Survivor.task.Unassigned] = 0;
+		
+		
+		_proficiencies[Survivor.task.Evict] = 0; //Skill at resisting eviction
+		_proficiencies[Survivor.task.Execute] = 0; //Skill in resisting execution (not being executed)
+		_proficiencies[Survivor.task.Defend] = 0;
+		_proficiencies[Survivor.task.Heal] = 0;
+		_proficiencies[Survivor.task.Raiding] = 0;
+		_proficiencies[Survivor.task.Resting] = 0;
+		_proficiencies[Survivor.task.Scavenge] = 0;
+		_proficiencies[Survivor.task.Scout] = 0;
+
+	}
+
+	/// <summary>
+	/// Initializes the danny proficiencies.
+	/// </summary>
+	public void InitializeDannyProficiencies(){
+		int taskCount = (int)Survivor.task.Count;
+		_proficiencies = new int[taskCount];
+		
+		
+		//Not used:
+		_proficiencies[Survivor.task.Count] = 0;
+		_proficiencies[Survivor.task.Unassigned] = 0;
+		
+		
+		_proficiencies[Survivor.task.Evict] = 0; //Skill at resisting eviction
+		_proficiencies[Survivor.task.Execute] = 0; //Skill in resisting execution (not being executed)
+		_proficiencies[Survivor.task.Defend] = 0;
+		_proficiencies[Survivor.task.Heal] = 0;
+		_proficiencies[Survivor.task.Raiding] = 0;
+		_proficiencies[Survivor.task.Resting] = 0;
+		_proficiencies[Survivor.task.Scavenge] = 0;
+		_proficiencies[Survivor.task.Scout] = 0;
+
+	}
+
+	/// <summary>
+	/// Initializes the bree proficiencies.
+	/// </summary>
+	public void InitializeBreeProficiencies(){
+		int taskCount = (int)Survivor.task.Count;
+		_proficiencies = new int[taskCount];
+		
+		
+		//Not used:
+		_proficiencies[Survivor.task.Count] = 0;
+		_proficiencies[Survivor.task.Unassigned] = 0;
+		
+		
+		_proficiencies[Survivor.task.Evict] = 0; //Skill at resisting eviction
+		_proficiencies[Survivor.task.Execute] = 0; //Skill in resisting execution (not being executed)
+		_proficiencies[Survivor.task.Defend] = 0;
+		_proficiencies[Survivor.task.Heal] = 0;
+		_proficiencies[Survivor.task.Raiding] = 0;
+		_proficiencies[Survivor.task.Resting] = 0;
+		_proficiencies[Survivor.task.Scavenge] = 0;
+		_proficiencies[Survivor.task.Scout] = 0;
+
+	}
+
+	/// <summary>
+	/// Initializes the shane proficiencies.
+	/// </summary>
+	public void InitializeShaneProficiencies(){
+		int taskCount = (int)Survivor.task.Count;
+		_proficiencies = new int[taskCount];
+
+
+		//Not used:
+		_proficiencies[Survivor.task.Count] = 0;
+		_proficiencies[Survivor.task.Unassigned] = 0;
+
+
+		_proficiencies[Survivor.task.Evict] = 0; //Skill at resisting eviction
+		_proficiencies[Survivor.task.Execute] = 0; //Skill in resisting execution (not being executed)
+		_proficiencies[Survivor.task.Defend] = 0;
+		_proficiencies[Survivor.task.Heal] = 0;
+		_proficiencies[Survivor.task.Raiding] = 0;
+		_proficiencies[Survivor.task.Resting] = 0;
+		_proficiencies[Survivor.task.Scavenge] = 0;
+		_proficiencies[Survivor.task.Scout] = 0;
+
+	}
+
 	/// <summary>
 	/// Initialize each value in proficiency array to a
 	/// random value
@@ -451,13 +596,34 @@ public class Survivor : ScriptableObject
 	/// <summary>
 	/// Init this survivor.
 	/// </summary>
-	public void Init (GameWorld gw)
+	public void Init (GameWorld gw, string name)
 	{
+		_name = name;
 		_gameWorld = gw;
 		_assignedTask = false;
 		_enabled = true;
-		RandomizeProficiences ();
-		RandomizeCharacteristics ();
+
+		Debug.Log ("Character name:" + _name);
+		switch(_name){
+		case "Brian":
+			break;
+		case "Marina":
+			break;
+		case "Eric":
+			break;
+		case "Danny":
+			break;
+		case "Bree":
+			break;
+		case "Shane":
+			break;
+		default:
+			RandomizeProficiences ();
+			RandomizeCharacteristics ();
+			break;
+
+		}
+
 	}
 
 	/// <summary>

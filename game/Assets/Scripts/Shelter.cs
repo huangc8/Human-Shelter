@@ -336,8 +336,7 @@ public class Shelter : MonoBehaviour
 	private Survivor CreateSurvivor (string name, GameObject image)
 	{
 		Survivor stmp = new Survivor ();
-		stmp.Init (_gameWorld);
-		stmp.Name = name;
+		stmp.Init (_gameWorld,name);
 		stmp.image = image;
 		//show on map
 		stmp.image.renderer.enabled = true;
