@@ -22,7 +22,6 @@ public class GameTime : MonoBehaviour
 	List <Report> _reports; 					// the reports of assign task
 		
 	public int _currentDay; 					// current day
-	int _conversationsLeft; 					// converstation points left
 		
 	// =============================================== initialization
 	// Use this for initialization
@@ -39,7 +38,6 @@ public class GameTime : MonoBehaviour
 		}
 		
 		// starting values
-		_conversationsLeft = 5;
 		_currentDay = 0;
 	}
 
@@ -55,7 +53,6 @@ public class GameTime : MonoBehaviour
 			evaluateTasks ();
 
 			// reset values + update values
-			_conversationsLeft = 5;
 			for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
 				_shelter._survivors [i].ConvReset ();
 			}
