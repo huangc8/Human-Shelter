@@ -34,10 +34,22 @@ public class Dialogue : MonoBehaviour
 		// parsing choices made in conversation
 		public void parseChoice (int choiceID)
 		{
-				switch (choiceID) {
+				Survivor visitorAtGate;
 				// setting condition according to ID
+				switch (choiceID) {
+				
+				case 23: // invite Marina in
+					visitorAtGate = _visitor._personList [1];
+					_shelter.InviteSurvivor(visitorAtGate);
+					_conditions.setCondition("invite Marina", true);
+					_conditions.setCondition("decline Marina", false);
+				break;
+				case 24: // decline Marina
+					_conditions.setCondition("invite Marina", false);
+					_conditions.setCondition("decline Marina", true);
+				break;
 				case 34: // invite Brian in
-					Survivor visitorAtGate = _visitor._personList [0];
+					visitorAtGate = _visitor._personList [0];
 					_shelter.InviteSurvivor(visitorAtGate);
 					break;
 				}
