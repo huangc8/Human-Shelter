@@ -82,9 +82,14 @@ public class clickChar : MonoBehaviour
 		if(_gametime._currentDay == 0){
 			visitorAtGate = null;
 		}
-		if (visitorAtGate != null && this.tag == "NewVisitor") {
-			renderer.enabled=true;
-
+		if (this.tag == "NewVisitor") {
+			if(visitorAtGate != null)
+				{
+				renderer.enabled=true;
+			}
+			else {
+				renderer.enabled=false;
+			}
 		}
 	}
 
