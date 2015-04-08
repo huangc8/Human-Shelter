@@ -439,14 +439,17 @@ public class Survivor : ScriptableObject
 		_proficiencies[Survivor.task.Unassigned] = 0;
 		
 		
-		_proficiencies[Survivor.task.Evict] = 0; //Skill at resisting eviction
-		_proficiencies[Survivor.task.Execute] = 0; //Skill in resisting execution (not being executed)
-		_proficiencies[Survivor.task.Defend] = 0;
-		_proficiencies[Survivor.task.Heal] = 0;
-		_proficiencies[Survivor.task.Raiding] = 0;
-		_proficiencies[Survivor.task.Resting] = 0;
-		_proficiencies[Survivor.task.Scavenge] = 0;
-		_proficiencies[Survivor.task.Scout] = 0;
+		_proficiencies[Survivor.task.Evict] = 2; //Skill at resisting eviction
+		_proficiencies[Survivor.task.Execute] = 2; //Skill in resisting execution (not being executed)
+		_proficiencies[Survivor.task.Defend] = 4;
+		_proficiencies[Survivor.task.Heal] = 2;
+		_proficiencies[Survivor.task.Raiding] = 2;
+		_proficiencies[Survivor.task.Resting] = 2;
+		_proficiencies[Survivor.task.Scavenge] = 2;
+		_proficiencies[Survivor.task.Scout] = 2;
+
+
+		_appetite = 2;
 
 	}
 
@@ -463,14 +466,16 @@ public class Survivor : ScriptableObject
 		_proficiencies[Survivor.task.Unassigned] = 0;
 		
 		
-		_proficiencies[Survivor.task.Evict] = 0; //Skill at resisting eviction
-		_proficiencies[Survivor.task.Execute] = 0; //Skill in resisting execution (not being executed)
-		_proficiencies[Survivor.task.Defend] = 0;
-		_proficiencies[Survivor.task.Heal] = 0;
-		_proficiencies[Survivor.task.Raiding] = 0;
-		_proficiencies[Survivor.task.Resting] = 0;
-		_proficiencies[Survivor.task.Scavenge] = 0;
-		_proficiencies[Survivor.task.Scout] = 0;
+		_proficiencies[Survivor.task.Evict] = -4; //Skill at resisting eviction
+		_proficiencies[Survivor.task.Execute] = -7; //Skill in resisting execution (not being executed)
+		_proficiencies[Survivor.task.Defend] = -8;
+		_proficiencies[Survivor.task.Heal] = 6;
+		_proficiencies[Survivor.task.Raiding] = -8;
+		_proficiencies[Survivor.task.Resting] = 7;
+		_proficiencies[Survivor.task.Scavenge] = 7;
+		_proficiencies[Survivor.task.Scout] = 7;
+
+		_appetite = 1;
 
 	}
 
@@ -487,14 +492,16 @@ public class Survivor : ScriptableObject
 		_proficiencies[Survivor.task.Unassigned] = 0;
 		
 		
-		_proficiencies[Survivor.task.Evict] = 0; //Skill at resisting eviction
-		_proficiencies[Survivor.task.Execute] = 0; //Skill in resisting execution (not being executed)
-		_proficiencies[Survivor.task.Defend] = 0;
-		_proficiencies[Survivor.task.Heal] = 0;
-		_proficiencies[Survivor.task.Raiding] = 0;
-		_proficiencies[Survivor.task.Resting] = 0;
-		_proficiencies[Survivor.task.Scavenge] = 0;
-		_proficiencies[Survivor.task.Scout] = 0;
+		_proficiencies[Survivor.task.Evict] = 8; //Skill at resisting eviction
+		_proficiencies[Survivor.task.Execute] = 7; //Skill in resisting execution (not being executed)
+		_proficiencies[Survivor.task.Defend] = 8;
+		_proficiencies[Survivor.task.Heal] = -7;
+		_proficiencies[Survivor.task.Raiding] = 7;
+		_proficiencies[Survivor.task.Resting] = -7;
+		_proficiencies[Survivor.task.Scavenge] = 4;
+		_proficiencies[Survivor.task.Scout] = -2;
+
+		_appetite = 3;
 
 	}
 
@@ -511,14 +518,16 @@ public class Survivor : ScriptableObject
 		_proficiencies[Survivor.task.Unassigned] = 0;
 		
 		
-		_proficiencies[Survivor.task.Evict] = 0; //Skill at resisting eviction
-		_proficiencies[Survivor.task.Execute] = 0; //Skill in resisting execution (not being executed)
-		_proficiencies[Survivor.task.Defend] = 0;
-		_proficiencies[Survivor.task.Heal] = 0;
-		_proficiencies[Survivor.task.Raiding] = 0;
-		_proficiencies[Survivor.task.Resting] = 0;
-		_proficiencies[Survivor.task.Scavenge] = 0;
-		_proficiencies[Survivor.task.Scout] = 0;
+		_proficiencies[Survivor.task.Evict] = -10; //Skill at resisting eviction
+		_proficiencies[Survivor.task.Execute] = -10; //Skill in resisting execution (not being executed)
+		_proficiencies[Survivor.task.Defend] = 3;
+		_proficiencies[Survivor.task.Heal] = 6;
+		_proficiencies[Survivor.task.Raiding] = -4;
+		_proficiencies[Survivor.task.Resting] = 8;
+		_proficiencies[Survivor.task.Scavenge] = 1;
+		_proficiencies[Survivor.task.Scout] = -8;
+
+		_appetite = 2;
 
 	}
 
@@ -528,21 +537,23 @@ public class Survivor : ScriptableObject
 	public void InitializeBreeProficiencies(){
 		int taskCount = (int)Survivor.task.Count;
 		_proficiencies = new int[taskCount];
-		
-		
+
+		_fatigue = 100;
 		//Not used:
 		_proficiencies[Survivor.task.Count] = 0;
 		_proficiencies[Survivor.task.Unassigned] = 0;
 		
 		
-		_proficiencies[Survivor.task.Evict] = 0; //Skill at resisting eviction
-		_proficiencies[Survivor.task.Execute] = 0; //Skill in resisting execution (not being executed)
-		_proficiencies[Survivor.task.Defend] = 0;
-		_proficiencies[Survivor.task.Heal] = 0;
-		_proficiencies[Survivor.task.Raiding] = 0;
-		_proficiencies[Survivor.task.Resting] = 0;
-		_proficiencies[Survivor.task.Scavenge] = 0;
-		_proficiencies[Survivor.task.Scout] = 0;
+		_proficiencies[Survivor.task.Evict] = 5S; //Skill at resisting eviction
+		_proficiencies[Survivor.task.Execute] = 5; //Skill in resisting execution (not being executed)
+		_proficiencies[Survivor.task.Defend] = 4;
+		_proficiencies[Survivor.task.Heal] = -3;
+		_proficiencies[Survivor.task.Raiding] = 4;
+		_proficiencies[Survivor.task.Resting] = 7;
+		_proficiencies[Survivor.task.Scavenge] = 8;
+		_proficiencies[Survivor.task.Scout] = 8;
+
+		_appetite = 5;
 
 	}
 
@@ -559,15 +570,16 @@ public class Survivor : ScriptableObject
 		_proficiencies[Survivor.task.Unassigned] = 0;
 
 
-		_proficiencies[Survivor.task.Evict] = 0; //Skill at resisting eviction
-		_proficiencies[Survivor.task.Execute] = 0; //Skill in resisting execution (not being executed)
-		_proficiencies[Survivor.task.Defend] = 0;
-		_proficiencies[Survivor.task.Heal] = 0;
-		_proficiencies[Survivor.task.Raiding] = 0;
-		_proficiencies[Survivor.task.Resting] = 0;
-		_proficiencies[Survivor.task.Scavenge] = 0;
-		_proficiencies[Survivor.task.Scout] = 0;
+		_proficiencies[Survivor.task.Evict] = -6; //Skill at resisting eviction
+		_proficiencies[Survivor.task.Execute] = -6; //Skill in resisting execution (not being executed)
+		_proficiencies[Survivor.task.Defend] = 10;
+		_proficiencies[Survivor.task.Heal] = 2;
+		_proficiencies[Survivor.task.Raiding] = 3;
+		_proficiencies[Survivor.task.Resting] = 8;
+		_proficiencies[Survivor.task.Scavenge] = 4;
+		_proficiencies[Survivor.task.Scout] = 3;
 
+		_appetite = 1;
 	}
 
 	/// <summary>
