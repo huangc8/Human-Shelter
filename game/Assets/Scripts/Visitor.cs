@@ -41,7 +41,7 @@ public class Visitor : MonoBehaviour {
 	// =================================================== survivor function
 	private Survivor CreateSurvivor(string name, GameObject image){
 		Survivor stmp = new Survivor ();
-		stmp.Init (_gameWorld);
+		stmp.Init (_gameWorld, name);
 		stmp.Name = name;
 		stmp.image = image;
 		return stmp;
