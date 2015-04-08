@@ -218,7 +218,10 @@ public class Survivor : ScriptableObject
 	/// </summary>
 	public int RestMe ()
 	{
-		_fatigue -= 30;
+		int proficiency = GetProficiency(task.Resting);
+
+
+		_fatigue -= (int) ((proficiency * (_health))/10.0f);
 		return _fatigue;
 	}
 
@@ -234,8 +237,15 @@ public class Survivor : ScriptableObject
 		}
 
 		Report r = new Report ();
+
+		int spillover = 0;
 		
-		int proficiency = GetProficiency (task.Scout) + 10;
+		if(Fatigue < 0){
+			spillover = Mathf.Abs(Fatigue);
+		}
+		int fatigueModifier = (100 / (10 + (10 + Mathf.Max(Fatigue,0)))) * 10 + spillover;
+		
+		int proficiency = GetProficiency (task.Scout) + 10 + fatigueModifier;
 		
 		int locationBonus = (int)Mathf.Pow (Random.Range (1.0f, 4.0f) * proficiency, .36f);
 		_gameWorld.AddScoutingBonus (locationBonus);
@@ -255,7 +265,12 @@ public class Survivor : ScriptableObject
 	{
 		Report r = new Report ();
 		int heals = 0;
-		int fatigueModifier = (100 / (10 + Fatigue)) * 10;
+		int spillover = 0;
+
+		if(Fatigue < 0){
+			spillover = Mathf.Abs(Fatigue);
+		}
+		int fatigueModifier = (100 / (10 + (10 + Mathf.Max(Fatigue,0)))) * 10 + spillover;
 		
 		int proficiency = GetProficiency (task.Heal);
 		
@@ -280,7 +295,11 @@ public class Survivor : ScriptableObject
 	/// <param name="s">Shelter</param>
 	public Report Defend (Shelter s)
 	{
-		int fatigueModifier = (100 / (10 + Fatigue)) * 10;
+			int spillover = 0;
+			if(Fatigue < 0){
+				spillover = Mathf.Abs(Fatigue);
+			}
+		int fatigueModifier = (100 / (10 + Mathf.Max(Fatigue,0))) * 10 + spillover;
 
 		int proficiency = (GetProficiency (task.Defend) + 10) + fatigueModifier;
 		int newDefenses = s.BolsterDefenses (proficiency);
@@ -297,8 +316,11 @@ public class Survivor : ScriptableObject
 	public Report Scavenge (Shelter s)
 	{
 		Report r = new Report ();
-
-		int fatigueModifier = (100 / (10 + Fatigue)) * 10;
+				int spillover = 0;
+			if(Fatigue < 0){
+				spillover = Mathf.Abs(Fatigue);
+			}
+		int fatigueModifier = (100 / (10 + (10 + Mathf.Max(Fatigue,0)))) * 10 + spillover;
 		int proficiency = GetProficiency (task.Scavenge);
 		if (Random.Range (-10, proficiency + fatigueModifier) < -8 && Random.Range (0, 10) < 3) {
 			
@@ -363,7 +385,13 @@ public class Survivor : ScriptableObject
 			boost++;
 		}
 
-		int fatigueModifier = (100 / (10 + Fatigue)) * 10;
+					
+					int spillover = 0;
+					if(Fatigue < 0){
+						spillover = Mathf.Abs(Fatigue);
+					}
+
+		int fatigueModifier =(int) ((100 / (10 + Mathf.Max(Fatigue,0.0f))) * 10) + spillover;
 		
 		int proficiency = GetProficiency (task.Raiding) + fatigueModifier + boost;
 		int newAttack = s.BolsterAttack (proficiency);
@@ -410,8 +438,12 @@ public class Survivor : ScriptableObject
 		int restoration = RestMe ();
 		int proficiency = GetProficiency (task.Defend);
 		s.BolsterDefenses (proficiency / 4);
-
-		r.SetMessage (_name + "'s fatigue is restored to " + restoration);
+		if(restoration > 0){
+			r.SetMessage (_name + "'s fatigue is restored to " + restoration);
+		}
+		else if(restoration < 0){
+			r.SetMessage (_name + "has rested to " + restoration + " points.");
+		}
 		return r;
 	}
 
