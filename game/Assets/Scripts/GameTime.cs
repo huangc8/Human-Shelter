@@ -46,7 +46,7 @@ public class GameTime : MonoBehaviour
 	/// </summary>
 	public void newDay ()
 	{
-		if (_currentDay > 1) {
+		if (_currentDay > 0) {
 			//process the tasks
 			evaluateTasks ();
 
@@ -58,7 +58,7 @@ public class GameTime : MonoBehaviour
 			_shelter.NewDay ();
 		}
 		_currentDay++;
-		_startConv.DayCheck (_currentDay);
+		_startConv.DayCheck ();
 	}
 
 
