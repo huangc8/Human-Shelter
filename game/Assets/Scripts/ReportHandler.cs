@@ -14,12 +14,14 @@ public class ReportHandler : MonoBehaviour
 	int _currentReportIndex = 0; 			// which report we are currently looking at
 	bool _hasReports; 						// whether or not we have reports to display
 	string _reportString = "";				// tmp string
+	public bool showReports;
+	ArrayList _pages;
 
 	// ===================================================== initialization
 	// Use this for initialization
 	void Start ()
 	{
-
+		showReports = false;
 	}
 
 	// ===================================================== functions
@@ -49,65 +51,76 @@ public class ReportHandler : MonoBehaviour
 	/// </summary>
 	void OnGUI()
 	{
-		if(_hasReports)
+		if(showReports)
 		{
-			int x = 100;
-			int y = 100;
-			int w = 200;
-			int h = 30;
+			if(_hasReports)
+			{
+				int x = 100;
+				int y = 100;
+				int w = 200;
+				int h = 30;
 
-			if(_currentReportIndex > 0){
-				//move to previous report
-				if(GUI.Button(new Rect(x,y,w,h),"Previous Report")){
-					_currentReportIndex--;
-					if(_currentReportIndex < 0){
-						_currentReportIndex = 0;
+				/*if(_currentReportIndex > 0){
+					//move to previous report
+					if(GUI.Button(new Rect(x,y,w,h),"Previous Report")){
+						_currentReportIndex--;
+						if(_currentReportIndex < 0){
+							_currentReportIndex = 0;
+						}
+						_reportString = _reports[_currentReportIndex].GetMessage();
 					}
-					_reportString = _reports[_currentReportIndex].GetMessage();
+					x += w;
 				}
+				*/
+
+				w = 500;
+				h = 50;
+				//Print the report text
+				Debug.Log(_reports.Count);
+				for(int i = 0; i < _reports.Count; i++)
+				{
+					GUI.Label(new Rect(x,y,w,h), "Report: " + _reports[i].GetMessage());
+					y+=50;
+				}
+
+				/*
 				x += w;
-			}
+				w = 200;
+				h = 30;
+				if(_currentReportIndex < _reports.Count-1){
+					//move to next report
+					if(GUI.Button(new Rect(x,y,w,h),"Next Report")){
+						_currentReportIndex++;
+						if(_currentReportIndex >= _reports.Count-1){
+							_currentReportIndex = _reports.Count-1;
+						}
+						_reportString = _reports[_currentReportIndex].GetMessage();
+					}
+					x += w;
+				}
 
-			w = 500;
-			h = 50;
-			//Print the report text
-			GUI.Label(new Rect(x,y,w,h), "Report: " + _reportString);
-			x += w;
-			w = 200;
-			h = 30;
-
-			if(_currentReportIndex < _reports.Count-1){
-				//move to next report
-				if(GUI.Button(new Rect(x,y,w,h),"Next Report")){
-					_currentReportIndex++;
+				//check for buttons allowing to delete report,
+				if(GUI.Button(new Rect(x,y,w,h),"Dismiss Report")){
+					_reports.RemoveAt(_currentReportIndex);
+					if(_reports.Count == 0){
+						_hasReports = false;
+					}
 					if(_currentReportIndex >= _reports.Count-1){
 						_currentReportIndex = _reports.Count-1;
 					}
 					_reportString = _reports[_currentReportIndex].GetMessage();
-				}
-				x += w;
-			}
-
-			//check for buttons allowing to delete report,
-			if(GUI.Button(new Rect(x,y,w,h),"Dismiss Report")){
-				_reports.RemoveAt(_currentReportIndex);
-				if(_reports.Count == 0){
-					_hasReports = false;
-				}
-				if(_currentReportIndex >= _reports.Count-1){
-					_currentReportIndex = _reports.Count-1;
-				}
-				_reportString = _reports[_currentReportIndex].GetMessage();
-            }
-            x += w;
-
-			if(_reports.Count > 1){
-				//dismiss all reports
-				//check for buttons allowing to delete report,
-				if(GUI.Button(new Rect(x,y,w,h),"Dismiss All")){
-					_reports = new List<Report>();
-					_hasReports = false;
 	            }
+	            x += w;
+
+				if(_reports.Count > 1){
+					//dismiss all reports
+					//check for buttons allowing to delete report,
+					if(GUI.Button(new Rect(x,y,w,h),"Dismiss All")){
+						_reports = new List<Report>();
+						_hasReports = false;
+		            }
+				}
+				*/
 			}
         }
     }

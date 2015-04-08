@@ -10,6 +10,7 @@ public class UI : MonoBehaviour {
 	Visitor _visitors;
 	GameTime _gametime;
 	StartNewConversation _startNewConversation;
+	ReportHandler _reports;
 
 	//these are needed for showing and hiding buttons
 	public bool showAllButtons;
@@ -29,6 +30,9 @@ public class UI : MonoBehaviour {
 		}
 		if (_gametime == null) {
 			_gametime = g.GetComponent<GameTime> ();
+		}
+		if (_reports == null) {
+			_reports = g.GetComponent<ReportHandler> ();
 		}
 
 		charButtons = sideButtons = showButtons = false;
@@ -76,6 +80,18 @@ public class UI : MonoBehaviour {
 			// new day button
 			if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.07f, 100, buttonHeight),  "Next Day")) {
 				_gametime.newDay();
+				_reports.showReports = true;
+			}
+
+			// reports button
+			if (GUI.Button (new Rect (Screen.width*.13f, Screen.height*.07f, 160, buttonHeight),  "Show/Hide Reports")) {
+				if(_reports.showReports == false){
+					_reports.showReports = true;
+				}
+				else
+				{
+					_reports.showReports = false;
+				}
 			}
 
 			//new survivor arrives
