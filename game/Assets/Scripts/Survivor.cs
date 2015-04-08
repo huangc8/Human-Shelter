@@ -307,7 +307,7 @@ public class Survivor : ScriptableObject
 		} else {
 			int sFood = 0;
 			int sMedicine = 0;
-			int sLuxuries = 0;
+			int sParts = 0;
 			
 			int qualityMultiplier = 1 + (int)_gameWorld.ScavengeQualityLevel;
 			
@@ -327,9 +327,9 @@ public class Survivor : ScriptableObject
 				
 				
 			case GameWorld.ScavengeableLocation.Mall:
-				sLuxuries += 1 + qualityMultiplier * (int)(Random.Range (0, 10) * (proficiency + fatigueModifier + 11) * .1f);
-				r.SetMessage (_name + " scavenged " + sLuxuries + " luxuries.");
-				s.Luxuries += sLuxuries;
+				sParts += 1 + qualityMultiplier * (int)(Random.Range (0, 10) * (proficiency + fatigueModifier + 11) * .1f);
+				r.SetMessage (_name + " scavenged " + sParts + " parts.");
+				s.Parts += sParts;
 				break;
 				
 			}
@@ -350,7 +350,7 @@ public class Survivor : ScriptableObject
 	public Report Raid (Shelter s)
 	{
 
-		//boost up to 3 points by using 3 food, 3 medicine and 3 luxuries
+		//boost up to 3 points by using 3 food, 3 medicine and 3 parts
 		int boost = 0;
 		if(s.ConsumeFood(3)){
 			boost++;
@@ -410,8 +410,12 @@ public class Survivor : ScriptableObject
 		int restoration = RestMe ();
 		int proficiency = GetProficiency (task.Defend);
 		s.BolsterDefenses (proficiency / 4);
-
-		r.SetMessage (_name + "'s fatigue is restored to " + restoration);
+		if(restoration > 0){
+			r.SetMessage (_name + "'s fatigue is restored to " + restoration);
+		}
+		else if(restoration < 0){
+			r.SetMessage (_name + "has rested to " + restoration + " points.");
+		}
 		return r;
 	}
 

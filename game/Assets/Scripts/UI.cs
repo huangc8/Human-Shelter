@@ -10,6 +10,7 @@ public class UI : MonoBehaviour {
 	Visitor _visitors;
 	GameTime _gametime;
 	StartNewConversation _startNewConversation;
+	ReportHandler _reports;
 
 	//these are needed for showing and hiding buttons
 	public bool showAllButtons;
@@ -30,6 +31,9 @@ public class UI : MonoBehaviour {
 		}
 		if (_gametime == null) {
 			_gametime = g.GetComponent<GameTime> ();
+		}
+		if (_reports == null) {
+			_reports = g.GetComponent<ReportHandler> ();
 		}
 
 		charButtons = sideButtons = showButtons = false;
@@ -70,13 +74,25 @@ public class UI : MonoBehaviour {
 			//top bar
 			if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.02f, Screen.width*.9f, buttonHeight), 
 			                "Day Survived: " + _gametime._currentDay.ToString () + "      Food: " + _shelter.Food + 
-			                "      Medicine: " + _shelter.Medicine + "      Luxuries: " + _shelter.Luxuries)) {
+			                "      Medicine: " + _shelter.Medicine + "      parts: " + _shelter.Parts)) {
 				
 			}
 
 			// new day button
 			if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.07f, 100, buttonHeight),  "Next Day")) {
 				_gametime.newDay();
+				_reports.showReports = true;
+			}
+
+			// reports button
+			if (GUI.Button (new Rect (Screen.width*.13f, Screen.height*.07f, 160, buttonHeight),  "Show/Hide Reports")) {
+				if(_reports.showReports == false){
+					_reports.showReports = true;
+				}
+				else
+				{
+					_reports.showReports = false;
+				}
 			}
 
 			//new survivor arrives
@@ -185,11 +201,22 @@ public class UI : MonoBehaviour {
 
 					}
 					itY += buttonHeight;
-					
-					if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Fatigue: " + _shelter._survivors [index].Fatigue)) {
-						showButtons=true;
+
+					if(_shelter._survivors[index].Fatigue <= 0){
+						if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Stamina: " + -1*_shelter._survivors [index].Fatigue)) {
+							showButtons=true;
+							
+						}
 
 					}
+					else{
+						if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Fatigue: " + _shelter._survivors [index].Fatigue)) {
+							showButtons=true;
+							
+						}
+
+					}
+
 
 					itY += buttonHeight * 2;
 					
