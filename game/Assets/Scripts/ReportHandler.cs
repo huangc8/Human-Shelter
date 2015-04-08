@@ -16,12 +16,15 @@ public class ReportHandler : MonoBehaviour
 	string _reportString = "";				// tmp string
 	public bool showReports;
 	ArrayList _pages;
+	int _currentPage = 0;
 
 	// ===================================================== initialization
 	// Use this for initialization
 	void Start ()
 	{
 		showReports = false;
+		_pages = new ArrayList ();
+
 	}
 
 	// ===================================================== functions
@@ -38,6 +41,9 @@ public class ReportHandler : MonoBehaviour
 			_currentReportIndex = 0;
 			_reportString = reports[_currentReportIndex].GetMessage();
 			Debug.Log ("_reportString set to:");
+
+			_pages.Add(_reports);
+			_currentPage = _pages.Count -1;
 		}
 		else
 		{
@@ -60,45 +66,39 @@ public class ReportHandler : MonoBehaviour
 				int w = 200;
 				int h = 30;
 
-				/*if(_currentReportIndex > 0){
+				if(_currentPage > 0){
 					//move to previous report
-					if(GUI.Button(new Rect(x,y,w,h),"Previous Report")){
-						_currentReportIndex--;
-						if(_currentReportIndex < 0){
-							_currentReportIndex = 0;
-						}
-						_reportString = _reports[_currentReportIndex].GetMessage();
+					if(GUI.Button(new Rect(x,y,w,h),"Previous Page")){
+						_currentPage--;
+						_reports = (List <Report>)_pages[_currentPage];
 					}
 					x += w;
 				}
-				*/
+
 
 				w = 500;
 				h = 50;
 				//Print the report text
-				Debug.Log(_reports.Count);
 				for(int i = 0; i < _reports.Count; i++)
 				{
 					GUI.Label(new Rect(x,y,w,h), "Report: " + _reports[i].GetMessage());
 					y+=50;
 				}
 
-				/*
+
 				x += w;
 				w = 200;
 				h = 30;
-				if(_currentReportIndex < _reports.Count-1){
-					//move to next report
-					if(GUI.Button(new Rect(x,y,w,h),"Next Report")){
-						_currentReportIndex++;
-						if(_currentReportIndex >= _reports.Count-1){
-							_currentReportIndex = _reports.Count-1;
-						}
-						_reportString = _reports[_currentReportIndex].GetMessage();
+				if(_currentPage < _pages.Count-1){
+					//move to next page
+					if(GUI.Button(new Rect(x,y,w,h),"Next Page")){
+						_currentPage++;
+						_reports = (List <Report>)_pages[_currentPage];
 					}
 					x += w;
 				}
-
+				
+				/*
 				//check for buttons allowing to delete report,
 				if(GUI.Button(new Rect(x,y,w,h),"Dismiss Report")){
 					_reports.RemoveAt(_currentReportIndex);
