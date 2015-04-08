@@ -1,8 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Survivor.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/clickChar.cs">
     <Files>
-      <File FileName="Assets\Scripts\Survivor.cs" Line="450" Column="3" />
+      <File FileName="Assets/Scripts/Survivor.cs" Line="66" Column="34" />
+      <File FileName="Assets/Scripts/Visitor.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GameTime.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/clickChar.cs" Line="79" Column="30" />
+      <File FileName="Assets/Scripts/Shelter.cs" Line="343" Column="19" />
+      <File FileName="Assets/Scripts/StartNewConversation.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

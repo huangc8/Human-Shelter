@@ -9,6 +9,8 @@ public class clickChar : MonoBehaviour
 	Visitor _visitors; 			// grab info about newcomers
 	private UI _ui;				// the UI class
 	GameTime _gametime;
+	public PixelCrushers.DialogueSystem.DialogueSystemController _DiagCon; // dialogue system
+
 
 
 	int arrayIndex; 			// character index in shelter.survivor
@@ -44,8 +46,12 @@ public class clickChar : MonoBehaviour
 	{
 
 		if (this.tag == "NewVisitor") {
-			_startNewConversation.ClickCheck("gate");
+			if(!_DiagCon.IsConversationActive)
+			{
+				_startNewConversation.ClickCheck("gate");
 			}
+
+		}
 		else{
 
 			//find corresponding character within shelter
