@@ -58,7 +58,7 @@ public class GameTime : MonoBehaviour
 			_shelter.NewDay ();
 		}
 		_currentDay++;
-		_startConv.DayCheck (_currentDay);
+		_startConv.DayCheck ();
 	}
 
 

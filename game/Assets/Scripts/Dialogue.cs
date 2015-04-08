@@ -8,6 +8,7 @@ public class Dialogue : MonoBehaviour
 		// ==================================================== data
 		public PixelCrushers.DialogueSystem.DialogueSystemController _DiagCon; // dialogue system
 		public Conditions _conditions; 	// condition data base
+		public UI _ui;	// ui reference
 		private Shelter _shelter; 	// shelter class reference
 		private Visitor _visitor;	// visitor class reference
 		private bool diaChoice = false; // whether the conversation have a choice
@@ -51,8 +52,10 @@ public class Dialogue : MonoBehaviour
 				if (_DiagCon.IsConversationActive) {
 						if (diaChoice) {
 							choiceID = _DiagCon.getID ();
+							_ui.showAllButtons = false;
 						}
 				} else {
+							_ui.showAllButtons = true;
 						// if choice,  
 						if (choiceID != -1) {
 							lastID = choiceID;

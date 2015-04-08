@@ -12,7 +12,8 @@ public class UI : MonoBehaviour {
 	StartNewConversation _startNewConversation;
 
 	//these are needed for showing and hiding buttons
-	private bool charButtons, sideButtons, showButtons, showAllButtons;
+	public bool showAllButtons;
+	private bool charButtons, sideButtons, showButtons;
 	private float x, y, animateSide;
 	private int index;
 
@@ -32,8 +33,7 @@ public class UI : MonoBehaviour {
 
 		charButtons = sideButtons = showButtons = false;
 		showAllButtons = true;
-
-
+		
 		index = 0;
 		animateSide = 400;
 	}
@@ -85,6 +85,7 @@ public class UI : MonoBehaviour {
 					visitorAtGate = null;
 			}
 			if (visitorAtGate != null) {
+				if(_startNewConversation.specialCase()){
 				if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "There is someone at the gate!")) {
 				}
 				itY += buttonHeight;
@@ -92,6 +93,7 @@ public class UI : MonoBehaviour {
 					_startNewConversation.ClickCheck("gate");
 				}
 				itY += buttonHeight;
+				}
 				/*
 				if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Invite")) {
 					_shelter.InviteSurvivor(visitorAtGate);

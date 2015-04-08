@@ -1,16 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\ZombieAI.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\StartNewConversation.cs">
     <Files>
-      <File FileName="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\ZombieAI.cs" Line="910" Column="1" />
-      <File FileName="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\DestroyableObject.cs" Line="152" Column="48" />
-      <File FileName="..\..\..\KeyboardKommanderApocalypseV2\Assets\SeekZombie.cs" Line="27" Column="16" />
-      <File FileName="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\TextReader.cs" Line="638" Column="18" />
-      <File FileName="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\ShakyCamera.cs" Line="42" Column="374" />
-      <File FileName="..\..\..\KeyboardKommanderApocalypseV2\Assets\SortingLayerExposer.cs" Line="14" Column="68" />
-      <File FileName="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\SizeCollider.cs" Line="19" Column="27" />
-      <File FileName="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\AnimateZombie.cs" Line="125" Column="1" />
-      <File FileName="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\Charger.cs" Line="128" Column="23" />
+      <File FileName="Assets\Scripts\Dialogue.cs" Line="58" Column="33" />
+      <File FileName="Assets\Scripts\StartNewConversation.cs" Line="185" Column="2" />
+      <File FileName="Assets\Scripts\UI.cs" Line="87" Column="32" />
+      <File FileName="Assets\Scripts\GameTime.cs" Line="63" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
