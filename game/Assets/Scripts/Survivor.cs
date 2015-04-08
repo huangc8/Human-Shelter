@@ -410,8 +410,12 @@ public class Survivor : ScriptableObject
 		int restoration = RestMe ();
 		int proficiency = GetProficiency (task.Defend);
 		s.BolsterDefenses (proficiency / 4);
-
-		r.SetMessage (_name + "'s fatigue is restored to " + restoration);
+		if(restoration > 0){
+			r.SetMessage (_name + "'s fatigue is restored to " + restoration);
+		}
+		else if(restoration < 0){
+			r.SetMessage (_name + "has rested to " + restoration + " points.");
+		}
 		return r;
 	}
 

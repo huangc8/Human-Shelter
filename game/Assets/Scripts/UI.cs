@@ -200,11 +200,22 @@ public class UI : MonoBehaviour {
 
 					}
 					itY += buttonHeight;
-					
-					if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Fatigue: " + _shelter._survivors [index].Fatigue)) {
-						showButtons=true;
+
+					if(_shelter._survivors[index].Fatigue <= 0){
+						if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Stamina: " + -1*_shelter._survivors [index].Fatigue)) {
+							showButtons=true;
+							
+						}
 
 					}
+					else{
+						if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Fatigue: " + _shelter._survivors [index].Fatigue)) {
+							showButtons=true;
+							
+						}
+
+					}
+
 
 					itY += buttonHeight * 2;
 					
