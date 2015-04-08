@@ -38,23 +38,34 @@ public class Dialogue : MonoBehaviour
 				// setting condition according to ID
 				switch (choiceID) {
 				
+				case 9: // invite Marina
+						visitorAtGate = _visitor._personList [3];
+						_shelter.InviteSurvivor (visitorAtGate);
+						_conditions.setCondition ("invite Eric", true);
+						_conditions.setCondition ("decline Eric", false);
+						break;
+				case 10: // decline Eric
+						visitorAtGate = _visitor._personList [3];
+						_conditions.setCondition ("invite Eric", false);
+						_conditions.setCondition ("decline Eric", true);
+						break;
 				case 23: // invite Marina in
-					visitorAtGate = _visitor._personList [1];
-					_shelter.InviteSurvivor(visitorAtGate);
-					_conditions.setCondition("invite Marina", true);
-					_conditions.setCondition("decline Marina", false);
-				break;
+						visitorAtGate = _visitor._personList [1];
+						_shelter.InviteSurvivor (visitorAtGate);
+						_conditions.setCondition ("invite Marina", true);
+						_conditions.setCondition ("decline Marina", false);
+						break;
 				case 24: // decline Marina
-					_conditions.setCondition("invite Marina", false);
-					_conditions.setCondition("decline Marina", true);
-				break;
+						_conditions.setCondition ("invite Marina", false);
+						_conditions.setCondition ("decline Marina", true);
+						break;
 				case 34: // invite Brian in
-					visitorAtGate = _visitor._personList [0];
-					_shelter.InviteSurvivor(visitorAtGate);
-					break;
+						visitorAtGate = _visitor._personList [0];
+						_shelter.InviteSurvivor (visitorAtGate);
+						break;
 				}
 		}
-
+	
 		// ==================================================== update
 
 		// Update
@@ -63,15 +74,15 @@ public class Dialogue : MonoBehaviour
 				// if conversation is going on, update choice
 				if (_DiagCon.IsConversationActive) {
 						if (diaChoice) {
-							choiceID = _DiagCon.getID ();
-							_ui.showAllButtons = false;
+								choiceID = _DiagCon.getID ();
+								_ui.showAllButtons = false;
 						}
 				} else {
-							_ui.showAllButtons = true;
+						_ui.showAllButtons = true;
 						// if choice,  
 						if (choiceID != -1) {
-							lastID = choiceID;
-							choiceID = -1;
+								lastID = choiceID;
+								choiceID = -1;
 						}
 				}
 
