@@ -125,7 +125,8 @@ public class GameWorld : MonoBehaviour
 	{
 		Hospital, //Gives food and medicine
 		GroceryStore, //Gives food only
-		Mall //Gives parts and foodS
+		Mall, //Gives parts and foodS
+        Count
 	}
 
 	// scavenge quality enum
@@ -173,7 +174,7 @@ public class GameWorld : MonoBehaviour
 		// add which structure we can scavenge
 		selectScavengeTarget ();
 		Report r = new Report ();
-		r.SetMessage ("Today we can raid a " + _scavengeTarget.ToString () + " with a " + _scavengeQuality.ToString () + " number of parts.");
+		r.SetMessage ("Today we can raid a " + _scavengeTarget.ToString () + " with a " + _scavengeQuality.ToString () + " number of resources.");
 		reports.Add (r);
 
 		// Check for raiding camps
@@ -191,11 +192,9 @@ public class GameWorld : MonoBehaviour
 					int playerDamage = _shelter.RaidingStrength + Random.Range (-2, 2);
 
 					// player attempt to raid other camp with not enough strength
-					if (playerDamage < camp.Strength) { //50% of losing 1 character
+					if (playerDamage < camp.Strength) { //50% of wounding a character
 						if (Random.Range (0, 10) < 5) {
-							Report repo = new Report ();
-							string name = _shelter.KillRandomRaider();
-							repo.SetMessage (name + " died in an attempted raid on an enemy.");
+							_shelter.WoundRandomRaider(reports);
 						}
 					} else { // player attempt to raid other camp with enough strength
 

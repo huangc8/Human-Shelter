@@ -265,7 +265,9 @@ public class Survivor : ScriptableObject
     }
 
     //Check to see if the surivor is wounded/dies return false for failing the mission, true for continuing
-    public bool WoundCheck(Shelter s, ref Report r, int successChance, string tasking,string task){
+    public bool WoundCheck(Shelter s, Report r, int successChance, string tasking,string task){
+        
+        wound sWound = wound.Uninjured;
         //Chance of getting wounded, if the wound is severe enough, do not continue scouting
         if (successChance + Random.Range(0, 10) < 13)
         {

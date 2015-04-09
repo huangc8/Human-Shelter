@@ -422,21 +422,17 @@ public class Shelter : MonoBehaviour
 	/// Kills a random raider.
 	/// </summary>
 	/// <returns>The random raider.</returns>
-	public string KillRandomRaider(){
-
-		ArrayList tmp = new ArrayList();
+	public void WoundRandomRaider(ArrayList reports){
 
 		int length = 0;
 		foreach (Survivor s in _survivors) {
 			if(s.AssignedTask == Survivor.task.Raiding){
-				tmp.Add (s);
-				length++;
+				Report r = new Report();
+                s.WoundCheck(this,r,0, "raiding","raid");
+                reports.Add(r);
 			}
 		}
 
-		name = _survivors [(int)Random.Range (0, length)].Name;
-		KillSurvivor (name);
-		return name;
 	}
 
 	/// <summary>
