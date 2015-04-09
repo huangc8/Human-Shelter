@@ -1,10 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\UI.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Survivor.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameTime.cs" Line="148" Column="3" />
-      <File FileName="Assets\Scripts\Dialogue.cs" Line="110" Column="4" />
-      <File FileName="Assets\Scripts\UI.cs" Line="210" Column="4" />
+      <File FileName="Assets\Scripts\GameWorld.cs" Line="240" Column="6" />
+      <File FileName="Assets\Scripts\UI.cs" Line="255" Column="1" />
+      <File FileName="Assets\Scripts\Survivor.cs" Line="321" Column="24" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
