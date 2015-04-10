@@ -1,7 +1,15 @@
 fileFormatVersion: 2
 guid: 32e3026d09ae74b63bd7a99114783345
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Danny Idle Sprite_0
+    21300002: Danny Idle Sprite_1
+    21300004: Danny Idle Sprite_2
+    21300006: Danny Idle Sprite_3
+    21300008: Danny Idle Sprite_4
+    21300010: Danny Idle Sprite_5
+    21300012: Danny Idle Sprite_6
+    21300014: Danny Idle Sprite_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -42,6 +50,86 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Danny Idle Sprite_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1
+        width: 168
+        height: 217
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Danny Idle Sprite_1
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 1
+        width: 168
+        height: 217
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Danny Idle Sprite_2
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 1
+        width: 168
+        height: 217
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Danny Idle Sprite_3
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 1
+        width: 168
+        height: 217
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Danny Idle Sprite_4
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 1
+        width: 168
+        height: 217
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Danny Idle Sprite_5
+      rect:
+        serializedVersion: 2
+        x: 861
+        y: 1
+        width: 168
+        height: 217
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Danny Idle Sprite_6
+      rect:
+        serializedVersion: 2
+        x: 1033
+        y: 1
+        width: 168
+        height: 217
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Danny Idle Sprite_7
+      rect:
+        serializedVersion: 2
+        x: 1205
+        y: 1
+        width: 168
+        height: 217
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
