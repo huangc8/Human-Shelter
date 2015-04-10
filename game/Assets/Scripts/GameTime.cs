@@ -109,7 +109,7 @@ public class GameTime : MonoBehaviour
 
 			// increase survivor status
 			_shelter._survivors [s].Exhaust ();
-			_shelter._survivors [s].Eat (_shelter);
+			_reports.Add(_shelter._survivors [s].Eat (_shelter));
 			_shelter._survivors [s].ConsumeMedicine (_shelter);
 		}
 

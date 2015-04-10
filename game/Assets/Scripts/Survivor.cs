@@ -20,12 +20,25 @@ public class Survivor : ScriptableObject
     private int _appetite = 10;                     // rate of consuming food
     private int[] _proficiencies;                   // array, stores skill at each task
 
+	private hunger _starvation;
 
     // changing survivor info
     private int _health = 10;                       // health of survivor
     private int _fatigue = 10;                      // fatigue level of survivor
     private int _conversationsHad;                  // how many times the player has talked to this character
     public int _conversationsLeft;                  // how many conversation left
+
+
+
+	public enum hunger
+	{
+		Content,
+		Satiatiated,
+		Hungry,
+		Famished,
+		Starving,
+		Count
+	}
 
     // enum for task
     public enum task
@@ -198,20 +211,49 @@ public class Survivor : ScriptableObject
         _health += healAmount;
     }
 
+	/// <summary>
+	/// Advances the hunger. Moves the survivor to the next level of starvation
+	/// </summary>
+	public Report AdvanceHunger(){
+		Report r = new Report();
+
+		if(_starvation != hunger.Starving){
+			_starvation = (hunger)((int) _starvation + 1);
+			r.SetMessage(_name +  " is now " + _starvation.ToString() + ".");
+		} 
+		else{ //_starvation == hunger.Starving
+			r.SetMessage(_name +  " is starving to death.");
+		}
+
+		return r;
+	}
+
     /// <summary>
     /// Eat.
     /// </summary>
     /// <param name="s">S.</param>
-    public void Eat(Shelter s)
+    public Report Eat(Shelter s)
     {
+		Report r = new Report();
         if (s.EatFood(Random.Range(1, _appetite)) == false)
-        {
-            _health--;
+		{
+
+			r = AdvanceHunger();
+
+			if(_starvation == hunger.Starving){
+				_health--;
+
+			}
             if (_health < 0)
             {
+				r.SetMessage(_name + " has starved to death.");
                 s.KillSurvivor(this);
             }
+			return r;
+
         }
+
+		return null;
     }
 
     /// <summary>
@@ -259,8 +301,9 @@ public class Survivor : ScriptableObject
     {
         int proficiency = GetProficiency(task.Resting);
 
+		int restModifier = ((int)hunger.Count - (int)_starvation);
 
-        _fatigue -= (int)((proficiency * (_health)) / 10.0f);
+        _fatigue -= (int)((proficiency * (_health)) / 10.0f) * restModifier;
         return _fatigue;
     }
 

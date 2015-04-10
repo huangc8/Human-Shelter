@@ -1,7 +1,13 @@
 fileFormatVersion: 2
-guid: 769fc97248ac6412a80c55de892f31b1
+guid: 3ea9c25f654f38540b201274b8121b89
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Bree Idle Sprite_0
+    21300002: Bree Idle Sprite_1
+    21300004: Bree Idle Sprite_2
+    21300006: Bree Idle Sprite_3
+    21300008: Bree Idle Sprite_4
+    21300010: Bree Idle Sprite_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -25,23 +31,83 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: 16
+    aniso: -1
     mipBias: -1
-    wrapMode: 1
-  nPOTScale: 0
+    wrapMode: -1
+  nPOTScale: 1
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 0
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
-  alphaIsTransparency: 1
-  textureType: 8
+  alphaIsTransparency: 0
+  textureType: -1
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Bree Idle Sprite_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 0
+        width: 85
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Bree Idle Sprite_1
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 0
+        width: 85
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Bree Idle Sprite_2
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 0
+        width: 85
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Bree Idle Sprite_3
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 0
+        width: 85
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Bree Idle Sprite_4
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 0
+        width: 85
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Bree Idle Sprite_5
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 0
+        width: 85
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
