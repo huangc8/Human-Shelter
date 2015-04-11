@@ -34,6 +34,14 @@ public class ReportHandler : MonoBehaviour
 	/// <param name="reports">Reports.</param>
 	public void PassReports(List<Report> reports)
 	{
+		//I know this is a hacky approach, we can take it out later if you want
+		for(int r = 0; r < reports.Count-1; r++){
+			if(reports[r].IsInitialized() == false){
+				reports.RemoveAt(r);
+			}
+		}
+
+
 		Debug.Log("Passing Reports");
 		if(reports.Count > 0){
 			_hasReports = true;

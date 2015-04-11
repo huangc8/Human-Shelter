@@ -359,7 +359,7 @@ public class Survivor : ScriptableObject
             boost++;
         }
 
-        Report r = new Report();
+        Report rTemporary = new Report();
 
         int spillover = 0;
         
@@ -375,7 +375,7 @@ public class Survivor : ScriptableObject
 
         ArrayList NewReps = new ArrayList();
 
-        if(WoundCheck(s,r,proficiency, "scouting","scout"))
+        if(WoundCheck(s,rTemporary,proficiency, "scouting","scout"))
         {
 
             int locationBonus = (int)Mathf.Pow(Random.Range(1.0f, 4.0f) * proficiency, .36f);
@@ -384,17 +384,19 @@ public class Survivor : ScriptableObject
             _gameWorld.AddScoutingBonus(locationBonus);
             if (sWound == wound.Uninjured)
             {
-                r.SetMessage(_name + " successfully scouted and helped to locate a scavenging target.");
+                rTemporary.SetMessage(_name + " successfully scouted and helped to locate a scavenging target.");
             } else
             {
-                r.SetMessage(_name + " sustained a " + sWound.ToString() + " wound while scouting but still helped to locate a scavenging target.");
+                rTemporary.SetMessage(_name + " sustained a " + sWound.ToString() + " wound while scouting but still helped to locate a scavenging target.");
             }
             //Look for enemy camps
             NewReps = _gameWorld.ScoutForShelters(proficiency + boost);
 
 
         }
-        NewReps.Add(r);
+		if(rTemporary.IsInitialized()){
+			NewReps.Add(rTemporary);
+		}
         return NewReps;
     }
 
