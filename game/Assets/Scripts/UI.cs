@@ -63,29 +63,39 @@ public class UI : MonoBehaviour {
 
 	// ========================================================== GUI
 	void OnGUI (){
-		int buttonWidth = 300;
-		int buttonHeight = 30;
 
-		float itY = Screen.height*.8f;
+		float buttonWidth = Screen.width * .2f;
+		float buttonHeight = Screen.height * .04f;
+
 		float xLoc = Screen.width*.8f;
+		float itY = Screen.height*.8f;
+
+		float squareSize = Screen.width * .07f;
 
 		if(showAllButtons && _gametime._currentDay > 0)
 		{
-			//top bar
-			if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.02f, Screen.width*.9f, buttonHeight), 
-			                "Day Survived: " + _gametime._currentDay.ToString () + "      Food: " + _shelter.Food + 
-			                "      Medicine: " + _shelter.Medicine + "      parts: " + _shelter.Parts)) {
-				
-			}
+			float w = Screen.width*.03f;
+			float h = Screen.height*.04f;
 
-			// new day button
-			if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.07f, 100, buttonHeight),  "Next Day")) {
+			//height 1 is food and day
+			GUI.Box (new Rect (Screen.width*.9f,h, squareSize, squareSize), "Day\n" + _gametime._currentDay.ToString());
+			GUI.Box (new Rect (w, h, squareSize, squareSize), "Food\n" + _shelter.Food);
+			h+= squareSize;
+
+			// height 2 is new day button, and medicine
+			if (GUI.Button (new Rect (Screen.width*.9f, h*1.15f, squareSize, squareSize/3),  "Next Day")) {
 				_gametime.newDay();
 				_reports.showReports = true;
 			}
+			GUI.Box (new Rect (w,h, squareSize, squareSize), "Medicine\n" + _shelter.Medicine);
+			h+= squareSize;
+
+			//parts
+			GUI.Box (new Rect (w,h, squareSize, squareSize), "Parts\n" + _shelter.Parts);
+			h+= squareSize;
 
 			// reports button
-			if (GUI.Button (new Rect (Screen.width*.13f, Screen.height*.07f, 160, buttonHeight),  "Show/Hide Reports")) {
+			if (GUI.Button (new Rect (w, h*1.1f, squareSize, squareSize/3),  "Open Journal")) {
 				if(_reports.showReports == false){
 					_reports.showReports = true;
 				}
@@ -95,6 +105,12 @@ public class UI : MonoBehaviour {
 				}
 			}
 
+
+
+			w = Screen.width *.765f;
+			h = Screen.height *.75f;
+
+
 			//new survivor arrives
 			try{
 			Survivor visitorAtGate = _visitors._personList [_gametime._currentDay];
@@ -103,46 +119,23 @@ public class UI : MonoBehaviour {
 			}
 			if (visitorAtGate != null) {
 				if(_startNewConversation.specialCase()){
-				if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "There is someone at the gate!")) {
-				}
-				itY += buttonHeight;
-				if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Talk to " + visitorAtGate.Name.ToString ())) {
+					GUI.Box (new Rect (w, h, buttonWidth, buttonHeight*1.15f), "There is someone at the gate!");
+
+				h += buttonHeight * 1.24f;
+				if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight), "Talk to " + visitorAtGate.Name.ToString ())) {
 					_startNewConversation.ClickCheck("gate");
 				}
-				itY += buttonHeight;
+				h += buttonHeight;
 				}
-				/*
-				if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Invite")) {
-					_shelter.InviteSurvivor(visitorAtGate);
-					
-					_shelter._survivors [_shelter.NumberOfSurvivors] = visitorAtGate;
-					//show on map
-					visitorAtGate.image.renderer.enabled = true;
-					visitorAtGate.image.layer = 0;
 
-					_shelter.NumberOfSurvivors++;
-					_visitors._personList [_gametime._currentDay] = null;
-				}
-				itY += buttonHeight;
-				if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Reject")) {
-					_visitors.RejectSurvivorAtGate(visitorAtGate.Name);
-				}
-				itY += buttonHeight;
-				if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Kill")) {
-					_visitors.KillSurvivorAtGate(visitorAtGate.Name);
-					
-				}
-				itY += buttonHeight;
-				*/
 			} 
 			}
 			catch{
 
 			}
-			/*else {
-				if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Nobody is at the gate")) {
-				}
-			}*/
+
+
+
 
 
 			//above character's head
