@@ -112,6 +112,9 @@ public class UI : MonoBehaviour {
 
 
 			//new survivor arrives
+			//this has been replaced by just clicking on the guy
+
+			/*
 			try{
 			Survivor visitorAtGate = _visitors._personList [_gametime._currentDay];
 			if(_gametime._currentDay == 0){
@@ -133,7 +136,7 @@ public class UI : MonoBehaviour {
 			catch{
 
 			}
-
+			*/
 
 
 
