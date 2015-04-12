@@ -19,6 +19,8 @@ public class UI : MonoBehaviour {
 	private float x, y, animateSide;
 	private int index;
 
+	GUIStyle boxStyle, buttonStyle;
+
 	// ========================================================== initialization
 	// Use this for initialization
 	void Start () {
@@ -42,6 +44,8 @@ public class UI : MonoBehaviour {
 		
 		index = 0;
 		animateSide = 500;
+
+
 	}
 
 	// ========================================================== helper
@@ -64,11 +68,22 @@ public class UI : MonoBehaviour {
 	// ========================================================== GUI
 	void OnGUI (){
 
+		//style
+		boxStyle = new GUIStyle ("box");
+		Font regular = (Font)Resources.Load("Arial", typeof(Font));
+		boxStyle.font = regular;
+		boxStyle.fontSize = 20;
+		boxStyle.alignment = TextAnchor.MiddleCenter;
+		boxStyle.normal.background = (Texture2D)Resources.Load ("boxBack", typeof(Texture2D));
+
+
+
+
+
+
+
 		float buttonWidth = Screen.width * .2f;
 		float buttonHeight = Screen.height * .03f;
-
-		float xLoc = Screen.width*.8f;
-		float itY = Screen.height*.8f;
 
 		float squareSize = Screen.width * .07f;
 
@@ -79,8 +94,8 @@ public class UI : MonoBehaviour {
 			float h = Screen.height*.04f;
 
 			//height 1 is food and day
-			GUI.Box (new Rect (Screen.width*.9f,h, squareSize, squareSize), "Day\n" + _gametime._currentDay.ToString());
-			GUI.Box (new Rect (w, h, squareSize, squareSize), "Food\n" + _shelter.Food);
+			GUI.Box (new Rect (Screen.width*.9f,h, squareSize, squareSize), "Day\n" + _gametime._currentDay.ToString(), boxStyle);
+			GUI.Box (new Rect (w, h, squareSize, squareSize), "Food\n" + _shelter.Food, boxStyle);
 			h+= squareSize;
 
 			// height 2 is new day button, and medicine
@@ -88,11 +103,11 @@ public class UI : MonoBehaviour {
 				_gametime.newDay();
 				_reports.showReports = true;
 			}
-			GUI.Box (new Rect (w,h, squareSize, squareSize), "Medicine\n" + _shelter.Medicine);
+			GUI.Box (new Rect (w,h, squareSize, squareSize), "Medicine\n" + _shelter.Medicine, boxStyle);
 			h+= squareSize;
 
 			//parts
-			GUI.Box (new Rect (w,h, squareSize, squareSize), "Parts\n" + _shelter.Parts);
+			GUI.Box (new Rect (w,h, squareSize, squareSize), "Parts\n" + _shelter.Parts, boxStyle);
 			h+= squareSize;
 
 			// reports button
@@ -168,9 +183,9 @@ public class UI : MonoBehaviour {
 				h = Screen.height*y - Screen.height * .08f;
 
 				//health and fatigue
-				GUI.Box(new Rect (w, h, squareSize/1.6f, squareSize/1.8f), _shelter._survivors[index].Health + "\nHealth");
+				GUI.Box(new Rect (w, h, squareSize/1.6f, squareSize/1.8f), _shelter._survivors[index].Health + "\nHealth", boxStyle);
 				h+=squareSize/1.8f;
-				GUI.Box(new Rect (w, h, squareSize/1.6f, squareSize/1.8f), _shelter._survivors[index].Fatigue + "\nFatigue");
+				GUI.Box(new Rect (w, h, squareSize/1.6f, squareSize/1.8f), _shelter._survivors[index].Fatigue + "\nFatigue", boxStyle);
 
 
 
@@ -198,7 +213,7 @@ public class UI : MonoBehaviour {
 
 				if(_shelter.NumberOfSurvivors > 0){ //if we have no survivors don't try to do this
 
-					GUI.Box (new Rect (w, h, buttonWidth, buttonHeight*12.1f),_shelter._survivors[index].Name + "\nAssign Task");
+					GUI.Box (new Rect (w, h, buttonWidth, buttonHeight*12.1f),_shelter._survivors[index].Name + "\nAssign Task", boxStyle);
 
 					w = Screen.width*.839f + animateSide;
 					buttonWidth = Screen.width * .125f;
@@ -231,11 +246,11 @@ public class UI : MonoBehaviour {
 
 					h += squareSize/1.6f;
 
-					GUI.Box (new Rect (w, h, squareSize/1.6f, squareSize/1.8f), "Health\n" + _shelter._survivors [index].Health);
+					GUI.Box (new Rect (w, h, squareSize/1.6f, squareSize/1.8f), "Health\n" + _shelter._survivors [index].Health, boxStyle);
 
 					h+=squareSize/1.8f;
 
-					GUI.Box (new Rect (w, h, squareSize/1.6f, squareSize/1.8f), "Fatigue\n" + _shelter._survivors [index].Fatigue);
+					GUI.Box (new Rect (w, h, squareSize/1.6f, squareSize/1.8f), "Fatigue\n" + _shelter._survivors [index].Fatigue, boxStyle);
 
 				}
 			}
@@ -244,7 +259,7 @@ public class UI : MonoBehaviour {
 		// start screen
 		if (_gametime._currentDay == 0) {
 			// new day button
-			if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.07f, buttonWidth, buttonHeight),  "New Game")) {
+			if (GUI.Button (new Rect (Screen.width*.25f, Screen.height*.07f, buttonWidth, buttonHeight),  "New Game")) {
 				_gametime.newDay();
 			}
 		}
