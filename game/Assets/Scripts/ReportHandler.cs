@@ -35,8 +35,8 @@ public class ReportHandler : MonoBehaviour
 	public void PassReports(List<Report> reports)
 	{
 		//I know this is a hacky approach, we can take it out later if you want
-		for(int r = 0; r < reports.Count-1; r++){
-			if(reports[r].IsInitialized() == false){
+		for(int r = 0; r < reports.Count; r++){
+			if(reports[r] && reports[r].IsInitialized() == false){
 				reports.RemoveAt(r);
 			}
 		}
@@ -47,9 +47,11 @@ public class ReportHandler : MonoBehaviour
 			_hasReports = true;
 			_reports = reports;
 			_currentReportIndex = 0;
+
+			/*
 			_reportString = reports[_currentReportIndex].GetMessage();
 			Debug.Log ("_reportString set to:");
-
+*/
 			_pages.Add(_reports);
 			_currentPage = _pages.Count -1;
 		}
@@ -82,15 +84,30 @@ public class ReportHandler : MonoBehaviour
 					}
 					x += w;
 				}
+				int  rIt =0;
 
+				foreach(Report r in _reports){
+					if(r){
+						r.PrintReport(rIt);
+					}
+					else{
+						Debug.Log ("ERROR: r is null");
+					}
+					rIt++;
+				}
 
 				w = 500;
 				h = 50;
 				//Print the report text
 				for(int i = 0; i < _reports.Count; i++)
 				{
-					GUI.Label(new Rect(x,y,w,h), "Report: " + _reports[i].GetMessage());
-					y+=50;
+					try{
+						GUI.Label(new Rect(x,y,w,h), "Report: " + _reports[i].GetMessage()); //error thrown is deifinitely not an indexing erro
+						y+=50;
+					}
+					catch{
+						Debug.LogError("ReportHandler (109) ERROR: i=" + i + " _reports.Count:" + _reports.Count);
+					}
 				}
 
 

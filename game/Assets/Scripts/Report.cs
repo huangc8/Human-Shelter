@@ -6,13 +6,17 @@ using System.Collections;
 
 public class Report : ScriptableObject
 {
-		string _message = "ERROR-- Message has not been set --";
+		string _message = "TRACER TO FIND BUG";
 
 
 		public void SetMessage (string message)
 		{
 				_message = message;
 		}
+
+	public void PrintReport(int i){
+		Debug.Log ("Report [" + i + "]: " + _message);
+	}
 
 	public bool IsInitialized(){
 		return "ERROR-- Message has not been set --" == _message;
