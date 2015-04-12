@@ -15,7 +15,7 @@ public class ReportHandler : MonoBehaviour
 	bool _hasReports; 						// whether or not we have reports to display
 	string _reportString = "";				// tmp string
 	public bool showReports;
-	ArrayList _pages;
+	public ArrayList _pages;
 	int _currentPage = 0;
 
 	// ===================================================== initialization
@@ -28,6 +28,18 @@ public class ReportHandler : MonoBehaviour
 
 	}
 
+	List<Report> CurrentReports{
+		get{
+			if(_pages != null && _pages.Count > 0){
+				return (List<Report>)_pages[_currentPage];
+			}
+			else{
+				return null;
+			}
+		}
+	}
+
+
 	// ===================================================== functions
 	/// <summary>
 	/// Passes the reports.
@@ -35,6 +47,7 @@ public class ReportHandler : MonoBehaviour
 	/// <param name="reports">Reports.</param>
 	public void PassReports(List<Report> reports)
 	{
+		List<Report> newReports = new List<Report>();
 		//I know this is a hacky approach, we can take it out later if you want
 		for(int r = 0; r < reports.Count; r++){
 			if(reports[r] && reports[r].IsInitialized() == false){
@@ -45,16 +58,32 @@ public class ReportHandler : MonoBehaviour
 
 		Debug.Log("Passing Reports");
 		if(reports.Count > 0){
+
+
+			newReports = new List<Report>();
 			_hasReports = true;
-			_reports = reports;
+
+			foreach(Report rept in reports){
+				newReports.Add(rept);
+			}
+
+			//newReports = reports;//_reports = reports;
 			_currentReportIndex = 0;
 
 			/*
 			_reportString = reports[_currentReportIndex].GetMessage();
-			Debug.Log ("_reportString set to:");
-*/
-			_pages.Add(_reports);
+			Debug.Log ("_reportString set to:");*/
+
+			_pages.Add(newReports);
+
+			Report bugTracer = new Report();
+
+			bugTracer.SetMessage("ERROR CHECK LINE 59 ReportHandler");
+			//new List<Report>();
+
 			_currentPage = _pages.Count -1;
+
+			_reports = (List<Report>)_pages[_currentPage];
 		}
 		else
 		{
@@ -68,7 +97,7 @@ public class ReportHandler : MonoBehaviour
 	/// </summary>
 	void OnGUI()
 	{
-		if(_reports == null){
+		if(CurrentReports == null){
 			Debug.LogError("Reports are null.");
 		}
 
@@ -88,7 +117,7 @@ public class ReportHandler : MonoBehaviour
 
 		Debug.Log ("_____________________");
 #endif
-		if(showReports && _reports != null)
+		if(showReports && CurrentReports != null)
 		{
 			if(_hasReports)
 			{
@@ -101,7 +130,7 @@ public class ReportHandler : MonoBehaviour
 					//move to previous report
 					if(GUI.Button(new Rect(x,y,w,h),"Previous Page")){
 						_currentPage--;
-						_reports = (List <Report>)_pages[_currentPage];
+						_reports = CurrentReports;
 					}
 					x += w;
 				}
@@ -124,14 +153,14 @@ public class ReportHandler : MonoBehaviour
 				w = 500;
 				h = 50;
 				//Print the report text
-				for(int i = 0; i < _reports.Count; i++)
+				for(int i = 0; i < CurrentReports.Count; i++)
 				{
 					try{
-						GUI.Label(new Rect(x,y,w,h), "Report: " + _reports[i].GetMessage()); //error thrown is deifinitely not an indexing erro
+						GUI.Label(new Rect(x,y,w,h), "Report: " + CurrentReports[i].GetMessage()); //error thrown is deifinitely not an indexing erro
 						y += 50;
 					}
 					catch{
-						Debug.LogError("ReportHandler (109) ERROR: i = " + i + " _reports.Count: " + _reports.Count);
+						Debug.LogError("ReportHandler (109) ERROR: i = " + i + " CurrentReports.Count: " + CurrentReports.Count);
 					}
 				}
 
@@ -143,7 +172,6 @@ public class ReportHandler : MonoBehaviour
 					//move to next page
 					if(GUI.Button(new Rect(x,y,w,h),"Next Page")){
 						_currentPage++;
-						_reports = (List <Report>)_pages[_currentPage];
 					}
 					x += w;
 				}
