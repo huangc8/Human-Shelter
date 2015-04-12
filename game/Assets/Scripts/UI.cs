@@ -20,6 +20,8 @@ public class UI : MonoBehaviour {
 	private int index;
 
 	GUIStyle boxStyle, buttonStyle;
+	Font regular, bold;
+	Texture2D box, button1, button2, button3;
 
 	// ========================================================== initialization
 	// Use this for initialization
@@ -46,6 +48,18 @@ public class UI : MonoBehaviour {
 		animateSide = 500;
 
 
+
+		boxStyle = new GUIStyle ("box");
+
+		buttonStyle = new GUIStyle ("button");
+		
+		regular = (Font)Resources.Load("Arial", typeof(Font));
+		bold = (Font)Resources.Load("Arial Bold", typeof(Font));
+
+		box = (Texture2D)Resources.Load ("boxBack", typeof(Texture2D));
+		button1 = (Texture2D)Resources.Load ("buttonBack", typeof(Texture2D));
+		button2 = (Texture2D)Resources.Load ("buttonBack2", typeof(Texture2D));
+		button3 = (Texture2D)Resources.Load ("buttonBack3", typeof(Texture2D));
 	}
 
 	// ========================================================== helper
@@ -68,16 +82,36 @@ public class UI : MonoBehaviour {
 	// ========================================================== GUI
 	void OnGUI (){
 
-		//style
-		boxStyle = new GUIStyle ("box");
-		Font regular = (Font)Resources.Load("Arial", typeof(Font));
+
+		//box style
 		boxStyle.font = regular;
-		boxStyle.fontSize = 20;
+
+		//1400x800
+		int bigFont = Screen.width / 29;
+		int smallFont = Screen.width / 70;
+		boxStyle.fontSize = smallFont;
+
 		boxStyle.alignment = TextAnchor.MiddleCenter;
-		boxStyle.normal.background = (Texture2D)Resources.Load ("boxBack", typeof(Texture2D));
+		boxStyle.normal.background = box;
+		boxStyle.normal.textColor = Color.white;
 
+		
+		
 
+		//button style
+		buttonStyle.font = regular;
+		buttonStyle.fontSize = smallFont;
+		
+		buttonStyle.alignment = TextAnchor.MiddleCenter;
+		buttonStyle.normal.background = button1;
+		buttonStyle.hover.background = button2;
+		buttonStyle.active.background = button3;
 
+		buttonStyle.normal.textColor = Color.white;
+		buttonStyle.hover.textColor = Color.black;
+		buttonStyle.active.textColor = Color.black;
+		
+		
 
 
 
@@ -86,6 +120,7 @@ public class UI : MonoBehaviour {
 		float buttonHeight = Screen.height * .03f;
 
 		float squareSize = Screen.width * .07f;
+		float smallSquareSize = squareSize / 3;
 
 		if(showAllButtons && _gametime._currentDay > 0)
 		//if(true)
@@ -94,24 +129,56 @@ public class UI : MonoBehaviour {
 			float h = Screen.height*.04f;
 
 			//height 1 is food and day
-			GUI.Box (new Rect (Screen.width*.9f,h, squareSize, squareSize), "Day\n" + _gametime._currentDay.ToString(), boxStyle);
-			GUI.Box (new Rect (w, h, squareSize, squareSize), "Food\n" + _shelter.Food, boxStyle);
-			h+= squareSize;
+			GUI.Box (new Rect (w, h, squareSize, smallSquareSize), "Food", boxStyle);
+			GUI.Box (new Rect (Screen.width*.9f,h, squareSize, smallSquareSize), "Day", boxStyle);
 
+			h+= smallSquareSize;
+			boxStyle.fontSize = bigFont;
+			boxStyle.font = bold;
+
+			GUI.Box (new Rect (w, h, squareSize, smallSquareSize*2), _shelter.Food.ToString(), boxStyle);
+			GUI.Box (new Rect (Screen.width*.9f,h, squareSize, smallSquareSize*2), _gametime._currentDay.ToString(), boxStyle);
+
+
+			h+= smallSquareSize*2;
+			boxStyle.fontSize = smallFont;
+			boxStyle.font = regular;
+
+		
 			// height 2 is new day button, and medicine
-			if (GUI.Button (new Rect (Screen.width*.9f, h*1.15f, squareSize, squareSize/3),  "Next Day")) {
+			if (GUI.Button (new Rect (Screen.width*.9f, h*1.15f, squareSize, squareSize/3),  "Next Day", buttonStyle)) {
 				_gametime.newDay();
 				_reports.showReports = true;
 			}
-			GUI.Box (new Rect (w,h, squareSize, squareSize), "Medicine\n" + _shelter.Medicine, boxStyle);
-			h+= squareSize;
+
+			GUI.Box (new Rect (w,h, squareSize, smallSquareSize), "Medicine", boxStyle);
+
+			h+= smallSquareSize;
+			boxStyle.fontSize = bigFont;
+			boxStyle.font = bold;
+
+
+			GUI.Box (new Rect (w,h, squareSize, smallSquareSize*2), _shelter.Medicine.ToString(), boxStyle);
+			h+= smallSquareSize*2;
+			boxStyle.fontSize = smallFont;
+			boxStyle.font = regular;
+			
 
 			//parts
-			GUI.Box (new Rect (w,h, squareSize, squareSize), "Parts\n" + _shelter.Parts, boxStyle);
-			h+= squareSize;
+			GUI.Box (new Rect (w,h, squareSize, smallSquareSize), "Parts", boxStyle);
+			h+= smallSquareSize;
+			boxStyle.fontSize = bigFont;
+			boxStyle.font = bold;
+
+			GUI.Box (new Rect (w,h, squareSize, smallSquareSize*2), _shelter.Parts.ToString(), boxStyle);
+			h+= smallSquareSize*2;
+			boxStyle.fontSize = smallFont;
+			boxStyle.font = regular;
+
+
 
 			// reports button
-			if (GUI.Button (new Rect (w, h*1.1f, squareSize, squareSize/3),  "Open Journal")) {
+			if (GUI.Button (new Rect (w, h*1.1f, squareSize, squareSize/3),  "Journal", buttonStyle)) {
 				if(_reports.showReports == false){
 					_reports.showReports = true;
 				}
@@ -123,57 +190,25 @@ public class UI : MonoBehaviour {
 
 
 
-			w = Screen.width *.765f;
-			h = Screen.height *.75f;
-
-
-			//new survivor arrives
-			//this has been replaced by just clicking on the guy
-
-			/*
-			try{
-			Survivor visitorAtGate = _visitors._personList [_gametime._currentDay];
-			if(_gametime._currentDay == 0){
-					visitorAtGate = null;
-			}
-			if (visitorAtGate != null) {
-				if(_startNewConversation.specialCase()){
-					GUI.Box (new Rect (w, h, buttonWidth, buttonHeight*1.15f), "There is someone at the gate!");
-
-				h += buttonHeight * 1.24f;
-				if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight), "Talk to " + visitorAtGate.Name.ToString ())) {
-					_startNewConversation.ClickCheck("gate");
-				}
-				h += buttonHeight;
-				}
-
-			} 
-			}
-			catch{
-
-			}
-			*/
-
-
-
 			w = Screen.width * x - Screen.width * .045f;
 			h = Screen.height * y - Screen.height * .143f;
 
 			buttonWidth = Screen.width * .1f;
+			float charSquare = squareSize * .2f ;
 
-
+			
 			//above character's head
 			if(charButtons){
-				if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight),"Talk to " + _shelter._survivors[index].Name)) {
+				if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight),"Talk to " + _shelter._survivors[index].Name, buttonStyle)) {
 					showButtons=true;
 					_startNewConversation.ClickCheck(_shelter._survivors[index].Name);
 
 					_shelter._survivors [index].Converse ();
 					_shelter._survivors[index]._conversationsLeft--;
 				}
-				h+= buttonHeight *1.07f;
+				h+= buttonHeight *1.09f;
 
-				if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight),"Assign task")) {
+				if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight),"Assign task", buttonStyle)) {
 					showButtons=true;
 					sideButtons=true;
 					charButtons=false;
@@ -182,12 +217,31 @@ public class UI : MonoBehaviour {
 				w = Screen.width *x - Screen.width * .089f;
 				h = Screen.height*y - Screen.height * .08f;
 
+
 				//health and fatigue
-				GUI.Box(new Rect (w, h, squareSize/1.6f, squareSize/1.8f), _shelter._survivors[index].Health + "\nHealth", boxStyle);
-				h+=squareSize/1.8f;
-				GUI.Box(new Rect (w, h, squareSize/1.6f, squareSize/1.8f), _shelter._survivors[index].Fatigue + "\nFatigue", boxStyle);
+				boxStyle.fontSize = (int)(bigFont*.75f);
+				boxStyle.font = bold;
+				GUI.Box(new Rect (w, h, charSquare*3, charSquare*2f), _shelter._survivors[index].Health.ToString(), boxStyle);
 
+				h+= charSquare*2f;
+				boxStyle.fontSize = (int)(smallFont*.8f);
+				boxStyle.font = regular;
+				boxStyle.alignment = TextAnchor.UpperCenter;
+				GUI.Box(new Rect (w, h, charSquare*3, charSquare*1.8f), "Health", boxStyle);
 
+				h+= charSquare*1.8f;
+				boxStyle.fontSize = (int)(bigFont*.5f);
+				boxStyle.font = bold;
+				boxStyle.alignment = TextAnchor.MiddleCenter;
+				GUI.Box(new Rect (w, h, charSquare*3, charSquare*1.3f), _shelter._survivors[index].Fatigue.ToString(), boxStyle);
+
+				h+= charSquare*1.3f;
+				boxStyle.fontSize = (int)(smallFont*.6f);
+				boxStyle.font = regular;
+				boxStyle.alignment = TextAnchor.UpperCenter;
+				GUI.Box(new Rect (w, h, charSquare*3, charSquare*1.1f), "Fatigue", boxStyle);
+
+				boxStyle.alignment = TextAnchor.MiddleCenter;
 
 			}
 
@@ -213,24 +267,47 @@ public class UI : MonoBehaviour {
 
 				if(_shelter.NumberOfSurvivors > 0){ //if we have no survivors don't try to do this
 
-					GUI.Box (new Rect (w, h, buttonWidth, buttonHeight*12.1f),_shelter._survivors[index].Name + "\nAssign Task", boxStyle);
+					boxStyle.alignment = TextAnchor.UpperCenter;
+					boxStyle.font = bold;
+					GUI.Box (new Rect (w, h, buttonWidth, buttonHeight),_shelter._survivors[index].Name, boxStyle);
+
+					h+= buttonHeight;
+					boxStyle.font = regular;
+					GUI.Box (new Rect (w, h, buttonWidth, buttonHeight*12.05f),"Assign Task", boxStyle);
+
+
+					h += buttonHeight*1.25f;
+
+
+					//decoratory white bar
+					boxStyle.normal.background = button2;
+					GUI.Box (new Rect (w, h*.99f, buttonWidth, buttonHeight*.01f),"", boxStyle);
+					boxStyle.normal.background = box;
+
+
 
 					w = Screen.width*.839f + animateSide;
-					buttonWidth = Screen.width * .125f;
+					buttonWidth = Screen.width * .1245f;
 
-
-					h += buttonHeight*2;
+					
 					for (int t = 0; t < (int) Survivor.task.Count; t++) {
-						if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight), ((Survivor.task)t).ToString ())) {
+
+						if(_shelter._survivors[index].AssignedTask == (Survivor.task)t)
+						{
+							buttonStyle.normal.background = (Texture2D)Resources.Load ("buttonBack2", typeof(Texture2D));
+							buttonStyle.normal.textColor = Color.black;
+
+						}
+
+						if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight), ((Survivor.task)t).ToString (), buttonStyle)) {
 							showButtons=true;
 							_shelter._survivors [index].AssignedTask = ((Survivor.task)t);
 						}
-						h += buttonHeight;
-					}
-					
-					if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight), "Assigned Task: " + _shelter._survivors [index].AssignedTask.ToString ())) {
-						showButtons=true;
+						buttonStyle.normal.background = (Texture2D)Resources.Load ("buttonBack", typeof(Texture2D));
+						buttonStyle.normal.textColor = Color.white;
 
+						
+						h += buttonHeight*1.2f;
 					}
 
 					//close, health, and fatigue
@@ -239,18 +316,41 @@ public class UI : MonoBehaviour {
 					h = Screen.height*.4f;
 					
 
-					if (GUI.Button (new Rect (w, h, squareSize/1.6f, squareSize/1.8f), "Close")) {
+					if (GUI.Button (new Rect (w, h, squareSize/1.6f, squareSize/1.8f), "Close", buttonStyle)) {
 						showButtons=true;
 						sideButtons=false;
 					}
 
 					h += squareSize/1.6f;
 
-					GUI.Box (new Rect (w, h, squareSize/1.6f, squareSize/1.8f), "Health\n" + _shelter._survivors [index].Health, boxStyle);
 
-					h+=squareSize/1.8f;
 
-					GUI.Box (new Rect (w, h, squareSize/1.6f, squareSize/1.8f), "Fatigue\n" + _shelter._survivors [index].Fatigue, boxStyle);
+
+					//health and fatigue
+					boxStyle.fontSize = (int)(bigFont*.75f);
+					boxStyle.font = bold;
+					boxStyle.alignment = TextAnchor.MiddleCenter;
+					GUI.Box(new Rect (w, h, charSquare*3, charSquare*2f), _shelter._survivors[index].Health.ToString(), boxStyle);
+					
+					h+= charSquare*2f;
+					boxStyle.fontSize = (int)(smallFont*.8f);
+					boxStyle.font = regular;
+					boxStyle.alignment = TextAnchor.UpperCenter;
+					GUI.Box(new Rect (w, h, charSquare*3, charSquare*1.8f), "Health", boxStyle);
+					
+					h+= charSquare*1.8f;
+					boxStyle.fontSize = (int)(bigFont*.5f);
+					boxStyle.font = bold;
+					boxStyle.alignment = TextAnchor.MiddleCenter;
+					GUI.Box(new Rect (w, h, charSquare*3, charSquare*1.3f), _shelter._survivors[index].Fatigue.ToString(), boxStyle);
+					
+					h+= charSquare*1.3f;
+					boxStyle.fontSize = (int)(smallFont*.6f);
+					boxStyle.font = regular;
+					boxStyle.alignment = TextAnchor.UpperCenter;
+					GUI.Box(new Rect (w, h, charSquare*3, charSquare*1.1f), "Fatigue", boxStyle);
+					
+					boxStyle.alignment = TextAnchor.MiddleCenter;
 
 				}
 			}
@@ -259,7 +359,7 @@ public class UI : MonoBehaviour {
 		// start screen
 		if (_gametime._currentDay == 0) {
 			// new day button
-			if (GUI.Button (new Rect (Screen.width*.25f, Screen.height*.07f, buttonWidth, buttonHeight),  "New Game")) {
+			if (GUI.Button (new Rect (Screen.width*.1f, Screen.height*.07f, buttonWidth, buttonHeight),  "New Game", buttonStyle)) {
 				_gametime.newDay();
 			}
 		}
