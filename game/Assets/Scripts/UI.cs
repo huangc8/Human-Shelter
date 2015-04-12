@@ -94,6 +94,7 @@ public class UI : MonoBehaviour {
 		boxStyle.alignment = TextAnchor.MiddleCenter;
 		boxStyle.normal.background = box;
 		boxStyle.normal.textColor = Color.white;
+		boxStyle.padding = new RectOffset (1, 1, 1, 1);
 
 		
 		
@@ -110,7 +111,8 @@ public class UI : MonoBehaviour {
 		buttonStyle.normal.textColor = Color.white;
 		buttonStyle.hover.textColor = Color.black;
 		buttonStyle.active.textColor = Color.black;
-		
+		buttonStyle.padding = new RectOffset (1, 1, 1, 1);
+
 		
 
 
