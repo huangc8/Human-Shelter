@@ -72,8 +72,8 @@ public class UI : MonoBehaviour {
 
 		float squareSize = Screen.width * .07f;
 
-		//if(showAllButtons && _gametime._currentDay > 0)
-		if(true)
+		if(showAllButtons && _gametime._currentDay > 0)
+		//if(true)
 		{
 			float w = Screen.width*.03f;
 			float h = Screen.height*.04f;
