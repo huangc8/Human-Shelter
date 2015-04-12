@@ -41,7 +41,7 @@ public class UI : MonoBehaviour {
 		showAllButtons = false;
 		
 		index = 0;
-		animateSide = 400;
+		animateSide = 500;
 	}
 
 	// ========================================================== helper
@@ -65,14 +65,15 @@ public class UI : MonoBehaviour {
 	void OnGUI (){
 
 		float buttonWidth = Screen.width * .2f;
-		float buttonHeight = Screen.height * .04f;
+		float buttonHeight = Screen.height * .03f;
 
 		float xLoc = Screen.width*.8f;
 		float itY = Screen.height*.8f;
 
 		float squareSize = Screen.width * .07f;
 
-		if(showAllButtons && _gametime._currentDay > 0)
+		//if(showAllButtons && _gametime._currentDay > 0)
+		if(true)
 		{
 			float w = Screen.width*.03f;
 			float h = Screen.height*.04f;
@@ -140,22 +141,43 @@ public class UI : MonoBehaviour {
 
 
 
+			w = Screen.width * x - Screen.width * .045f;
+			h = Screen.height * y - Screen.height * .143f;
+
+			buttonWidth = Screen.width * .1f;
+
 
 			//above character's head
 			if(charButtons){
-				if (GUI.Button (new Rect (Screen.width*x-110, Screen.height*y-120, 100, 50),"Talk to " + _shelter._survivors[index].Name)) {
+				if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight),"Talk to " + _shelter._survivors[index].Name)) {
 					showButtons=true;
 					_startNewConversation.ClickCheck(_shelter._survivors[index].Name);
 
 					_shelter._survivors [index].Converse ();
 					_shelter._survivors[index]._conversationsLeft--;
 				}
-				if (GUI.Button (new Rect (Screen.width*x+10, Screen.height*y-120, 100, 50),"Assign task")) {
+				h+= buttonHeight *1.07f;
+
+				if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight),"Assign task")) {
 					showButtons=true;
 					sideButtons=true;
 					charButtons=false;
 				}
+
+				w = Screen.width *x - Screen.width * .089f;
+				h = Screen.height*y - Screen.height * .08f;
+
+				//health and fatigue
+				GUI.Box(new Rect (w, h, squareSize/1.6f, squareSize/1.8f), _shelter._survivors[index].Health + "\nHealth");
+				h+=squareSize/1.8f;
+				GUI.Box(new Rect (w, h, squareSize/1.6f, squareSize/1.8f), _shelter._survivors[index].Fatigue + "\nFatigue");
+
+
+
 			}
+
+
+
 
 			//side assign buttons
 			if (true) {
@@ -163,63 +185,58 @@ public class UI : MonoBehaviour {
 				{
 					animateSide -=20;
 				}
-				if(animateSide < 400 && !sideButtons)
+				if(animateSide < 500 && !sideButtons)
 				{
 					animateSide +=20;
 				}
 
 
-				itY = Screen.height*.1f;
-				xLoc = Screen.width*.8f + animateSide;
+				w = Screen.width*.836f + animateSide;
+				h = Screen.height*.4f;
+				buttonWidth = Screen.width * .13f;
+
 
 				if(_shelter.NumberOfSurvivors > 0){ //if we have no survivors don't try to do this
-					if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), _shelter._survivors[index].Name)) {
-						showButtons=true;
 
-					}
+					GUI.Box (new Rect (w, h, buttonWidth, buttonHeight*12.1f),_shelter._survivors[index].Name + "\nAssign Task");
 
-					itY += buttonHeight;
+					w = Screen.width*.839f + animateSide;
+					buttonWidth = Screen.width * .125f;
+
+
+					h += buttonHeight*2;
 					for (int t = 0; t < (int) Survivor.task.Count; t++) {
-						if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), ((Survivor.task)t).ToString ())) {
+						if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight), ((Survivor.task)t).ToString ())) {
 							showButtons=true;
 							_shelter._survivors [index].AssignedTask = ((Survivor.task)t);
 						}
-						itY += buttonHeight;
+						h += buttonHeight;
 					}
 					
-					if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Assigned Task: " + _shelter._survivors [index].AssignedTask.ToString ())) {
+					if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight), "Assigned Task: " + _shelter._survivors [index].AssignedTask.ToString ())) {
 						showButtons=true;
 
 					}
-					itY += buttonHeight * 2;
-					if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Health: " + _shelter._survivors [index].Health)) {
-						showButtons=true;
 
-					}
-					itY += buttonHeight;
+					//close, health, and fatigue
 
-					if(_shelter._survivors[index].Fatigue <= 0){
-						if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Stamina: " + -1*_shelter._survivors [index].Fatigue)) {
-							showButtons=true;
-							
-						}
-
-					}
-					else{
-						if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Fatigue: " + _shelter._survivors [index].Fatigue)) {
-							showButtons=true;
-							
-						}
-
-					}
-
-
-					itY += buttonHeight * 2;
+					w = Screen.width*.786f+animateSide;
+					h = Screen.height*.4f;
 					
-					if (GUI.Button (new Rect (xLoc, itY, buttonWidth, buttonHeight), "Close")) {
+
+					if (GUI.Button (new Rect (w, h, squareSize/1.6f, squareSize/1.8f), "Close")) {
 						showButtons=true;
 						sideButtons=false;
 					}
+
+					h += squareSize/1.6f;
+
+					GUI.Box (new Rect (w, h, squareSize/1.6f, squareSize/1.8f), "Health\n" + _shelter._survivors [index].Health);
+
+					h+=squareSize/1.8f;
+
+					GUI.Box (new Rect (w, h, squareSize/1.6f, squareSize/1.8f), "Fatigue\n" + _shelter._survivors [index].Fatigue);
+
 				}
 			}
 		}
@@ -227,7 +244,7 @@ public class UI : MonoBehaviour {
 		// start screen
 		if (_gametime._currentDay == 0) {
 			// new day button
-			if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.07f, 100, buttonHeight),  "New Game")) {
+			if (GUI.Button (new Rect (Screen.width*.05f, Screen.height*.07f, buttonWidth, buttonHeight),  "New Game")) {
 				_gametime.newDay();
 			}
 		}
