@@ -84,8 +84,9 @@ public class Conditions : MonoBehaviour
 		
 		//First half of the string should be the command, second half should
 		//be the name
+#if DEBUGLOG
 		Debug.Log ("getCondition: Command:" + words [0] + " name:" + words [1]);
-
+#endif
 		bool tmp = false; 
 		key = words [1];
 		
@@ -112,8 +113,9 @@ public class Conditions : MonoBehaviour
 				return false;
 			}
 		}// end of switch
-		
+#if DEBUGLOG		
 		Debug.Log ("Error: No such command"); // return error message
+#endif
 		return false;
 	}
 

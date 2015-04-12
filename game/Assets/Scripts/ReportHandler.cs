@@ -24,6 +24,7 @@ public class ReportHandler : MonoBehaviour
 	{
 		showReports = false;
 		_pages = new ArrayList ();
+		_reports = new List<Report>();
 
 	}
 
@@ -67,7 +68,27 @@ public class ReportHandler : MonoBehaviour
 	/// </summary>
 	void OnGUI()
 	{
-		if(showReports)
+		if(_reports == null){
+			Debug.LogError("Reports are null.");
+		}
+
+		Debug.Log ("ReportHandler.OnGUI():");
+
+#if debugmode
+		int rIndex = 0;
+		foreach(Report rIt in _reports){
+			if(rIt == null){
+				Debug.LogError("rIt == null " + rIndex);
+			}
+			else{
+				Debug.Log ("Report message: " + rIt.GetMessage());
+			}
+			rIndex++;
+		}
+
+		Debug.Log ("_____________________");
+#endif
+		if(showReports && _reports != null)
 		{
 			if(_hasReports)
 			{
@@ -84,6 +105,8 @@ public class ReportHandler : MonoBehaviour
 					}
 					x += w;
 				}
+
+#if debugmode
 				int  rIt =0;
 
 				foreach(Report r in _reports){
@@ -91,10 +114,12 @@ public class ReportHandler : MonoBehaviour
 						r.PrintReport(rIt);
 					}
 					else{
-						Debug.Log ("ERROR: r is null");
+						Debug.LogError("ERROR: r is null");
 					}
 					rIt++;
 				}
+#endif
+
 
 				w = 500;
 				h = 50;
@@ -103,10 +128,10 @@ public class ReportHandler : MonoBehaviour
 				{
 					try{
 						GUI.Label(new Rect(x,y,w,h), "Report: " + _reports[i].GetMessage()); //error thrown is deifinitely not an indexing erro
-						y+=50;
+						y += 50;
 					}
 					catch{
-						Debug.LogError("ReportHandler (109) ERROR: i=" + i + " _reports.Count:" + _reports.Count);
+						Debug.LogError("ReportHandler (109) ERROR: i = " + i + " _reports.Count: " + _reports.Count);
 					}
 				}
 
