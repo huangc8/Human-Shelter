@@ -598,6 +598,9 @@ public class Survivor : ScriptableObject
         {
             r.SetMessage(_name + "has rested to " + restoration + " points.");
         }
+		else{
+			r.SetMessage(_name + " has rested to " + restoration + " points.");
+		}
         return r;
     }
 
