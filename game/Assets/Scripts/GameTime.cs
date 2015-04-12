@@ -69,6 +69,7 @@ public class GameTime : MonoBehaviour
 	/// </summary>
 	void evaluateTasks ()
 	{
+		_reports = new List<Report>();
 		//Evaluate each task
 		for (int s = 0; s < _shelter.NumberOfSurvivors; s++) {
 
