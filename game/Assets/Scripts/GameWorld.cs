@@ -266,6 +266,14 @@ public class GameWorld : MonoBehaviour
 		} else {
 			_daysSinceSpawn++;
 		}
+
+		//print out the contents of reports
+		Debug.Log("Printing Reports in GameWorld.NewDay():");
+
+
+		foreach(Report itRep in reports){
+			Debug.Log("itRep:" + itRep.GetMessage());
+		}
 		
 		return reports;
 	}

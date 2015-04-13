@@ -69,6 +69,7 @@ public class GameTime : MonoBehaviour
 	/// </summary>
 	void evaluateTasks ()
 	{
+		_reports = new List<Report>();
 		//Evaluate each task
 		for (int s = 0; s < _shelter.NumberOfSurvivors; s++) {
 
@@ -103,13 +104,19 @@ public class GameTime : MonoBehaviour
 			case Survivor.task.Unassigned:
 				goto case Survivor.task.Resting;
 			case Survivor.task.Resting:
-				_reports.Add (_shelter._survivors [s].Rest (_shelter));
+
+
+				Report rTmp = _shelter._survivors [s].Rest (_shelter);
+
+				Debug.Log ("rTmp Message:" + rTmp.GetMessage());
+
+				_reports.Add (rTmp);
 				break;
 			}
 
 			// increase survivor status
 			_shelter._survivors [s].Exhaust ();
-			_shelter._survivors [s].Eat (_shelter);
+			_reports.Add(_shelter._survivors [s].Eat (_shelter));
 			_shelter._survivors [s].ConsumeMedicine (_shelter);
 		}
 
@@ -119,11 +126,23 @@ public class GameTime : MonoBehaviour
 			_reports.Add (r);
 		}
 
+#if debug
+		//print the reports
+		foreach (Report r in _reports){
+			try{
+				Debug.Log ("130 [reports]:" + r.GetMessage());
+			}
+			catch{
+				Debug.LogError("134 reports are invalid");
+			}
+		}
+#endif
+
 		// pass report
 		_rh.PassReports (_reports);
 
 		// reset report
-		_reports = new List<Report> ();
+		//_reports = new List<Report> ();
 
 		// player update
 		_shelter.playerEat ();
