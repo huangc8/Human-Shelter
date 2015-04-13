@@ -158,7 +158,8 @@ public class StartNewConversation : MonoBehaviour
 						if (hadConversation ["Conv_1_1"] == false) {
 								hadConversation ["Conv_1_1"] = true;
 								//start conv
-								_dialogue.startConv ("Conv_1_1", true);
+								//_dialogue.startConv ("Conv_1_1", true);
+								_dialogue.startConv ("NC22", true);
 								_dialogue.parseChoice (34);
 						}
 						break;
