@@ -59,16 +59,6 @@ public class Conditions : MonoBehaviour
 		//First half of the string should be the condition, second half should be the name
 		//Tokenize the string to get the corresponding array
 		string [] words = key.Split (' ');
-<<<<<<< HEAD
-
-=======
-		
-		//First half of the string should be the command, second half should
-		//be the name
-#if DEBUGLOG
-		Debug.Log ("getCondition: Command:" + words [0] + " name:" + words [1]);
-#endif
->>>>>>> 0856bca3e5ff293afa332b1b86bf2e758d33b492
 		bool tmp = false; 
 		key = words [1];
 		
