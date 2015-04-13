@@ -11,8 +11,6 @@ public class clickChar : MonoBehaviour
 	GameTime _gametime;
 	public PixelCrushers.DialogueSystem.DialogueSystemController _DiagCon; // dialogue system
 
-
-
 	int arrayIndex; 			// character index in shelter.survivor
 	StartNewConversation _startNewConversation;
 
@@ -21,8 +19,6 @@ public class clickChar : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		_startNewConversation = g.GetComponent<StartNewConversation>();
-
 		if (_shelter == null) {
 			_shelter = g.GetComponent<Shelter> ();
 		}
@@ -50,7 +46,6 @@ public class clickChar : MonoBehaviour
 			{
 				_startNewConversation.ClickCheck("gate");
 			}
-
 		}
 		else{
 
