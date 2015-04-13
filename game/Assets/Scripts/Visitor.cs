@@ -15,10 +15,7 @@ public class Visitor : MonoBehaviour {
 
 	// =================================================== initialization
 	// Use this for initialization
-	void Start () {
-		_gameWorld = this.GetComponent<GameWorld>();
-		_gametime = this.GetComponent<GameTime>();
-		
+	void Start () {		
 		//images
 		_images = new GameObject[30];
 		_images [0] = GameObject.FindWithTag ("Brian");
