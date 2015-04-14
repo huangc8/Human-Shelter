@@ -126,11 +126,7 @@ public class Shelter : MonoBehaviour
 	// =============================================================== initialization
 	// Use this for initialization
 	void Start ()
-	{
-		_gameWorld = this.GetComponent<GameWorld> ();
-		_visitors = this.GetComponent<Visitor> ();
-		_gametime = this.GetComponent<GameTime> ();
-		
+	{		
 		_defenses = 0;
 		_survivors = new Survivor[6];
 		_images = new GameObject[6];

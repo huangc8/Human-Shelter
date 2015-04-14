@@ -4,56 +4,38 @@ using System.Collections;
 public class clickChar : MonoBehaviour
 {
 	// ====================================================================== data
-	public GameObject g;		// this gameobject
-	Shelter _shelter; 			// the shelter data
-	Visitor _visitors; 			// grab info about newcomers
-	private UI _ui;				// the UI class
-	GameTime _gametime;
-	public PixelCrushers.DialogueSystem.DialogueSystemController _DiagCon; // dialogue system
+	public GameObject g;													// this gameobject
+	private Shelter _shelter; 												// the shelter data
+	private Visitor _visitors; 												// grab info about newcomers
+	private UI _ui;															// the UI class
+	private GameTime _gametime;												// game time class
+	private StartNewConversation _startNewConversation;						// start new conversation
+	private Dialogue _Diag; // dialogue system
 
-
-
-	int arrayIndex; 			// character index in shelter.survivor
-	StartNewConversation _startNewConversation;
-
+	int arrayIndex; 														// character index in shelter.survivor
 
 	// ====================================================================== init
 	// Use this for initialization
 	void Start ()
 	{
-		_startNewConversation = g.GetComponent<StartNewConversation>();
+		_shelter = g.GetComponent<Shelter> ();
+		_visitors = g.GetComponent<Visitor> ();
+		_ui = g.GetComponent<UI> ();
+		_gametime = g.GetComponent<GameTime> ();
+		_startNewConversation = g.GetComponent<StartNewConversation> ();
 
-		if (_shelter == null) {
-			_shelter = g.GetComponent<Shelter> ();
-		}
-		if (_visitors == null) {
-			_visitors = g.GetComponent<Visitor> ();
-		}
-		if (_ui == null) {
-			_ui = g.GetComponent<UI> ();
-		}
-		if (_gametime == null) {
-			_gametime = g.GetComponent<GameTime> ();
-		}
 		//invisible at first
 		renderer.enabled = false;
-
 	}
 
 	// ===================================================================== action
 	// check for mouse click
 	private void OnMouseDown ()
 	{
-
 		if (this.tag == "NewVisitor") {
-			if(!_DiagCon.IsConversationActive)
-			{
-				_startNewConversation.ClickCheck("gate");
-			}
-
+			_startNewConversation.ClickCheck("gate");
 		}
 		else{
-
 			//find corresponding character within shelter
 			arrayIndex = -1;
 			for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
@@ -77,14 +59,13 @@ public class clickChar : MonoBehaviour
 
 	void Update()
 	{
-		
 		Survivor visitorAtGate = _visitors._personList [_gametime._currentDay];
 		if(_gametime._currentDay == 0){
 			visitorAtGate = null;
 		}
 		if (this.tag == "NewVisitor") {
 			if(visitorAtGate != null)
-				{
+			{
 				renderer.enabled=true;
 			}
 			else {

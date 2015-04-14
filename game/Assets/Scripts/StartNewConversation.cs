@@ -83,7 +83,7 @@ public class StartNewConversation : MonoBehaviour
 						if (hadConversation ["Conv_3_2"] == false && name == "gate") {
 								hadConversation ["Conv_3_2"] = true;
 								//start conv
-								_dialogue.startConv ("Conv_3_2", false);
+								_dialogue.startConv ("Conv_3_2", true);
 						}
 						break;
 				// --------------------- day 4 -----------------------
@@ -98,7 +98,7 @@ public class StartNewConversation : MonoBehaviour
 						if (hadConversation ["Conv_4_2"] == false && name == "gate") {
 								hadConversation ["Conv_4_2"] = true;
 								//start conv
-								_dialogue.startConv ("Conv_4_2", false);
+								_dialogue.startConv ("Conv_4_2", true);
 						}
 						break;
 				// --------------------- day 5 -----------------------
@@ -121,7 +121,7 @@ public class StartNewConversation : MonoBehaviour
 						if (hadConversation ["Conv_6_1"] == false && name == "gate") {
 								hadConversation ["Conv_6_1"] = true;
 								//start conv
-								_dialogue.startConv ("Conv_6_1", false);
+								_dialogue.startConv ("Conv_6_1", true);
 						}
 						break;
 				// --------------------- day 7 -----------------------
@@ -129,7 +129,7 @@ public class StartNewConversation : MonoBehaviour
 						if (hadConversation ["Conv_7_1"] == false && name == "gate") {
 								hadConversation ["Conv_7_1"] = true;
 								//start conv
-								_dialogue.startConv ("Conv_7_1", false);
+								_dialogue.startConv ("Conv_7_1", true);
 						}
 						if (hadConversation ["Conv_7_2"] == false && name == "Bree") {
 								hadConversation ["Conv_7_2"] = true;
@@ -158,7 +158,8 @@ public class StartNewConversation : MonoBehaviour
 						if (hadConversation ["Conv_1_1"] == false) {
 								hadConversation ["Conv_1_1"] = true;
 								//start conv
-								_dialogue.startConv ("Conv_1_1", true);
+								//_dialogue.startConv ("Conv_1_1", true);
+								_dialogue.startConv ("NC22", true);
 								_dialogue.parseChoice (34);
 						}
 						break;
