@@ -112,6 +112,10 @@ public class GameWorld : MonoBehaviour
 	// ------------------------------ end of Enemy class ---------------------------------------
 
 	// ========================================================= data
+	
+	private const int NUM_SCAVENGE_TARGETS = 3;
+	public int [] scavengedTargets = new int[NUM_SCAVENGE_TARGETS]; //3 chosen - number of enums for scavenging
+
 	Shelter _shelter;						// shelter class
 	int _daysSinceSpawn = 0;				// 
 	int _scoutingBonus;						// 	
@@ -120,13 +124,13 @@ public class GameWorld : MonoBehaviour
 	private ScavengeableLocation _scavengeTarget;
 	private ScavengeQuality _scavengeQuality;
 
+
 	// scavenge location enum
 	public enum ScavengeableLocation
 	{
 		Hospital, //Gives food and medicine
 		GroceryStore, //Gives food only
-		Mall, //Gives parts and foodS
-        Count
+		Mall //Gives parts and food
 	}
 
 	// scavenge quality enum
@@ -140,6 +144,10 @@ public class GameWorld : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		scavengedTargets[(int)ScavengeableLocation.Hospital] = 0;
+		scavengedTargets[(int)ScavengeableLocation.GroceryStore] = 0;
+		scavengedTargets[(int)ScavengeableLocation.Mall] = 0;
+
 		_shelter = this.GetComponent<Shelter> ();
 	}
 	
@@ -302,13 +310,25 @@ public class GameWorld : MonoBehaviour
 	
 	/// <summary>
 	/// Selects the scavenge target.
+	/// Weight randomness so that it is more likely to pick a place we have not seen in a while
+	/// Keep track of three int values for the scavenging target, stored in one int array
 	/// </summary>
 	private void selectScavengeTarget ()
 	{
-		_scavengeTarget = GetRandomEnum<ScavengeableLocation> ();
-		//_scavengeQuality = GetRandomEnum<ScavengeQuality>();
+		_scavengeQuality = GetRandomEnum<ScavengeQuality>();
 		int scav = Random.Range (0, 10);
 		scav += _scoutingBonus;
+
+		int [] tmpScavengedTargets = new int[NUM_SCAVENGE_TARGETS];
+
+		for(int i = 0 ; i < NUM_SCAVENGE_TARGETS; i++){
+			tmpScavengedTargets[i] += Random.Range (0,10);
+		}
+
+		//get the value for each scavenged target and randomly offset it. Take the value with the 
+		//least points
+
+
 		if (scav > 9) {
 			_scavengeQuality = ScavengeQuality.Plentiful;
 		} else if (scav > 6) {
@@ -316,6 +336,19 @@ public class GameWorld : MonoBehaviour
 		} else {
 			_scavengeQuality = ScavengeQuality.Scarce;
 		}
+
+		_scavengeTarget = ScavengeableLocation.GroceryStore;
+
+		for(int i = 0; i < NUM_SCAVENGE_TARGETS; i++){
+			if(scavengedTargets[i] <= scavengedTargets[(int)_scavengeTarget]){
+				_scavengeTarget = (ScavengeableLocation)i;
+			}
+		}
+
+
+
+
+		scavengedTargets[(int)_scavengeTarget] += (int) _scavengeQuality;
 
 		_scoutingBonus = 0;
 	}
