@@ -193,7 +193,7 @@ public class UI : MonoBehaviour {
 
 
 			w = Screen.width * x - Screen.width * .045f;
-			h = Screen.height * y - Screen.height * .143f;
+			h = Screen.height * y - Screen.height * .18f;
 
 			buttonWidth = Screen.width * .1f;
 			float charSquare = squareSize * .2f ;
@@ -201,6 +201,8 @@ public class UI : MonoBehaviour {
 			
 			//above character's head
 			if(charButtons){
+				boxStyle.normal.background = button2;
+				GUI.Box (new Rect (w, h - Screen.height * .001f, buttonWidth, buttonHeight * .001f),"", boxStyle);
 				if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight),"Talk to " + _shelter._survivors[index].Name, buttonStyle)) {
 					showButtons=true;
 					_startNewConversation.ClickCheck(_shelter._survivors[index].Name);
@@ -208,13 +210,23 @@ public class UI : MonoBehaviour {
 					_shelter._survivors [index].Converse ();
 					_shelter._survivors[index]._conversationsLeft--;
 				}
-				h+= buttonHeight *1.09f;
+				h+= buttonHeight *1.25f;
 
+				GUI.Box (new Rect (w, h - Screen.height * .001f, buttonWidth, buttonHeight * .001f),"", boxStyle);
 				if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight),"Assign task", buttonStyle)) {
 					showButtons=true;
 					sideButtons=true;
 					charButtons=false;
 				}
+
+				boxStyle.normal.background = box;
+
+				h+= buttonHeight *1.2f;
+
+				boxStyle.fontSize = (int)(smallFont*.8f);
+				GUI.Box(new Rect (w + Screen.width * .009f, h, buttonWidth*.8f, buttonHeight), _shelter._survivors[index].AssignedTask.ToString(), boxStyle);
+				boxStyle.fontSize = smallFont;
+
 
 				w = Screen.width *x - Screen.width * .089f;
 				h = Screen.height*y - Screen.height * .08f;
