@@ -235,13 +235,29 @@ public class UI : MonoBehaviour {
 				boxStyle.fontSize = (int)(bigFont*.5f);
 				boxStyle.font = bold;
 				boxStyle.alignment = TextAnchor.MiddleCenter;
-				GUI.Box(new Rect (w, h, charSquare*3, charSquare*1.3f), _shelter._survivors[index].Fatigue.ToString(), boxStyle);
+				if(_shelter._survivors[index].Fatigue >= 0)
+				{
+					GUI.Box(new Rect (w, h, charSquare*3, charSquare*1.3f), _shelter._survivors[index].Fatigue.ToString(), boxStyle);
+				}
+				else
+				{
+					GUI.Box(new Rect (w, h, charSquare*3, charSquare*1.3f), (_shelter._survivors[index].Fatigue * -1).ToString(), boxStyle);
+				}
 
 				h+= charSquare*1.3f;
 				boxStyle.fontSize = (int)(smallFont*.6f);
 				boxStyle.font = regular;
 				boxStyle.alignment = TextAnchor.UpperCenter;
-				GUI.Box(new Rect (w, h, charSquare*3, charSquare*1.1f), "Fatigue", boxStyle);
+
+				if(_shelter._survivors[index].Fatigue >= 0)
+				{
+					GUI.Box(new Rect (w, h, charSquare*3, charSquare*1.1f), "Fatigue", boxStyle);
+				}
+				else
+				{
+					GUI.Box(new Rect (w, h, charSquare*3, charSquare*1.1f), "Stamina", boxStyle);
+
+				}
 
 				boxStyle.alignment = TextAnchor.MiddleCenter;
 
