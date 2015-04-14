@@ -1,8 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\ZombieAI.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI.cs">
     <Files>
-      <File FileName="..\..\..\KeyboardKommanderApocalypseV2\Assets\Scripts\ZombieAI.cs" Line="1108" Column="16" />
+      <File FileName="Assets/Scripts/UI.cs" Line="156" Column="43" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

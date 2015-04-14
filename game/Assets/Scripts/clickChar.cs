@@ -33,7 +33,9 @@ public class clickChar : MonoBehaviour
 	private void OnMouseDown ()
 	{
 		if (this.tag == "NewVisitor") {
-			_startNewConversation.ClickCheck("gate");
+			if(!_ui.tutorial){
+				_startNewConversation.ClickCheck("gate");
+			}
 		}
 		else{
 			//find corresponding character within shelter

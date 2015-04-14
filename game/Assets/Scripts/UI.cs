@@ -18,6 +18,7 @@ public class UI : MonoBehaviour {
 	private bool charButtons, sideButtons, showButtons;
 	private float x, y, animateSide;
 	private int index;
+	public bool tutorial;
 
 	GUIStyle boxStyle, buttonStyle;
 	Font regular, bold;
@@ -43,6 +44,7 @@ public class UI : MonoBehaviour {
 		charButtons = sideButtons = showButtons = false;
 
 		showAllButtons = false;
+		tutorial = true;
 		
 		index = 0;
 		animateSide = 500;
@@ -69,14 +71,16 @@ public class UI : MonoBehaviour {
 		//not using this at the moment because it doesn't really work
 		//GUIStyle style = GUI.skin.GetStyle("align");
 		//style.alignment = TextAnchor.MiddleCenter;
-
-		x = ax;
-		y = ay;
-		index = aindex;
-		
-		charButtons = true;
-		showButtons = true;
-		sideButtons = false;
+		if(!tutorial && !_diag._DiagCon.IsConversationActive)
+		{
+			x = ax;
+			y = ay;
+			index = aindex;
+			
+			charButtons = true;
+			showButtons = true;
+			sideButtons = false;
+		}
 	}
 
 	// ========================================================== GUI
@@ -127,6 +131,33 @@ public class UI : MonoBehaviour {
 		if(showAllButtons && _gametime._currentDay > 0)
 		//if(true)
 		{
+			//tutorial
+			if(tutorial)
+			{
+				boxStyle.alignment = TextAnchor.UpperLeft;
+				boxStyle.padding = new RectOffset (5, 5, 10, 10);
+				boxStyle.wordWrap = true;
+
+				GUI.Box (new Rect (Screen.width * .2f, Screen.height * .2f, Screen.width * .6f, Screen.height * .6f), 
+				         "Welcome to Human Shelter!  Your goal is to survive.\nClick on the characters to speak with them and discover what is going on.\n" +
+				         "Listen carefully to your residents, because knowledge of their strengths and history will help you survive.\n\n" +
+				         "Assign each person a job for the day, but be careful: The wrong choices could lead to disaster.\n" +
+				         "Check your journal for more information on assignments.\n\nThere's someone at the gate!  Be sure to find out what they want.\n\n" +
+				         "Good luck!"
+				         , boxStyle);
+				if (GUI.Button (new Rect (Screen.width*.4f, Screen.height *.7f, buttonWidth, buttonHeight),  "Continue", buttonStyle)) {
+					tutorial = false;
+				}
+				boxStyle.alignment = TextAnchor.MiddleCenter;
+				boxStyle.padding = new RectOffset (1, 1, 1, 1);
+				boxStyle.wordWrap = false;
+
+
+			}
+			else{
+
+
+
 			float w = Screen.width*.03f;
 			float h = Screen.height*.04f;
 
@@ -409,6 +440,7 @@ public class UI : MonoBehaviour {
 				}
 			}
 		}
+		}
 
 		// start screen
 		if (_gametime._currentDay == 0) {
@@ -418,7 +450,7 @@ public class UI : MonoBehaviour {
 			}
 		}
 	}// end of GUI
-
+	
 
 	// ========================================================== Update
 	// Update is called once per frame
