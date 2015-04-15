@@ -227,6 +227,9 @@ public class UI : MonoBehaviour {
 					{
 						_gametime.newDay();
 						_reports.showReports = true;
+						showJournal=true;
+						showButtons=true;
+						charButtons = sideButtons = false;
 					}
 			}
 
@@ -354,9 +357,47 @@ public class UI : MonoBehaviour {
 			if(showJournal)
 				{
 					_reports.showReports = true;
-					w = Screen.width * .4f;
-					h = Screen.height * .4f;
-					GUI.Box(new Rect (w,h, Screen.width*.4f, Screen.height*.4f), "", boxStyle);
+					w = Screen.width * .15f;
+					h = Screen.height * .15f;
+
+					boxStyle.fontSize = bigFont;
+					buttonStyle.fontSize = bigFont;
+					//boxStyle.font = bold;
+					buttonStyle.font = bold;
+					buttonStyle.padding =  new RectOffset (1, 1, 7, 1);
+
+					if(GUI.Button(new Rect (w,h, Screen.height*.07f, Screen.height*.07f), "×", buttonStyle))
+					{
+					}
+
+					if(GUI.Button(new Rect (w,h+Screen.height*.3f, Screen.height*.07f, Screen.height*.07f), "<", buttonStyle))
+					{
+						showButtons=true;
+						_reports.lastPage();
+					}
+					if(GUI.Button(new Rect (w+Screen.width*.65f,h+Screen.height*.3f, Screen.height*.07f, Screen.height*.07f), ">", buttonStyle))
+					{
+						showButtons=true;
+						_reports.nextPage();
+					}
+
+					buttonStyle.padding =  new RectOffset (1, 1, 1, 1);
+
+
+					w += Screen.height*.08f;
+					GUI.Box(new Rect (w,h, Screen.width*.15f, Screen.height*.07f), "Journal", boxStyle);
+
+					h+= Screen.height *.08f;
+
+					if(GUI.Button(new Rect (w,h, Screen.width*.6f, Screen.height*.58f), "", boxStyle))
+					{
+						showButtons = true;
+					}
+
+
+
+
+
 
 				}
 				else
@@ -466,16 +507,21 @@ public class UI : MonoBehaviour {
 
 
 
-					//close, health, and fatigue
+					//close
 
 					w = Screen.width*.786f+animateSide;
 					h = Screen.height*.4f;
 					
+					
+					buttonStyle.fontSize = (int)(bigFont*1.2f);
+					buttonStyle.font = bold;
+					buttonStyle.padding =  new RectOffset (1, 1, 7, 1);
 
-					if (GUI.Button (new Rect (w, h, squareSize/1.6f, squareSize/1.8f), "Close", buttonStyle)) {
+					if (GUI.Button (new Rect (w, h, squareSize/1.6f, squareSize/1.8f), "×", buttonStyle)) {
 						showButtons=true;
 						sideButtons=false;
 					}
+					buttonStyle.padding =  new RectOffset (1, 1, 1, 1);
 
 					h += squareSize/1.6f;
 
