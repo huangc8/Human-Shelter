@@ -15,7 +15,7 @@ public class UI : MonoBehaviour {
 	//these are needed for showing and hiding buttons
 	public bool showAllButtons;
 	public bool startScreen;
-	private bool charButtons, sideButtons, showButtons, showJournal;
+	private bool charButtons, sideButtons, showButtons, showJournal, showHelp;
 	private float x, y, animateSide;
 	private int index;
 	public bool tutorial;
@@ -42,7 +42,7 @@ public class UI : MonoBehaviour {
 			_reports = g.GetComponent<ReportHandler> ();
 		}
 
-		charButtons = sideButtons = showButtons = showJournal = false;
+		charButtons = sideButtons = showButtons = showJournal = showHelp = false;
 
 		showAllButtons = false;
 		tutorial = true;
@@ -81,7 +81,7 @@ public class UI : MonoBehaviour {
 			
 			charButtons = true;
 			showButtons = true;
-			sideButtons = showJournal = false;
+			sideButtons = showJournal = showHelp = false;
 		}
 	}
 
@@ -139,19 +139,19 @@ public class UI : MonoBehaviour {
 			if(tutorial)
 			{
 				boxStyle.alignment = TextAnchor.UpperLeft;
-				boxStyle.padding = new RectOffset (5, 5, 10, 10);
+				boxStyle.padding = new RectOffset (15, 5, 15, 10);
 				boxStyle.wordWrap = true;
 
 				if(warning ==0)
 				{
-					GUI.Box (new Rect (Screen.width * .2f, Screen.height * .2f, Screen.width * .6f, Screen.height * .6f), 
-					         "Welcome to Human Shelter!  Your goal is to survive.\nClick on the characters to speak with them and discover what is going on.\n" +
-					         "Listen carefully to your residents, because knowledge of their strengths and history will help you survive.\n\n" +
-					         "Assign each person a job for the day, but be careful: The wrong choices could lead to disaster.\n" +
-					         "Check your journal for more information on assignments.\n\nThere's someone at the gate!  Be sure to find out what they want.\n\n" +
+					GUI.Box (new Rect (Screen.width * .25f, Screen.height * .2f, Screen.width * .5f, Screen.height * .55f), 
+					         "Welcome to Human Shelter!  Your goal is to survive.\n\nClick on the characters to speak with them and discover what is going on.\n" +
+					         "Listen carefully to your residents, because knowledge\nof their strengths and history will help you survive.\n\n" +
+					         "Assign each person a job for the day, but be careful: The wrong\nchoices could lead to disaster.\n" +
+					         "Click the Help button for more information on assignments.\n\nThere's someone at the gate!  You should go find out what they want.\n\n" +
 					         "Good luck!"
 					         , boxStyle);
-					if (GUI.Button (new Rect (Screen.width*.4f, Screen.height *.7f, buttonWidth, buttonHeight),  "Continue", buttonStyle)) {
+					if (GUI.Button (new Rect (Screen.width*.4f, Screen.height *.66f, buttonWidth, buttonHeight),  "Continue", buttonStyle)) {
 						tutorial = false;
 					}
 				}
@@ -229,7 +229,7 @@ public class UI : MonoBehaviour {
 						_reports.showReports = true;
 						showJournal=true;
 						showButtons=true;
-						charButtons = sideButtons = false;
+						charButtons = sideButtons = showHelp= false;
 					}
 			}
 
@@ -263,11 +263,22 @@ public class UI : MonoBehaviour {
 				if(showJournal == false){
 					showJournal=true;
 					showButtons=true;
-					charButtons=sideButtons=false;
+					charButtons=sideButtons=showHelp=false;
 				}
 				//else it will close it automatically, see update
 			}
 
+				h += squareSize/3;
+
+			// help button
+			if (GUI.Button (new Rect (w, h+Screen.height*.05f, squareSize, squareSize/3),  "Help", buttonStyle)) {
+				if(showHelp == false){
+					showHelp=true;
+					showButtons=true;
+					charButtons=sideButtons=showJournal=false;
+				}
+				//else it will close it automatically, see update
+			}
 
 
 			w = Screen.width * x - Screen.width * .045f;
@@ -294,7 +305,7 @@ public class UI : MonoBehaviour {
 				if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight),"Assign task", buttonStyle)) {
 					showButtons=true;
 					sideButtons=true;
-					charButtons=showJournal=false;
+					charButtons=showJournal=showHelp=false;
 				}
 
 				boxStyle.normal.background = box;
@@ -394,16 +405,65 @@ public class UI : MonoBehaviour {
 						showButtons = true;
 					}
 
-
-
-
-
-
 				}
 				else
 				{
 					_reports.showReports = false;
 				}
+
+
+				if(showHelp)
+				{
+					w = Screen.width * .15f;
+					h = Screen.height * .12f;
+					
+					boxStyle.fontSize = bigFont;
+					buttonStyle.fontSize = bigFont;
+					//boxStyle.font = bold;
+					buttonStyle.font = bold;
+					buttonStyle.padding =  new RectOffset (1, 1, 7, 1);
+					
+					if(GUI.Button(new Rect (w,h, Screen.height*.07f, Screen.height*.07f), "×", buttonStyle))
+					{
+					}
+					buttonStyle.padding =  new RectOffset (1, 1, 1, 1);
+					
+					
+					w += Screen.height*.08f;
+					GUI.Box(new Rect (w,h, Screen.width*.15f, Screen.height*.07f), "Help", boxStyle);
+					
+					h+= Screen.height *.08f;
+					boxStyle.fontSize = smallFont;
+					boxStyle.alignment = TextAnchor.UpperLeft;
+					boxStyle.padding =  new RectOffset (15, 1, 15, 1);
+
+
+					if(GUI.Button(new Rect (w,h, Screen.width*.6f, Screen.height*.63f), 
+					              "Click on a character in your camp to speak to them, or assign them a daily task.\n" +
+					              "Speak with new arrivals to find out what they're looking for.\n" +
+					              "When you're finished, click Next Day progress.\n\n" +
+					              "Task descriptions:\n" +
+					              "Scout: \t\tSearch nearby for other camps that may have supplies to steal.\n\n" +
+					              "Heal: \t\tThis survivor will help increase the health of injured survivors.\n\n" +
+					              "Defend: \t\tIncrease your camp's defences, in preperation for an attack.\n\n" +
+					              "Scavenge: \tSearch a nearby area for supplies. \n\t\tEach day, your journal will tell you which building can be scavenged.\n\n" +
+					              "Raiding: \t\tIncrease your attack strength, making raids more successful.\n\n" +
+					              "Resting: \t\tStay inside for the day and restore some health and stamina.\n\n" +
+					              "Evict: \t\tKick this person out of your camp.\n\n" +
+					              "Execute: \tKill this survivor."
+
+					              , boxStyle))
+					{
+						showButtons = true;
+					}
+
+					boxStyle.padding =  new RectOffset (1, 1, 1, 1);
+
+					
+				}
+
+
+
 
 
 			//side assign buttons
@@ -589,7 +649,7 @@ public class UI : MonoBehaviour {
 			//this will get rid of buttons when you click anywhere other than a button
 			if (Input.GetMouseButtonUp(0)) {
 				if(!showButtons){
-					charButtons = sideButtons = showJournal = false;
+					charButtons = sideButtons = showJournal = showHelp = false;
 				}
 				showButtons = false;
 			}
