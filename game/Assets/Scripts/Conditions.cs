@@ -78,9 +78,7 @@ public class Conditions : MonoBehaviour
 				return false;
 			}
 		}// end of switch
-#if DEBUGLOG		
-		Debug.Log ("Error: No such command"); // return error message
-#endif
+
 		return false;
 	}
 

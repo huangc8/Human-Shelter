@@ -84,7 +84,7 @@ public class Dialogue : MonoBehaviour
 						visitorAtGate = _visitor._personList [1];
 						_shelter.EvictSurvivor (visitorAtGate);
 						break;
-				case 34: // **************invite Brian***************
+				case 25: // **************invite Brian***************
 						visitorAtGate = _visitor._personList [0];
 						_shelter.InviteSurvivor (visitorAtGate);
 						break;
