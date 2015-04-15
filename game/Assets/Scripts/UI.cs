@@ -15,7 +15,7 @@ public class UI : MonoBehaviour {
 	//these are needed for showing and hiding buttons
 	public bool showAllButtons;
 	public bool startScreen;
-	private bool charButtons, sideButtons, showButtons;
+	private bool charButtons, sideButtons, showButtons, showJournal;
 	private float x, y, animateSide;
 	private int index;
 	public bool tutorial;
@@ -42,7 +42,7 @@ public class UI : MonoBehaviour {
 			_reports = g.GetComponent<ReportHandler> ();
 		}
 
-		charButtons = sideButtons = showButtons = false;
+		charButtons = sideButtons = showButtons = showJournal = false;
 
 		showAllButtons = false;
 		tutorial = true;
@@ -259,10 +259,12 @@ public class UI : MonoBehaviour {
 			if (GUI.Button (new Rect (w, h*1.1f, squareSize, squareSize/3),  "Journal", buttonStyle)) {
 				if(_reports.showReports == false){
 					_reports.showReports = true;
+					showJournal=true;
 				}
 				else
 				{
 					_reports.showReports = false;
+					showJournal=false;
 				}
 			}
 
@@ -352,6 +354,13 @@ public class UI : MonoBehaviour {
 			}
 
 
+			if(showJournal)
+				{
+					w = Screen.width * .4f;
+					h = Screen.height * .4f;
+					GUI.Box(new Rect (w,h, Screen.width*.4f, Screen.height*.4f), "", boxStyle);
+
+				}
 
 
 			//side assign buttons
@@ -380,10 +389,7 @@ public class UI : MonoBehaviour {
 					h+= buttonHeight;
 					boxStyle.font = regular;
 
-					if(GUI.Button (new Rect (w, h, buttonWidth, buttonHeight*10.85f),"Assign Task", boxStyle))
-						{
-							showButtons=true;
-						}
+					GUI.Box (new Rect (w, h, buttonWidth, buttonHeight*10.85f),"Assign Task", boxStyle);
 
 
 					h += buttonHeight*1.25f;
@@ -435,6 +441,26 @@ public class UI : MonoBehaviour {
 					buttonStyle.alignment = TextAnchor.MiddleCenter;
 					buttonStyle.padding = new RectOffset (1, 1, 1, 1);
 					buttonStyle.fontSize = smallFont;
+
+
+					//prevent closing via misclick
+					h = Screen.height*.4f + buttonHeight;
+					buttonWidth = Screen.width * .13f;
+					w = Screen.width*.836f + animateSide;
+					boxStyle.active.background = null;
+					boxStyle.hover.background = null;
+					boxStyle.normal.background = null;
+
+					if(GUI.Button (new Rect (w, h, buttonWidth, buttonHeight*10.85f),"", boxStyle))
+					{
+						showButtons=true;
+					}
+
+					boxStyle.active.background = box;
+					boxStyle.hover.background = box;
+					boxStyle.normal.background = box;
+					buttonWidth = Screen.width * .1245f;
+
 
 
 
@@ -515,7 +541,7 @@ public class UI : MonoBehaviour {
 			//this will get rid of buttons when you click anywhere other than a button
 			if (Input.GetMouseButtonUp(0)) {
 				if(!showButtons){
-					charButtons = sideButtons = false;
+					charButtons = sideButtons = showJournal = false;
 				}
 				showButtons = false;
 			}
