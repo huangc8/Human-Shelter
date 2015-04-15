@@ -81,7 +81,7 @@ public class UI : MonoBehaviour {
 			
 			charButtons = true;
 			showButtons = true;
-			sideButtons = false;
+			sideButtons = showJournal = false;
 		}
 	}
 
@@ -257,15 +257,12 @@ public class UI : MonoBehaviour {
 
 			// reports button
 			if (GUI.Button (new Rect (w, h*1.1f, squareSize, squareSize/3),  "Journal", buttonStyle)) {
-				if(_reports.showReports == false){
-					_reports.showReports = true;
+				if(showJournal == false){
 					showJournal=true;
+					showButtons=true;
+					charButtons=sideButtons=false;
 				}
-				else
-				{
-					_reports.showReports = false;
-					showJournal=false;
-				}
+				//else it will close it automatically, see update
 			}
 
 
@@ -294,7 +291,7 @@ public class UI : MonoBehaviour {
 				if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight),"Assign task", buttonStyle)) {
 					showButtons=true;
 					sideButtons=true;
-					charButtons=false;
+					charButtons=showJournal=false;
 				}
 
 				boxStyle.normal.background = box;
@@ -356,10 +353,15 @@ public class UI : MonoBehaviour {
 
 			if(showJournal)
 				{
+					_reports.showReports = true;
 					w = Screen.width * .4f;
 					h = Screen.height * .4f;
 					GUI.Box(new Rect (w,h, Screen.width*.4f, Screen.height*.4f), "", boxStyle);
 
+				}
+				else
+				{
+					_reports.showReports = false;
 				}
 
 
