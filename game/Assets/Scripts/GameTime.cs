@@ -60,6 +60,7 @@ public class GameTime : MonoBehaviour
 		}
 		_currentDay++;
 		_startConv.DayCheck ();
+		GameEndCheck();
 	}
 
 
@@ -158,10 +159,7 @@ public class GameTime : MonoBehaviour
 		return (_shelter.IsGameOver());
 	}
 
-	// ================================================= update / GUI
-	// Update is called once per frame
-	void Update ()
-	{
+	public void GameEndCheck(){
 		//Check for the end conditions
 		if(GameWon()){
 			Application.LoadLevel("WinGame");
@@ -170,5 +168,6 @@ public class GameTime : MonoBehaviour
 			Application.LoadLevel ("LoseGame");
 		}
 	}
+
 }
 
