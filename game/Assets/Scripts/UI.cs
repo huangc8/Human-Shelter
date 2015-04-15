@@ -19,6 +19,7 @@ public class UI : MonoBehaviour {
 	private float x, y, animateSide;
 	private int index;
 	public bool tutorial;
+	int warning;
 
 	GUIStyle boxStyle, buttonStyle;
 	Font regular, bold;
@@ -45,6 +46,7 @@ public class UI : MonoBehaviour {
 
 		showAllButtons = false;
 		tutorial = true;
+		warning = 0;
 		
 		index = 0;
 		animateSide = 500;
@@ -138,20 +140,42 @@ public class UI : MonoBehaviour {
 				boxStyle.padding = new RectOffset (5, 5, 10, 10);
 				boxStyle.wordWrap = true;
 
-				GUI.Box (new Rect (Screen.width * .2f, Screen.height * .2f, Screen.width * .6f, Screen.height * .6f), 
-				         "Welcome to Human Shelter!  Your goal is to survive.\nClick on the characters to speak with them and discover what is going on.\n" +
-				         "Listen carefully to your residents, because knowledge of their strengths and history will help you survive.\n\n" +
-				         "Assign each person a job for the day, but be careful: The wrong choices could lead to disaster.\n" +
-				         "Check your journal for more information on assignments.\n\nThere's someone at the gate!  Be sure to find out what they want.\n\n" +
-				         "Good luck!"
-				         , boxStyle);
-				if (GUI.Button (new Rect (Screen.width*.4f, Screen.height *.7f, buttonWidth, buttonHeight),  "Continue", buttonStyle)) {
-					tutorial = false;
+				if(warning ==0)
+				{
+					GUI.Box (new Rect (Screen.width * .2f, Screen.height * .2f, Screen.width * .6f, Screen.height * .6f), 
+					         "Welcome to Human Shelter!  Your goal is to survive.\nClick on the characters to speak with them and discover what is going on.\n" +
+					         "Listen carefully to your residents, because knowledge of their strengths and history will help you survive.\n\n" +
+					         "Assign each person a job for the day, but be careful: The wrong choices could lead to disaster.\n" +
+					         "Check your journal for more information on assignments.\n\nThere's someone at the gate!  Be sure to find out what they want.\n\n" +
+					         "Good luck!"
+					         , boxStyle);
+					if (GUI.Button (new Rect (Screen.width*.4f, Screen.height *.7f, buttonWidth, buttonHeight),  "Continue", buttonStyle)) {
+						tutorial = false;
+					}
 				}
 				boxStyle.alignment = TextAnchor.MiddleCenter;
+
+				if(warning ==1)
+				{
+					GUI.Box (new Rect (Screen.width * .4f, Screen.height * .45f, Screen.width * .2f, Screen.height * .1f), 
+					         "There's someone at the gate.\nGo see what they want!"
+					         , boxStyle);
+					if (GUI.Button (new Rect (Screen.width*.4f, Screen.height *.55f, buttonWidth, buttonHeight),  "Continue", buttonStyle)) {
+						tutorial = false;
+					}
+				}
+				if(warning ==2)
+				{
+					GUI.Box (new Rect (Screen.width * .38f, Screen.height * .45f, Screen.width * .24f, Screen.height * .1f), 
+					         "You have unassigned residents.\nBe sure to give them a task."
+					         , boxStyle);
+					if (GUI.Button (new Rect (Screen.width*.38f, Screen.height *.55f, Screen.width * .24f, buttonHeight),  "Continue", buttonStyle)) {
+						tutorial = false;
+					}
+				}
+
 				boxStyle.padding = new RectOffset (1, 1, 1, 1);
 				boxStyle.wordWrap = false;
-
 
 			}
 			else{
@@ -161,7 +185,6 @@ public class UI : MonoBehaviour {
 			float w = Screen.width*.03f;
 			float h = Screen.height*.04f;
 
-			//height 1 is food and day
 			GUI.Box (new Rect (w, h, squareSize, smallSquareSize), "Food", boxStyle);
 			GUI.Box (new Rect (Screen.width*.9f,h, squareSize, smallSquareSize), "Day", boxStyle);
 
@@ -178,10 +201,31 @@ public class UI : MonoBehaviour {
 			boxStyle.font = regular;
 
 		
-			// height 2 is new day button, and medicine
 			if (GUI.Button (new Rect (Screen.width*.9f, h*1.15f, squareSize, squareSize/3),  "Next Day", buttonStyle)) {
-				_gametime.newDay();
-				_reports.showReports = true;
+					//see if anyone is unassigned
+					bool unass = false;
+					for(int i =0; i< _shelter.NumberOfSurvivors; i++)
+					{
+						if(_shelter._survivors[i].AssignedTask == Survivor.task.Unassigned)
+						{
+							unass = true;
+						}
+					}
+					if(_visitors._personList[_gametime._currentDay]!=null)
+					{
+						tutorial = true;
+						warning = 1;
+					}
+					else if (unass)
+					{
+						tutorial = true;
+						warning = 2;
+					}
+					else
+					{
+						_gametime.newDay();
+						_reports.showReports = true;
+					}
 			}
 
 			GUI.Box (new Rect (w,h, squareSize, smallSquareSize), "Medicine", boxStyle);
@@ -197,7 +241,6 @@ public class UI : MonoBehaviour {
 			boxStyle.font = regular;
 			
 
-			//parts
 			GUI.Box (new Rect (w,h, squareSize, smallSquareSize), "Parts", boxStyle);
 			h+= smallSquareSize;
 			boxStyle.fontSize = bigFont;
@@ -334,7 +377,7 @@ public class UI : MonoBehaviour {
 
 					h+= buttonHeight;
 					boxStyle.font = regular;
-					GUI.Box (new Rect (w, h, buttonWidth, buttonHeight*12.05f),"Assign Task", boxStyle);
+					GUI.Box (new Rect (w, h, buttonWidth, buttonHeight*10.85f),"Assign Task", boxStyle);
 
 
 					h += buttonHeight*1.25f;
@@ -355,8 +398,9 @@ public class UI : MonoBehaviour {
 					buttonStyle.fontSize = (int)(smallFont*.85f);
 
 
-
-					for (int t = 0; t < (int) Survivor.task.Count; t++) {
+					//it stops 1 short to avoid "unassigned" as an option
+					//if something else gets added to the end, this needs to be fixed
+					for (int t = 0; t < (int) Survivor.task.Count-1; t++) {
 
 						if(_shelter._survivors[index].AssignedTask == (Survivor.task)t)
 						{
@@ -364,6 +408,12 @@ public class UI : MonoBehaviour {
 							buttonStyle.normal.textColor = Color.black;
 
 						}
+						
+						if(t == 6)
+							{
+								//h+=buttonHeight*1.2f;
+								//Code for making evict and execute look different
+							}
 
 						if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight), ((Survivor.task)t).ToString (), buttonStyle)) {
 							showButtons=true;

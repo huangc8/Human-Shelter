@@ -49,8 +49,8 @@ public class Survivor : ScriptableObject
         Scavenge,           // increase camp resource
         Raiding,            // massively increase camp resource (special one, can't always be used)
         Resting,            // restore survivor fatigue
+		Evict,            	// delete survivor
         Execute,            // delete survivor
-        Evict,              // delete survivor
         Unassigned,         // go to resting
         Count
     }
