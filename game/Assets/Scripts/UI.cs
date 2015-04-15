@@ -259,16 +259,19 @@ public class UI : MonoBehaviour {
 
 
 			// reports button
-			if (GUI.Button (new Rect (w, h*1.1f, squareSize, squareSize/3),  "Journal", buttonStyle)) {
-				if(showJournal == false){
-					showJournal=true;
-					showButtons=true;
-					charButtons=sideButtons=showHelp=false;
+			if( _gametime._currentDay>1)
+				{
+				if (GUI.Button (new Rect (w, h*1.1f, squareSize, squareSize/3),  "Journal", buttonStyle)) {
+					if(showJournal == false){
+						showJournal=true;
+						showButtons=true;
+						charButtons=sideButtons=showHelp=false;
+					}
+					//else it will close it automatically, see update
 				}
-				//else it will close it automatically, see update
-			}
 
 				h += squareSize/3;
+			}
 
 			// help button
 			if (GUI.Button (new Rect (w, h+Screen.height*.05f, squareSize, squareSize/3),  "Help", buttonStyle)) {
@@ -404,6 +407,13 @@ public class UI : MonoBehaviour {
 					{
 						showButtons = true;
 					}
+
+					w+= Screen.width*.54f;
+					h+= Screen.height*.59f;
+
+					boxStyle.fontSize=smallFont;
+					GUI.Box(new Rect (w,h, Screen.width*.06f, Screen.height*.04f), "Day " + (_reports._currentPage+1), boxStyle);
+
 
 				}
 				else

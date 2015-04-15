@@ -16,7 +16,7 @@ public class ReportHandler : MonoBehaviour
 	string _reportString = "";				// tmp string
 	public bool showReports;
 	public ArrayList _pages;
-	int _currentPage = 0;
+	public int _currentPage = 0;
 	GUIStyle labelStyle;
 
 	// ===================================================== initialization
