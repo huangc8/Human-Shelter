@@ -399,7 +399,7 @@ public class Shelter : MonoBehaviour
 		Debug.Log ("Killing Survivor: " + s + " sPosition: " + sPosition);
 		
 		KillSurvivor (_survivors [sPosition]);
-		_numSurvivors--;
+		//_numSurvivors--;
 		
 	}
 
@@ -410,7 +410,7 @@ public class Shelter : MonoBehaviour
 	{
 		name = _survivors [(int)Random.Range (0, _numSurvivors)].Name;
 		KillSurvivor (name);
-		_numSurvivors--;
+		//_numSurvivors--;
 		return name;
 	}
 
@@ -455,7 +455,7 @@ public class Shelter : MonoBehaviour
 		//Debug.Log (_numSurvivors);
 		Destroy (s.image);
 		Destroy (s);
-		_numSurvivors--;
+		//_numSurvivors--;
 
 	}
 

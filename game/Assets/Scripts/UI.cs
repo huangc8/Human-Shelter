@@ -99,7 +99,11 @@ public class UI : MonoBehaviour {
 
 		boxStyle.alignment = TextAnchor.MiddleCenter;
 		boxStyle.normal.background = box;
+		boxStyle.hover.background = box;
+		boxStyle.active.background = box;
 		boxStyle.normal.textColor = Color.white;
+		boxStyle.hover.textColor = Color.white;
+		boxStyle.active.textColor = Color.white;
 		boxStyle.padding = new RectOffset (1, 1, 1, 1);
 
 	
@@ -375,7 +379,11 @@ public class UI : MonoBehaviour {
 
 					h+= buttonHeight;
 					boxStyle.font = regular;
-					GUI.Box (new Rect (w, h, buttonWidth, buttonHeight*10.85f),"Assign Task", boxStyle);
+
+					if(GUI.Button (new Rect (w, h, buttonWidth, buttonHeight*10.85f),"Assign Task", boxStyle))
+						{
+							showButtons=true;
+						}
 
 
 					h += buttonHeight*1.25f;
