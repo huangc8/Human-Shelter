@@ -12,19 +12,79 @@ public class GameWorld : MonoBehaviour
 	/// in the form of rival camps
 	public class Enemy
 	{
+		public enum ScoutingProgress{
+			mystery,//A mystery
+			vagueIdea,//vague idea
+			generalVicinity,//general vicinity
+			exactLocation//exact location
+		}
+
+
 		int _strength; 			// how much power they have
 		int _readiness; 		// how likely they are to attack you, counts up to five, resets after each attack
 		int _visibility; 		// how easy they are to see
 		int _aggressiveness; 	// how likely they are to attack you
+
+		ScoutingProgress _scoutedProgress;
+
 		bool _located = false;	// whether is aware by player
 
+		
+		public Report MakeScoutingProgress (int proficiency)
+		{
+			Report r = new Report();
+			if(proficiency > 3){
+				//increase by 2 points
+				_scoutedProgress = (ScoutingProgress)((int)_scoutedProgress + 1);
+				if(_scoutedProgress == ScoutingProgress.exactLocation){
+					_located = true;
+				}
+				_scoutedProgress = (ScoutingProgress)((int)_scoutedProgress + 1);
+				if(_scoutedProgress == ScoutingProgress.exactLocation){
+					_located = true;
+				}
+			}
+			else if (proficiency>1){
+				//increase by 1 point
+				_scoutedProgress = (ScoutingProgress)((int)_scoutedProgress + 1);
+				if(_scoutedProgress == ScoutingProgress.exactLocation){
+					_located = true;
+				}
+			}
+
+			if(_located == true){
+				r.SetMessage("The exact location of an enemy camp has been located. You can attack it now.");
+			}
+			else{
+				switch(_scoutedProgress){
+				case ScoutingProgress.mystery:
+					r.SetMessage("Your scouts have no idea where the enemy camp is.");
+					break;
+				case ScoutingProgress.vagueIdea:
+					r.SetMessage("Your scouts have a vague idea where the enemy camp is.");
+					break;
+				case ScoutingProgress.generalVicinity:
+					r.SetMessage("Your scouts have determined the general vicinity of where the enemy camp is.");
+					break;
+				case ScoutingProgress.exactLocation:
+					r.SetMessage("Your scouts have pinpointed the exact location of the enemy camp.");
+					break;
+				default:
+					Debug.LogError("ERROR in Gameworld, _scoutedProgress is not a valid enum.");
+					break;
+				}
+			}
+			return r;
+		}
+
 		// =========================================================== constructor
-		// Randomly generate an enemy
+		// Randomly generate an enemy -- should procedurally generate based off of progress
 		public Enemy ()
 		{
 			_strength = Random.Range (0, 10);
 			_visibility = Random.Range (0, 10);
 			_aggressiveness = Random.Range (0, 10);
+			_scoutedProgress = 0;
 
 			_readiness = -5;
 		}
@@ -265,7 +325,7 @@ public class GameWorld : MonoBehaviour
 		}
 		
 		//Spawn an enemy camp
-		if (Random.Range (0, 10) * Enemies.Count < 2 + _daysSinceSpawn) {
+		if (Random.Range (0, 10) + _daysSinceSpawn > 3 +  Enemies.Count *5 ) {
 			_daysSinceSpawn = 0;
 			AddEnemy ();
 			Report eReport = new Report ();
@@ -360,25 +420,15 @@ public class GameWorld : MonoBehaviour
 	/// <param name="proficiency">Proficiency.</param>
 	public ArrayList ScoutForShelters (int proficiency)
 	{
+		proficiency += Random.Range (-5,5);
 		ArrayList reports = new ArrayList ();
 		foreach (Enemy e in Enemies) {
 			if (e.IsUnscouted ()) {
 				if (e.Visibility < proficiency) {
 					//Let us see it
-					e.MakeCampVisibile ();
+					Report r = e.MakeScoutingProgress (proficiency);
 
-					Report r = new Report ();
-					r.SetMessage ("Your scouts have found an enemy camp.");
 					reports.Add (r);
-				} else {
-					if (Random.Range (0, 10) + proficiency > Random.Range (0, 5) + e.Visibility) {
-						//Let us see it
-						e.MakeCampVisibile ();
-						
-						Report r = new Report ();
-						r.SetMessage ("Your scouts have found an enemy camp.");
-						reports.Add (r);
-					}
 				}
 			} else {
 				reports.Add (e.AttackLikeliness ());
