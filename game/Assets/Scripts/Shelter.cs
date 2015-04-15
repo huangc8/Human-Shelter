@@ -360,7 +360,7 @@ public class Shelter : MonoBehaviour
 	/// </summary>
 	/// <param name="visitorAtGate">Visitor at gate.</param>
 	public void InviteSurvivor (Survivor visitorAtGate)
-	{
+	{	
 		this._survivors [this.NumberOfSurvivors] = visitorAtGate;
 		//show on map
 		visitorAtGate.image.renderer.enabled = true;

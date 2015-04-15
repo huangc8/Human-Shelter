@@ -62,10 +62,13 @@ public class clickChar : MonoBehaviour
 	void Update()
 	{
 		Survivor visitorAtGate = _visitors._personList [_gametime._currentDay];
-		if(_gametime._currentDay == 0){
-			visitorAtGate = null;
+
+		if (_gametime._currentDay == 0) {
+				visitorAtGate = null;
 		}
+
 		if (this.tag == "NewVisitor") {
+
 			if(visitorAtGate != null)
 			{
 				renderer.enabled=true;
@@ -73,7 +76,13 @@ public class clickChar : MonoBehaviour
 			else {
 				renderer.enabled=false;
 			}
+
+			// Marina don't show up before Brian
+			if (_gametime._currentDay == 1) {
+				if (_startNewConversation.getConv ("Conv_1_1") && !_startNewConversation.getConv ("Conv_1_3")) {
+					renderer.enabled = false;
+				}
+			}
 		}
 	}
-
 }

@@ -20,6 +20,7 @@ public class StartNewConversation : MonoBehaviour
 				_gameTime = this.GetComponent<GameTime> ();
 				hadConversation ["Conv_1_1"] = false;
 				hadConversation ["Conv_1_2"] = false;
+				hadConversation ["Conv_1_3"] = false;
 
 				hadConversation ["Conv_2_1"] = false;
 				hadConversation ["Conv_2_2"] = false;
@@ -51,10 +52,20 @@ public class StartNewConversation : MonoBehaviour
 				switch (_gameTime._currentDay) {
 				// --------------------- day 1 -----------------------
 				case 1:
-						if (hadConversation ["Conv_1_2"] == false && name == "gate") {
-								hadConversation ["Conv_1_2"] = true;
-								//start conv
-								_dialogue.startConv ("Conv_1_2", true);
+						if(hadConversation ["Conv_1_1"] == false && name == "gate"){
+								hadConversation["Conv_1_1"] = true;
+								_dialogue.startConv ("Conv_1_1", true);
+						}else{
+							if (hadConversation ["Conv_1_2"] == false && name == "gate") {
+									hadConversation ["Conv_1_2"] = true;
+									//start conv
+									_dialogue.startConv ("Conv_1_2", true);
+							}
+						}
+						
+						if(hadConversation["Conv_1_3"] == false && name == "Brian"){
+								hadConversation["Conv_1_3"] = true;
+								_dialogue.startConv ("Conv_1_3", false);
 						}
 						break;
 				// --------------------- day 2 -----------------------
@@ -155,13 +166,6 @@ public class StartNewConversation : MonoBehaviour
 				switch (_gameTime._currentDay) {
 				// --------------------- day 1 -----------------------
 				case 1:
-						if (hadConversation ["Conv_1_1"] == false) {
-								hadConversation ["Conv_1_1"] = true;
-								//start conv
-								//_dialogue.startConv ("Conv_1_1", true);
-								_dialogue.startConv ("NC22", true);
-								_dialogue.parseChoice (34);
-						}
 						break;
 				// --------------------- day 2 -----------------------
 				case 2:
@@ -214,5 +218,14 @@ public class StartNewConversation : MonoBehaviour
 						return true;
 				}
 						return true;
+		}
+
+		/// <summary>
+		/// Gets whether had conv.
+		/// </summary>
+		/// <returns><c>true</c>, if conv was gotten, <c>false</c> otherwise.</returns>
+		/// <param name="key">Key.</param>
+		public bool getConv(string key){
+			return hadConversation[key];
 		}
 }
