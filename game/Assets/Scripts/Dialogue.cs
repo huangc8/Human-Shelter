@@ -15,7 +15,6 @@ public class Dialogue : MonoBehaviour
 		private bool diaChoice = false; // whether the conversation have a choice
 		private int choiceID = -1; // what is current choice
 		private int lastID = -1; // what is last choice
-		private int k = 0;
 
 		// ==================================================== initialization
 		void Start ()

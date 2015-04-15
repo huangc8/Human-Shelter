@@ -102,9 +102,7 @@ public class UI : MonoBehaviour {
 		boxStyle.normal.textColor = Color.white;
 		boxStyle.padding = new RectOffset (1, 1, 1, 1);
 
-		
-		
-
+	
 		//button style
 		buttonStyle.font = regular;
 		buttonStyle.fontSize = smallFont;
