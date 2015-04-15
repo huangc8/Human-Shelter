@@ -177,6 +177,8 @@ public class GameWorld : MonoBehaviour
 	public int [] scavengedTargets = new int[NUM_SCAVENGE_TARGETS]; //3 chosen - number of enums for scavenging
 
 	Shelter _shelter;						// shelter class
+	public int totalScoutingPower  = 0;
+
 	int _daysSinceSpawn = 0;				// 
 	int _scoutingBonus;						// 	
 	ArrayList Enemies = new ArrayList ();	// enemy list
@@ -424,16 +426,31 @@ public class GameWorld : MonoBehaviour
 		ArrayList reports = new ArrayList ();
 		foreach (Enemy e in Enemies) {
 			if (e.IsUnscouted ()) {
-				if (e.Visibility < proficiency) {
-					//Let us see it
-					Report r = e.MakeScoutingProgress (proficiency);
 
+			} else {
+				reports.Add (e.AttackLikeliness ());
+			}
+		}
+
+		totalScoutingPower += proficiency;
+		return reports;
+	}	
+
+	public ArrayList CalculateShelterLocation(){
+		ArrayList reports = new ArrayList ();
+		foreach (Enemy e in Enemies) {
+			if (e.IsUnscouted ()) {
+				if (e.Visibility < totalScoutingPower) {
+					//Let us see it
+					
+					Report r = e.MakeScoutingProgress (totalScoutingPower);
 					reports.Add (r);
 				}
 			} else {
 				reports.Add (e.AttackLikeliness ());
 			}
 		}
+		totalScoutingPower = 0;
 		return reports;
-	}	
+	}
 }
