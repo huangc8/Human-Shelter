@@ -121,7 +121,7 @@ public class ReportHandler : MonoBehaviour
 		{
 			if(_hasReports)
 			{
-				int x = 100;
+				int x = 300;
 				int y = 100;
 				int w = 200;
 				int h = 30;

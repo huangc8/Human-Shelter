@@ -182,7 +182,7 @@ public class GameWorld : MonoBehaviour
 		// add which structure we can scavenge
 		selectScavengeTarget ();
 		Report r = new Report ();
-		r.SetMessage ("Today we can raid a " + _scavengeTarget.ToString () + " with a " + _scavengeQuality.ToString () + " number of resources.");
+		r.SetMessage ("Today we can scavenge a " + _scavengeTarget.ToString () + " with a " + _scavengeQuality.ToString () + " number of resources.");
 		reports.Add (r);
 
 		// Check for raiding camps
