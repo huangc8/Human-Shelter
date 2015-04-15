@@ -810,8 +810,7 @@ public class Survivor : ScriptableObject
         _gameWorld = gw;
         _assignedTask = false;
         _enabled = true;
-
-        Debug.Log("Character name:" + _name);
+		
         switch (_name)
         {
             case "Brian":
