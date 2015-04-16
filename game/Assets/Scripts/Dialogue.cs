@@ -43,7 +43,7 @@ public class Dialogue : MonoBehaviour
 				case 10: 
 						if (_gt._currentDay == 3) {	//************ decline Eric
 								visitorAtGate = _visitor._personList [3];
-								_shelter.EvictSurvivor (visitorAtGate);
+								_shelter.RejectSurvivor (visitorAtGate);
 						} else { //************* invite Danny
 								visitorAtGate = _visitor._personList [4];
 								_shelter.InviteSurvivor (visitorAtGate);
@@ -52,7 +52,7 @@ public class Dialogue : MonoBehaviour
 				case 11:
 						if (_gt._currentDay == 4) { //************* decline Danny	
 								visitorAtGate = _visitor._personList [4];
-								_shelter.EvictSurvivor (visitorAtGate);
+								_shelter.RejectSurvivor (visitorAtGate);
 						} else { //************** invite Bree
 								visitorAtGate = _visitor._personList [6];
 								_shelter.InviteSurvivor (visitorAtGate);
@@ -60,7 +60,7 @@ public class Dialogue : MonoBehaviour
 						break;
 				case 12: //****************** decline Bree
 						visitorAtGate = _visitor._personList [6];
-						_shelter.EvictSurvivor (visitorAtGate);
+						_shelter.RejectSurvivor (visitorAtGate);
 						break;
 				case 16: //****************** invite Shane
 						visitorAtGate = _visitor._personList [7];
@@ -68,7 +68,7 @@ public class Dialogue : MonoBehaviour
 						break;
 				case 17: //****************** Evict Shane
 						visitorAtGate = _visitor._personList [7];
-						_shelter.EvictSurvivor (visitorAtGate);
+						_shelter.RejectSurvivor (visitorAtGate);
 						break;
 				case 23: // **************invite Marina**************
 						visitorAtGate = _visitor._personList [1];
@@ -76,7 +76,7 @@ public class Dialogue : MonoBehaviour
 						break;
 				case 24: // **************decline Marina*************
 						visitorAtGate = _visitor._personList [1];
-						_shelter.EvictSurvivor (visitorAtGate);
+						_shelter.RejectSurvivor (visitorAtGate);
 						break;
 				case 25: // **************invite Brian***************
 						visitorAtGate = _visitor._personList [0];

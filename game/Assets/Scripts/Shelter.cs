@@ -324,11 +324,9 @@ public class Shelter : MonoBehaviour
 		Report r = new Report();
 		if(proficiency + Random.Range (-5,5) > 5){
 			r.SetMessage(s.Name + " resisted eviction.");
-			
 		}
 		else{
 			r.SetMessage(s.Name + " was evicted without incident.");
-			
 		}
 		
 		EvictSurvivor(s);
@@ -344,7 +342,7 @@ public class Shelter : MonoBehaviour
 		if (visitorAtGate.Name == "Brian") {
 			this._survivors [0] = visitorAtGate;	
 		} else {
-			this._survivors [_gametime._currentDay] = visitorAtGate;
+			this._survivors [_numSurvivors] = visitorAtGate;
 		}
 
 		//show on map
@@ -361,6 +359,14 @@ public class Shelter : MonoBehaviour
 
 		// increase number of survivor
 		_numSurvivors++;
+	}
+
+	// reject a survivor at gate
+	public void RejectSurvivor(Survivor s){
+		_evictedSurvivors [_numEvictedSurvivors] = CopySurvivor (s);
+		_numEvictedSurvivors++;
+		Destroy (s.image); 
+		Destroy (s);
 	}
 
 	// copy the survivor

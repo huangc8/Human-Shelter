@@ -13,6 +13,7 @@ public class Survivor : ScriptableObject
     public task _task = task.Unassigned;            // current given task
     public bool _assignedTask;                      // if the character is not on a mission, idle is true
     public bool _enabled = false;                   // whether character is enabled
+	public bool _notify = false;					// whether character have important things to say
     
     // fix survivor info
     private string _name;                           // name of the survivor
@@ -717,6 +718,7 @@ public class Survivor : ScriptableObject
         _gameWorld = gw;
         _assignedTask = false;
         _enabled = true;
+		_notify = false;
 		
         switch (_name)
         {
