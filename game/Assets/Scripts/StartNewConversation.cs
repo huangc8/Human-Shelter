@@ -8,8 +8,9 @@ public class StartNewConversation : MonoBehaviour
 	// ====================================================== data
 	public Dialogue _dialogue; 							// the dialogue system
 	private GameTime _gameTime;							// game time reference
+	private Shelter _shelter;							// shelter reference
 	private Dictionary<string,bool> hadConversation; 	// whether conversation is triggered
-		
+	
 	private bool talked = false;
 
 	// ====================================================== initialization
@@ -17,6 +18,7 @@ public class StartNewConversation : MonoBehaviour
 	void Start ()
 	{
 		_gameTime = this.GetComponent<GameTime> ();
+		_shelter = this.GetComponent<Shelter>();
 
 		hadConversation = new Dictionary<string, bool> ();
 
@@ -160,9 +162,81 @@ public class StartNewConversation : MonoBehaviour
 				break;
 
 			}
+		}// end of !talk switch
+
+		// update notify
+		NotifyCheck();
+	}
+
+	// check if important stuff to say
+	public bool NoteCheck(string name){
+
+		//Switch based off of day
+		switch (_gameTime._currentDay) {
+		// --------------------- day 1 -----------------------
+		case 1:
+			if (hadConversation ["Conv_1_3"] == false && name == "Brian") {
+				return true;
+			}
+			break;
+		// --------------------- day 2 -----------------------
+		case 2:
+			if (hadConversation ["Conv_2_1"] == false && name == "Brian") {
+				return true;
+			}
+			
+			if (hadConversation ["Conv_2_2"] == false && name == "Marina") {
+				return true;
+			}
+			break;
+		// --------------------- day 3 -----------------------
+		case 3:
+			if (hadConversation ["Conv_3_1"] == false && name == "Brian") {
+				return true;
+			}
+			break;
+		// --------------------- day 4 -----------------------
+		case 4:
+			if (hadConversation ["Conv_4_1"] == false && name == "Marina") {
+				return true;
+			}
+			break;
+		// --------------------- day 5 -----------------------
+		case 5:
+			
+			if (hadConversation ["Conv_5_1"] == false && name == "Brian") {
+				return true;
+			}
+			
+			if (hadConversation ["Conv_5_2"] == false && name == "Eric") {
+				return true;
+			}
+			break;
+		// --------------------- day 6 -----------------------
+		case 6:
+			break;
+		// --------------------- day 7 -----------------------
+		case 7:
+			if (hadConversation ["Conv_7_2"] == false && name == "Bree") {
+				return true;
+			}
+			if (hadConversation ["Conv_7_3"] == false && name == "Danny") {
+				return true;
+			}
+			break;
+		}// end of switch
+		return false;
+	}
+
+	// check if notify turns on
+	public void NotifyCheck(){
+		foreach (Survivor s in _shelter._survivors) {
+			if (NoteCheck (s.name)) {
+				s._notify = true;
+			}
 		}
 	}
-	
+
 	// Start Conversation at the beginning of day.
 	public void DayCheck ()
 	{
@@ -195,6 +269,9 @@ public class StartNewConversation : MonoBehaviour
 	// check for special case 
 	public bool specialCase ()
 	{
+
+		NotifyCheck();
+
 		// switch based off game day
 		switch (_gameTime._currentDay) {
 		// --------------------- day 1 -----------------------
@@ -221,7 +298,7 @@ public class StartNewConversation : MonoBehaviour
 		}
 		return true;
 	}
-	
+
 	// start the talking
 	private void talk (string name, bool cond)
 	{
