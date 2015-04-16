@@ -223,7 +223,8 @@ public class UI : MonoBehaviour {
 								unass = true;
 							}
 						}
-						if(_visitors._personList[_gametime._currentDay]!=null)
+						//no error until bugs are fixed
+						if(_visitors._personList[_gametime._currentDay]!=null && false)
 						{
 							tutorial = true;
 							warning = 1;

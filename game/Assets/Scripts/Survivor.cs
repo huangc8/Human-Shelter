@@ -115,6 +115,11 @@ public class Survivor : ScriptableObject
         set
         {
             _health = value;
+			if(_health < 0){
+				_health = 0;
+				_gameWorld._shelter.KillSurvivor(this._name);
+
+			}
         }
     }
 
@@ -148,7 +153,7 @@ public class Survivor : ScriptableObject
 	// heal this instance
     public void HealMe(int healAmount)
     {
-        _health += healAmount;
+        Health += healAmount;
     }
 
 	// Advances the hunger. Moves the survivor to the next level of starvation
@@ -175,10 +180,10 @@ public class Survivor : ScriptableObject
 			r = AdvanceHunger();
 
 			if(_starvation == hunger.Starving){
-				_health--;
+				Health--;
 
 			}
-            if (_health < 0)
+            if (Health < 0)
             {
 				r.SetMessage(_name + " has starved to death.");
                 s.KillSurvivor(this.Name);
@@ -192,11 +197,11 @@ public class Survivor : ScriptableObject
     public void ConsumeMedicine(Shelter s)
     {
 		// if massively wounded
-        if (_health < 10)
+        if (Health < 10)
         {
             if (s.Medicine < 2)
             {
-                _health--;
+                Health--;
             } else
             {
                 s.UseMedicine(2); //consume to stabilize
@@ -205,13 +210,13 @@ public class Survivor : ScriptableObject
 		
         if (s.Medicine < 1)
         {
-            _health--;
+            Health--;
         } else
         {
             s.UseMedicine(1); //consume just cause
         }
         
-        if (_health < 0)
+        if (Health < 0)
         {
             s.KillSurvivor(this.Name);
         }
@@ -228,7 +233,7 @@ public class Survivor : ScriptableObject
     {
         int proficiency = GetProficiency(task.Resting);
 		int restModifier = ((int)hunger.Count - (int)_starvation);
-        _fatigue -= (int)((proficiency * (_health)) / 10.0f) * restModifier;
+        _fatigue -= (int)((proficiency * (Health)) / 10.0f) * restModifier;
         return _fatigue;
     }
 
@@ -245,21 +250,21 @@ public class Survivor : ScriptableObject
                 case wound.Uninjured:
                     break;
                 case wound.Minor:
-                    _health -= Random.Range(0, 1); //1 being a papercut
+                    Health -= Random.Range(0, 1); //1 being a papercut
                     break;
                 case wound.Moderate:
-                    _health -= Random.Range(1, 3); //1 being a papercut
+                    Health -= Random.Range(1, 3); //1 being a papercut
                     break;
                 case wound.Severe:
-                    _health -= Random.Range(3, 5); //1 being a papercut
+                    Health -= Random.Range(3, 5); //1 being a papercut
                     break;
                 case wound.Grievous:
-                    _health -= Random.Range(5, 7); //1 being a papercut
+                    Health -= Random.Range(5, 7); //1 being a papercut
                     break;
             }
         }
         
-        if(_health < 0){
+        if(Health < 0){
             r.SetMessage(_name + " died after sustaining a " + sWound.ToString() + " wound " + tasking + ".");
             s.KillSurvivor(this.Name);
             return false;
@@ -367,10 +372,40 @@ public class Survivor : ScriptableObject
         int fatigueModifier = (100 / (10 + Mathf.Max(Fatigue, 0))) * 10 + spillover;
 
         int proficiency = (GetProficiency(task.Defend) + 10) + fatigueModifier;
-        int newDefenses = s.BolsterDefenses(proficiency);
+        Shelter.DefenseLevel newDefenses = s.BolsterDefenses(proficiency);
+
+		string defenseDescription = " undefended.";
+
+		switch(newDefenses){
+		case Shelter.DefenseLevel.Undefended:
+			defenseDescription = " undefended.";
+			break;
+		case Shelter.DefenseLevel.BarelyDefended:
+			defenseDescription = " barely defended.";
+			break;
+		case Shelter.DefenseLevel.SlightlyDefended:
+			defenseDescription = " slightly defended.";
+			break;
+		case Shelter.DefenseLevel.ModeratelyDefended:
+			defenseDescription = " moderately defended.";
+			break;
+		case Shelter.DefenseLevel.HeavilyDefended:
+			defenseDescription = " heavily defended.";
+			break;
+		case Shelter.DefenseLevel.WellDefended:
+			defenseDescription = " well defended.";
+			break;
+		case Shelter.DefenseLevel.InpenetrableFortress:
+			defenseDescription = " very well defended.";
+			break;
+		default:
+			defenseDescription = " undefended.";
+			break;
+		}
+
 
         Report r = new Report();
-        r.SetMessage(_name + " Bolstered defenses to " + newDefenses);
+        r.SetMessage(_name + " Bolstered defenses to" + defenseDescription );
         return r;
     }
     
@@ -469,9 +504,19 @@ public class Survivor : ScriptableObject
     // Execute the specified survivor.
     public Report Execute(Shelter s)
     {
-        Report r = new Report();
+		int proficiency = GetProficiency(task.Execute);
+		
+		Report r = new Report();
+		if(proficiency + Random.Range (-5,5) > 5){
+			r.SetMessage(_name + " resisted execution.");
+
+		}
+		else{
+			r.SetMessage(_name + " was executed without incident.");
+
+		}
+
         s.KillSurvivor(this.Name);
-        r.SetMessage(_name + " successfully executed");
         return r;
     }
     
@@ -711,7 +756,7 @@ public class Survivor : ScriptableObject
         _task = sCopy.AssignedTask;
 
         _name = sCopy.Name;
-        _health = sCopy.Health;
+        Health = sCopy.Health;
         _fatigue = sCopy.Fatigue;
         _proficiencies = sCopy.GetProficiencies();
         _appetite = sCopy.Appetitie;

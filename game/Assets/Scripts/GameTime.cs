@@ -83,10 +83,10 @@ public class GameTime : MonoBehaviour
 				_reports.Add (_shelter._survivors [s].Scavenge (_shelter));
 				break;
 			case Survivor.task.Execute:
-				_reports.Add (_shelter._survivors [s].Execute (_shelter));
+				_reports.Add (_shelter.Execute (_shelter._survivors[s]));
 				break;
 			case Survivor.task.Evict:
-				_reports.Add (_shelter._survivors [s].Evict (_shelter));
+				_reports.Add (_shelter.Evict (_shelter._survivors[s]));
 				break;
 			case Survivor.task.Raiding:
 				_reports.Add (_shelter._survivors [s].Raid (_shelter));

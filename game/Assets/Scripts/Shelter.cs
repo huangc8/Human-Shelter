@@ -8,9 +8,9 @@ public class Shelter : MonoBehaviour
 	{
 		// =============================================================== data
 		private Shelter _parent;
-		int _parts;							// how much parts we have
-		int _food;							// how much food we have
-		int _medicine; 						// how much medicine we have
+		private int _parts;							// how much parts we have
+		private int _food;							// how much food we have
+		private int _medicine; 						// how much medicine we have
 
 		// =============================================================== initialization
 		// constructor
@@ -30,6 +30,9 @@ public class Shelter : MonoBehaviour
 			}
 			set {
 				_parts = value;
+				if(_parts < 0){
+					_parts = 0;
+				}
 			}
 		}
 
@@ -40,6 +43,9 @@ public class Shelter : MonoBehaviour
 			}
 			set {
 				_food = value;
+				if(_food < 0){
+					_food = 0;
+				}
 			}
 		}
 
@@ -50,6 +56,9 @@ public class Shelter : MonoBehaviour
 			}
 			set {
 				_medicine = value;
+				if(_medicine < 0){
+					_medicine = 0;
+				}
 			}
 		}
 
@@ -62,7 +71,7 @@ public class Shelter : MonoBehaviour
 		// player consume food
 		public void playerEat ()
 		{
-			_food -= 5;
+			Food =  Food - 5;
 		}
 
 		// consume medicine
@@ -81,7 +90,18 @@ public class Shelter : MonoBehaviour
 	}
 	// ------------------------------ end of Stores class ---------------------------------------
 
+	public enum DefenseLevel{
+		Undefended,
+		BarelyDefended,
+		SlightlyDefended,
+		ModeratelyDefended,
+		HeavilyDefended,
+		WellDefended,
+		InpenetrableFortress
+	}
+
 	// =============================================================== data
+	public DefenseLevel _defenseLevel;
 	public GameWorld _gameWorld; 			// game world reference
 	public GameTime _gametime;				// game time reference
 	public Visitor _visitors;				// visitor reference
@@ -94,14 +114,14 @@ public class Shelter : MonoBehaviour
 	private Stores _storage; 				// the storage
 	private int _numEvictedSurvivors; 		// current number of survivors who have been evicted
 	private int _numSurvivors; 				// current number of survivors
-	private int _defenses; 					// the defense of the building (depend on guard
 	private int _attackStrength; 			// the raiding strength
+	private int _defenses = 0;
 
 	// =============================================================== initialization
 	// Use this for initialization
 	void Start ()
 	{		
-		_defenses = 0;
+		_defenseLevel = DefenseLevel.Undefended;
 		_survivors = new Survivor[6];
 		_images = new GameObject[6];
 		_evictedSurvivors = new Survivor[100];
@@ -170,11 +190,30 @@ public class Shelter : MonoBehaviour
 	}
 	
 	// get defense strength
-	public int DefensivePower {
+	public DefenseLevel DefensivePower{
 		get {
-			return _defenses;
+			if(_defenses < 5){
+				return DefenseLevel.Undefended;
+			}
+			else if(_defenses < 15){
+				return DefenseLevel.BarelyDefended;
+			}
+			else if(_defenses < 35){
+				return DefenseLevel.SlightlyDefended;
+			}
+			else if(_defenses < 50){
+				return DefenseLevel.ModeratelyDefended;
+			}
+			else if(_defenses < 70){
+				return DefenseLevel.HeavilyDefended;
+			}
+			else if(_defenses < 90){
+				return DefenseLevel.WellDefended;
+			}
+			else{
+				return DefenseLevel.InpenetrableFortress;
+			}
 		}
-		
 	}
 
 	// check for game over (cond: out of food & out of survivors
@@ -243,10 +282,10 @@ public class Shelter : MonoBehaviour
 	}
 
 	// increase defense
-	public int BolsterDefenses (int proficiency)
+	public DefenseLevel BolsterDefenses (int proficiency)
 	{
 		_defenses += proficiency;
-		return _defenses;
+		return DefensivePower;
 	}
 	
 	// increase attack
@@ -255,6 +294,47 @@ public class Shelter : MonoBehaviour
 		_attackStrength += proficiency;
 		return _attackStrength;
 	}
+
+	/// <summary>
+	/// Execute the specified survivor s.
+	/// </summary>
+	/// <param name="s">survivor.</param>
+	public Report Execute(Survivor s){
+		
+		int proficiency = s.GetProficiency(Survivor.task.Execute);
+		
+		Report r = new Report();
+		if(proficiency + Random.Range (-5,5) > 5){
+			r.SetMessage(s.Name + " resisted execution.");
+			
+		}
+		else{
+			r.SetMessage(s.Name + " was executed without incident.");
+			
+		}
+		
+		KillSurvivor(s.Name);
+		return r;
+	}
+
+	public Report Evict (Survivor s)
+	{
+		int proficiency = s.GetProficiency(Survivor.task.Evict);
+		
+		Report r = new Report();
+		if(proficiency + Random.Range (-5,5) > 5){
+			r.SetMessage(s.Name + " resisted eviction.");
+			
+		}
+		else{
+			r.SetMessage(s.Name + " was evicted without incident.");
+			
+		}
+		
+		EvictSurvivor(s);
+		return r;
+	}
+
 
 	// ================================================== action on survivor
 	// Invites a survivor.
