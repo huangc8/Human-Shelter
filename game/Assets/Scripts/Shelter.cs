@@ -8,9 +8,9 @@ public class Shelter : MonoBehaviour
 	{
 		// =============================================================== data
 		private Shelter _parent;
-		int _parts;							// how much parts we have
-		int _food;							// how much food we have
-		int _medicine; 						// how much medicine we have
+		private int _parts;							// how much parts we have
+		private int _food;							// how much food we have
+		private int _medicine; 						// how much medicine we have
 
 		// =============================================================== initialization
 		// constructor
@@ -30,6 +30,9 @@ public class Shelter : MonoBehaviour
 			}
 			set {
 				_parts = value;
+				if(_parts < 0){
+					_parts = 0;
+				}
 			}
 		}
 
@@ -40,6 +43,9 @@ public class Shelter : MonoBehaviour
 			}
 			set {
 				_food = value;
+				if(_food < 0){
+					_food = 0;
+				}
 			}
 		}
 
@@ -50,6 +56,9 @@ public class Shelter : MonoBehaviour
 			}
 			set {
 				_medicine = value;
+				if(_medicine < 0){
+					_medicine = 0;
+				}
 			}
 		}
 
@@ -62,7 +71,7 @@ public class Shelter : MonoBehaviour
 		// player consume food
 		public void playerEat ()
 		{
-			_food -= 5;
+			Food =  Food - 5;
 		}
 
 		// consume medicine

@@ -176,7 +176,7 @@ public class GameWorld : MonoBehaviour
 	private const int NUM_SCAVENGE_TARGETS = 3;
 	public int [] scavengedTargets = new int[NUM_SCAVENGE_TARGETS]; //3 chosen - number of enums for scavenging
 
-	Shelter _shelter;						// shelter class
+	public Shelter _shelter;						// shelter class
 	public int totalScoutingPower  = 0;
 
 	int _daysSinceSpawn = 0;				// 
