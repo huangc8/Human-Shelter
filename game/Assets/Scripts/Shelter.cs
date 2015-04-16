@@ -1,8 +1,4 @@
-﻿/// <summary>
-/// Shelter. This class controls the properties of the shelter including
-/// the survivors and they're corresponding tasks
-/// </summary>
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class Shelter : MonoBehaviour
@@ -11,21 +7,13 @@ public class Shelter : MonoBehaviour
 	public class Stores
 	{
 		// =============================================================== data
-		/// <summary>
-		/// Stores class, nested class that keeps track of all of the items we currently
-		/// have in the shelter
-		/// </summary>
 		private Shelter _parent;
-		int _parts;//How much medicine we have
-		int _food;//how much food we have
-		int _medicine; //how much medicine we have
+		int _parts;							// how much parts we have
+		int _food;							// how much food we have
+		int _medicine; 						// how much medicine we have
 
 		// =============================================================== initialization
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Shelter+stores"/> class.
-		/// Sets each store to be zero, sets the parent class too.
-		/// </summary>
-		/// <param name="parent">Parent.</param>
+		// constructor
 		public Stores (Shelter parent)
 		{
 			this._parent = parent;
@@ -35,10 +23,7 @@ public class Shelter : MonoBehaviour
 		}
 		
 		// ================================================================= accessor
-		/// <summary>
-		/// Gets or sets the parts.
-		/// </summary>
-		/// <value>The resource.</value>
+		// get & set parts
 		public int Parts {
 			get {
 				return _parts;
@@ -48,10 +33,7 @@ public class Shelter : MonoBehaviour
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the food.
-		/// </summary>
-		/// <value>The food.</value>
+		// get & set foods
 		public int Food {
 			get {
 				return _food;
@@ -61,10 +43,7 @@ public class Shelter : MonoBehaviour
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the medicine.
-		/// </summary>
-		/// <value>The medicine.</value>
+		// get & set medicine
 		public int Medicine {
 			get {
 				return _medicine;
@@ -74,31 +53,25 @@ public class Shelter : MonoBehaviour
 			}
 		}
 
+		// is parts enough?
+		public bool SufficientParts(){
+			return _parts > 200;
+		}
+
 		// ================================================================= function
-		/// <summary>
-		/// Players eat.
-		/// </summary>
+		// player consume food
 		public void playerEat ()
 		{
 			_food -= 5;
 		}
 
-		public bool SufficientParts(){
-			return _parts > 200;
-		}
-
-		/// <summary>
-		/// Uses the medicine.
-		/// </summary>
-		/// <param name="useAmount">Use amount.</param>
+		// consume medicine
 		public void UseMedicine (int useAmount)
 		{
 			_medicine -= useAmount;
 		}
 
-		/// <summary>
-		/// Loses half parts in store.
-		/// </summary>
+		// lose resource due to raid
 		public void LoseHalfResources ()
 		{
 			_medicine = (int)(_medicine * Random.Range (.4f, .6f));
@@ -112,16 +85,17 @@ public class Shelter : MonoBehaviour
 	public GameWorld _gameWorld; 			// game world reference
 	public GameTime _gametime;				// game time reference
 	public Visitor _visitors;				// visitor reference
+	public Conditions _cond;				// conditions reference
 
 	public Survivor[] _survivors; 			// array of survivors, maximum capacity is 6
 	public Survivor[] _evictedSurvivors; 	// array of survivors who have been kicked out of the shelter
 	public GameObject[] _images; 			// array of corrisponding character images
 
+	private Stores _storage; 				// the storage
 	private int _numEvictedSurvivors; 		// current number of survivors who have been evicted
 	private int _numSurvivors; 				// current number of survivors
-	private Stores _storage; 				// the storage
-	int _defenses; 							// the defense of the building (depend on guard
-	int _attackStrength; 					// the raiding strength
+	private int _defenses; 					// the defense of the building (depend on guard
+	private int _attackStrength; 			// the raiding strength
 
 	// =============================================================== initialization
 	// Use this for initialization
@@ -132,26 +106,13 @@ public class Shelter : MonoBehaviour
 		_images = new GameObject[6];
 		_evictedSurvivors = new Survivor[100];
 		
-		
 		_storage = new Stores (this);
 		_numSurvivors = 0;
 		_numEvictedSurvivors = 0;
 	}
 
-	public bool HasSufficentParts(){
-		if(_storage.SufficientParts()){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-
 	//================================================== accessor
-	/// <summary>
-	/// Gets or sets the medicine.
-	/// </summary>
-	/// <value>The medicine.</value>
+	// get & set medicine
 	public int Medicine {
 		get {
 			return _storage.Medicine;
@@ -161,10 +122,7 @@ public class Shelter : MonoBehaviour
 		}
 	}
 	
-	/// <summary>
-	/// Gets or sets the food.
-	/// </summary>
-	/// <value>The food.</value>
+	// get & set food
 	public int Food {
 		get {
 			return _storage.Food;
@@ -174,10 +132,7 @@ public class Shelter : MonoBehaviour
 		}
 	}
 	
-	/// <summary>
-	/// Gets or sets the parts.
-	/// </summary>
-	/// <value>The parts.</value>
+	// get & set parts
 	public int Parts {
 		get {
 			return _storage.Parts;
@@ -187,18 +142,17 @@ public class Shelter : MonoBehaviour
 		}
 	}
 
-	public bool IsGameOver(){
-		//check to see if we are out of food
-		//check to see we are out of survivors
-
-		return _numSurvivors <=0 && _storage.Food <= 0;
-		//without either end the game
+	// whether there is enough parts
+	public bool HasSufficentParts(){
+		if(_storage.SufficientParts()){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
-	
-	/// <summary>
-	/// Gets or sets the number of survivors.
-	/// </summary>
-	/// <value>The number of survivors.</value>
+
+	// get & set number of survivors
 	public int NumberOfSurvivors {
 		get {
 			return _numSurvivors;
@@ -208,20 +162,14 @@ public class Shelter : MonoBehaviour
 		}
 	}
 	
-	/// <summary>
-	/// Gets the raiding strength.
-	/// </summary>
-	/// <value>The raiding strength.</value>
+	// get raiding strength
 	public int RaidingStrength {
 		get {
 			return _attackStrength;
 		}
 	}
 	
-	/// <summary>
-	/// Gets the defensive power.
-	/// </summary>
-	/// <value>The defensive power.</value>
+	// get defense strength
 	public int DefensivePower {
 		get {
 			return _defenses;
@@ -229,7 +177,13 @@ public class Shelter : MonoBehaviour
 		
 	}
 
+	// check for game over (cond: out of food & out of survivors
+	public bool IsGameOver(){
+		return _numSurvivors <= 0 && _storage.Food <= 0;
+	}
+
 	//================================================== Modifier on shelter
+	// consume food
 	public bool ConsumeFood(int maxConsumption){
 		if(maxConsumption > _storage.Food){
 			_storage.Food = 0;
@@ -239,6 +193,7 @@ public class Shelter : MonoBehaviour
 		return true;
 	}
 
+	// consume parts
 	public bool ConsumeParts(int maxConsumption){
 		if(maxConsumption > _storage.Parts){
 			_storage.Medicine = 0;
@@ -246,47 +201,19 @@ public class Shelter : MonoBehaviour
 		}
 		_storage.Medicine -= maxConsumption;
 		return true;
-
 	}
 
+	// consume medicine
 	public bool ConsumeMedicine(int maxConsumption){
 		if(maxConsumption > _storage.Medicine){
 			_storage.Medicine = 0;
 			return false;
 		}
-
 		_storage.Parts -= maxConsumption;
 		return true;
-
 	}
 
-
-	/// <summary>
-	/// Bolsters the defenses.
-	/// </summary>
-	/// <param name="proficiency">Proficiency.</param>
-	public int BolsterDefenses (int proficiency)
-	{
-		_defenses += proficiency;
-		return _defenses;
-	}
-	
-	/// <summary>
-	/// Bolsters the attack.
-	/// </summary>
-	/// <returns>The attack.</returns>
-	/// <param name="proficiency">Proficiency.</param>
-	public int BolsterAttack (int proficiency)
-	{
-		_attackStrength += proficiency;
-		return _attackStrength;
-	}
-	
-	/// <summary>
-	/// Other Survivor eat food.
-	/// </summary>
-	/// <returns><c>true</c>, if food was eaten, <c>false</c> otherwise.</returns>
-	/// <param name="toEat">To eat.</param>
+	// consume food
 	public bool EatFood (int toEat)
 	{
 		_storage.Food = _storage.Food - toEat;
@@ -297,129 +224,85 @@ public class Shelter : MonoBehaviour
 		return true;
 	}
 
-	/// <summary>
-	/// Players eat.
-	/// </summary>
+	// player consume food
 	public void playerEat ()
 	{
 		_storage.playerEat ();
 	}
 
-	/// <summary>
-	/// Uses the medicine.
-	/// </summary>
-	/// <param name="useAmount">Use amount.</param>
+	// consume medicine
 	public void UseMedicine (int useAmount)
 	{
 		_storage.UseMedicine (useAmount);
 	}
 
-	/// <summary>
-	/// Loses half of parts.
-	/// </summary>
+	// lose half resource
 	public void LoseHalfResources ()
 	{
 		_storage.LoseHalfResources ();
 	}
 
-	// ================================================== action on survivor
-	/// <summary>
-	/// Creates a survivor.
-	/// </summary>
-	/// <returns>The survivor.</returns>
-	/// <param name="name">Name.</param>
-	/// <param name="image">Image.</param>
-	private Survivor CreateSurvivor (string name, GameObject image)
+	// increase defense
+	public int BolsterDefenses (int proficiency)
 	{
-		Survivor stmp = new Survivor ();
-		stmp.Init (_gameWorld,name);
-		stmp.image = image;
-		//show on map
-		stmp.image.renderer.enabled = true;
-		stmp.image.layer = 0;
-		
-		_numSurvivors++;
-		return stmp;
+		_defenses += proficiency;
+		return _defenses;
 	}
 	
-	/// <summary>
-	/// Copies the survivor.
-	/// </summary>
-	/// <returns>The survivor.</returns>
-	/// <param name="toBeCopied">To be copied.</param>
+	// increase attack
+	public int BolsterAttack (int proficiency)
+	{
+		_attackStrength += proficiency;
+		return _attackStrength;
+	}
+
+	// ================================================== action on survivor
+	// Invites a survivor.
+	public void InviteSurvivor (Survivor visitorAtGate)
+	{	
+		// make the last empty spot to be the new survivor
+		if (visitorAtGate.Name == "Brian") {
+			this._survivors [0] = visitorAtGate;	
+		} else {
+			this._survivors [_gametime._currentDay] = visitorAtGate;
+		}
+
+		//show on map
+		visitorAtGate.image.renderer.enabled = true;
+		visitorAtGate.image.layer = 0;
+	
+		// set condition
+		_cond.setCondition ("inCamp", visitorAtGate.Name, true);
+
+		// clear gate
+		if (visitorAtGate.Name != "Brian") {
+			_visitors._personList [_gametime._currentDay] = null;
+		}
+
+		// increase number of survivor
+		_numSurvivors++;
+	}
+
+	// copy the survivor
 	private Survivor CopySurvivor (Survivor toBeCopied)
 	{
 		Survivor stmp = new Survivor ();
-		
 		stmp.CopyInit (toBeCopied);
 		return stmp;
 	}
 
-	/// <summary>
-	/// Invites a survivor.
-	/// </summary>
-	/// <param name="visitorAtGate">Visitor at gate.</param>
-	public void InviteSurvivor (Survivor visitorAtGate)
-	{	
-		this._survivors [this.NumberOfSurvivors] = visitorAtGate;
-		//show on map
-		visitorAtGate.image.renderer.enabled = true;
-		visitorAtGate.image.layer = 0;
-		
-		this.NumberOfSurvivors++;
-		if (visitorAtGate.Name != "Brian") {
-			_visitors._personList [_gametime._currentDay] = null;
-		}
-	}
-
-	/// <summary>
-	/// Evicts a survivor.
-	/// </summary>
-	/// <param name="s">S.</param>
+	// Evicts a survivor.
 	public void EvictSurvivor (Survivor s)
 	{
 		_evictedSurvivors [_numEvictedSurvivors] = CopySurvivor (s);
+		Destroy (s.image); 
+		Destroy (s);
 		_numEvictedSurvivors++;
-		Destroy (s.image); //destroy the sprite
-		Destroy (s); //destory the script
+		_numSurvivors--;
 	}
 
-	/// <summary>
-	/// Kills the survivor.
-	/// </summary>
-	public void KillSurvivor (string s)
-	{
-		//Find the survivors position
-		int sPosition = -1;
-		for (int i = 0; i < _numSurvivors; i++) {
-			if (_survivors [i].Name == s) {
-				sPosition = i;
-			}
-		}
-		Debug.Log ("Killing Survivor: " + s + " sPosition: " + sPosition);
-		
-		KillSurvivor (_survivors [sPosition]);
-		//_numSurvivors--;
-		
-	}
-
-	/// <summary>
-	/// Kills a random survivor.
-	/// </summary>
-	public string KillRandomSurvivor ()
-	{
-		name = _survivors [(int)Random.Range (0, _numSurvivors)].Name;
-		KillSurvivor (name);
-		//_numSurvivors--;
-		return name;
-	}
-
-	/// <summary>
-	/// Kills a random raider.
-	/// </summary>
-	/// <returns>The random raider.</returns>
+	// wound a random raider.
 	public void WoundRandomRaider(ArrayList reports){
-
 		int length = 0;
 		foreach (Survivor s in _survivors) {
 			if(s.AssignedTask == Survivor.task.Raiding){
@@ -428,41 +311,40 @@ public class Shelter : MonoBehaviour
                 reports.Add(r);
 			}
 		}
-
 	}
 
-	/// <summary>
-	/// Kills the survivor.
-	/// </summary>
-	public void KillSurvivor (Survivor s)
+	// Kills a random survivor.
+	public string KillRandomSurvivor ()
 	{
-		//Find the survivors position
+		name = _survivors [(int)Random.Range (0, _numSurvivors)].Name;
+		KillSurvivor (name);
+		return name;
+	}
+
+	// kill survivor
+	public void KillSurvivor (string s)
+	{
+		// find the survivors position
 		int sPosition = -1;
 		for (int i = 0; i < _numSurvivors; i++) {
-			if (_survivors [i].Name == s.Name) {
+			if (_survivors [i].Name == s) {
 				sPosition = i;
+				break;
 			}
 		}
-		Debug.Log ("Killing Survivor: " + s.Name + " sPosition: " + sPosition);
 
-		//Swap him with the survivor at the end of the list
-		//Edit: Don't do this or it will break the map images.  Just leave them at the same index.
-
-		//Debug.Log (_survivors[sPosition].Name);
-		//_survivors[sPosition] = CopySurvivor(_survivors[_numSurvivors-1]);
-		//Debug.Log (_survivors[sPosition].Name);
-		//_numSurvivors--;
-		//Debug.Log (_numSurvivors);
-		Destroy (s.image);
-		Destroy (s);
-		//_numSurvivors--;
-
+		// kill him/her
+		if (sPosition != -1) {
+			Destroy (_survivors [sPosition].image);
+			Destroy (_survivors [sPosition]);
+			_numSurvivors--;
+		} else {
+			Debug.LogError("KillSurvivor: No such Survivor");
+		}
 	}
 
 	// ================================================================ helper
-	/// <summary>
-	/// Refreshes shelter for a new day, sets _defenses to 0
-	/// </summary>
+	// Refreshes shelter for a new day, sets _defenses to 0
 	public void NewDay ()
 	{
 		_defenses = 0;

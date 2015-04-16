@@ -42,20 +42,12 @@ public class GameTime : MonoBehaviour
 	}
 
 	// =============================================== action
-	/// <summary>
-	/// Start a new day, reset all of values that reset over night
-	/// Complete all of the tasks the survivors were sent on
-	/// </summary>
+	// Start a new day, complete all of the tasks the survivors were sent on
 	public void newDay ()
 	{
 		if (_currentDay > 0) {
 			//process the tasks
 			evaluateTasks ();
-
-			// reset values + update values
-			for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
-				_shelter._survivors [i].ConvReset ();
-			}
 			_shelter.NewDay ();
 		}
 		_currentDay++;
@@ -65,11 +57,8 @@ public class GameTime : MonoBehaviour
 
 
 	// ================================================ helper
-	/// <summary>
-	/// Evaluates the tasks. Carry out the task for each survivor
-	/// </summary>
-	void evaluateTasks ()
-	{
+	// Evaluates the tasks. Carry out the task for each survivor
+	void evaluateTasks (){
 		_reports = new List<Report>();
 		//Evaluate each task
 		for (int s = 0; s < _shelter.NumberOfSurvivors; s++) {
@@ -115,7 +104,6 @@ public class GameTime : MonoBehaviour
 				break;
 			}
 
-
 			// increase survivor status
 
 			ArrayList tReports = _gameWorld.CalculateShelterLocation();
@@ -157,6 +145,7 @@ public class GameTime : MonoBehaviour
 		_shelter.playerEat ();
 	}
 
+	// check if game win
 	private bool GameWon(){
 #if ThirtyDays
 		//check for the time and check for the number of required parts (luxuries)
@@ -164,14 +153,14 @@ public class GameTime : MonoBehaviour
 #else
 		return (_currentDay >= 7 && _shelter.Parts > 200);
 #endif
-
-
 	}
 
+	// check if game lose
 	private bool GameLost(){
 		return (_shelter.IsGameOver());
 	}
 
+	// game end check
 	public void GameEndCheck(){
 		//Check for the end conditions
 		if(GameWon()){
@@ -181,6 +170,5 @@ public class GameTime : MonoBehaviour
 			Application.LoadLevel ("LoseGame");
 		}
 	}
-
 }
 

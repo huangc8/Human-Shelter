@@ -129,15 +129,10 @@ public class UI : MonoBehaviour {
 		buttonStyle.hover.textColor = Color.black;
 		buttonStyle.active.textColor = Color.black;
 		buttonStyle.padding = new RectOffset (1, 1, 1, 1);
-
-
-
+		
 		labelStyle.fontSize = Screen.width / 90;
 		labelStyle.normal.textColor = Color.white; 
-
-
-
-
+		
 		float buttonWidth = Screen.width * .2f;
 		float buttonHeight = Screen.height * .03f;
 
@@ -314,9 +309,6 @@ public class UI : MonoBehaviour {
 					if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight),"Talk to " + _shelter._survivors[index].Name, buttonStyle)) {
 						showButtons=true;
 						_startNewConversation.ClickCheck(_shelter._survivors[index].Name);
-
-						_shelter._survivors [index].Converse ();
-						_shelter._survivors[index]._conversationsLeft--;
 					}
 					h+= buttonHeight *1.25f;
 

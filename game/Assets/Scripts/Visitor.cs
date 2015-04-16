@@ -5,7 +5,6 @@ using System.Collections;
 public class Visitor : MonoBehaviour {
 
 	// =================================================== data
-
 	public GameTime _gametime;					// game time reference
 	public GameWorld _gameWorld;				// game world reference
 
@@ -40,28 +39,12 @@ public class Visitor : MonoBehaviour {
 	}
 
 	// =================================================== survivor function
+	// create a survivor
 	private Survivor CreateSurvivor(string name, GameObject image){
 		Survivor stmp = new Survivor ();
 		stmp.Init (_gameWorld, name);
 		stmp.Name = name;
 		stmp.image = image;
 		return stmp;
-	}
-
-	/// <summary>
-	/// Rejects the survivor at gate.
-	/// </summary>
-	public void RejectSurvivorAtGate(string name){
-		if(name != _personList [_gametime._currentDay].Name){
-			Debug.LogError("Error: not such survivor exist");
-		}
-		_personList [_gametime._currentDay] = null;
-	}
-
-	/// <summary>
-	/// Kills the survivor at gate.
-	/// </summary>
-	public void KillSurvivorAtGate(string name){
-		RejectSurvivorAtGate(name);
 	}
 }

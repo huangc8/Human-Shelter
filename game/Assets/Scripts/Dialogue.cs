@@ -11,7 +11,6 @@ public class Dialogue : MonoBehaviour
 		public GameTime _gt; // gametime reference
 		private Shelter _shelter; 	// shelter class reference
 		private Visitor _visitor;	// visitor class reference
-		private Conditions _conditions; 	// condition data base
 		private bool diaChoice = false; // whether the conversation have a choice
 		private int choiceID = -1; // what is current choice
 		private int lastID = -1; // what is last choice
@@ -21,11 +20,9 @@ public class Dialogue : MonoBehaviour
 		{
 				_shelter = this.GetComponent<Shelter> ();
 				_visitor = this.GetComponent<Visitor> ();
-				_conditions = this.GetComponent<Conditions> ();
 		}
 
 		// ==================================================== functions
-
 		// start the conversation 
 		public void startConv (string name, bool choice)
 		{
@@ -84,13 +81,11 @@ public class Dialogue : MonoBehaviour
 				case 25: // **************invite Brian***************
 						visitorAtGate = _visitor._personList [0];
 						_shelter.InviteSurvivor (visitorAtGate);
-						_conditions.setCondition(0, true);
 						break;
 				}
 		}
 
 		// ==================================================== update
-
 		// Update
 		void Update ()
 		{	

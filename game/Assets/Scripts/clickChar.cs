@@ -65,30 +65,29 @@ public class clickChar : MonoBehaviour
 	{
 		Survivor visitorAtGate = _visitors._personList [_gametime._currentDay];
 
-		if (_gametime._currentDay == 0) {
-				visitorAtGate = null;
-		}
-				
-		renderer.enabled = true;
-
+		// for newVisitor sprite
 		if (this.tag == "NewVisitor") {
 
-			if(_gametime._currentDay == 1){
+			// special case Day 0
+			if (_gametime._currentDay == 0) {
+				visitorAtGate = null;
+			}
 
+			// special case Day 1 
+			if(_gametime._currentDay == 1){
+				renderer.enabled = true;
 				// between talk 2 and Marina show up
-				if(_startNewConversation.getConv("Conv_1_1") 
-				   && _Cond.getCondition(0) 
-				   && !_startNewConversation.getConv("Conv_1_3")){
+				if(_startNewConversation.getConv("Conv_1_1")
+				   && _Cond.getCondition("inCamp", "Brian")
+				   && !_startNewConversation.getConv("Conv_1_3") || visitorAtGate == null){
 					renderer.enabled = false;
 				}
-
 			}else{
-				if(visitorAtGate != null && _ui.fading!=1)
-				{
-					renderer.enabled=true;
-				}
-				else {
-					renderer.enabled=false;
+				// check if render
+				if (visitorAtGate != null && _ui.fading != 1) {
+					renderer.enabled = true;
+				} else {
+					renderer.enabled = false;
 				}
 			}
 		}

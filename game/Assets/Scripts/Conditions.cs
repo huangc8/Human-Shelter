@@ -1,29 +1,30 @@
-﻿/// <summary>
-/// Conditions. Acts as an interface between the dialog toolkit and the main game. 
-/// Essentially this class contains three dictionary of boolean values.
-/// the dictionaries are execute, decline, gainApproval and loseApproval.
-/// These dictionary will map strings to boolean values that are either true or false. 
-/// The boolean values will operate as basic commands.
-/// The three different commands we are starting with include
-/// 
-/// execute <name> (execute in camp)
-/// kill <name> (execute at gate)
-/// decline <name> 
-/// invite <name>
-/// 
-/// </summary>
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class Conditions : MonoBehaviour
 {
+	// survivor conditions
+	public class survCond{
+	
+		public bool alive;
+		public bool inCamp;
+		public bool special;
+
+		public survCond(){
+			alive = true;
+			inCamp = false;
+			special = false;
+		}
+
+	}// end of survivor Cond Class
+
 	// ============================================== data
 	public Visitor _visitor; 							// reference to the visitor class
 	public Shelter _shelter; 							// reference to the shelter class
 	
 	// dialogue dictionary
-	private Dictionary <int, bool> _conditions;			// whether character is still alive
+	private Dictionary <string, survCond> _conditions;			// whether character is still alive
 
 	// ============================================== initialize
 	// Use this for initialization
@@ -34,13 +35,19 @@ public class Conditions : MonoBehaviour
 		_visitor = this.GetComponent<Visitor> (); 
 
 		// initiate data base
-		_conditions = new Dictionary <int, bool> ();
+		_conditions = new Dictionary <string, survCond> ();
 
 		// ==================== PLEASE CREATE BOOLEAN HERE!!!! =====================
 		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 		// add conditions index	value	  condition detail
-		_conditions.Add(0, false);
+		_conditions.Add ("Brian", new survCond());
+		_conditions.Add ("Marina", new survCond ());
+		_conditions.Add ("Eric", new survCond ());
+		_conditions.Add ("Danny", new survCond ());
+		_conditions.Add ("Bree", new survCond ());
+		_conditions.Add ("Shane", new survCond ());
+		_conditions.Add ("David", new survCond ());
 
 		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		// ==========================================================================
@@ -48,25 +55,36 @@ public class Conditions : MonoBehaviour
 
 	// ============================================== accessor
 	// get conditions 
-	public bool getCondition (int key)
+	public bool getCondition (string key, string name)
 	{
-		if (_conditions.ContainsKey (key)) {
-			return _conditions[key];
+
+		survCond tmp = _conditions [name];
+
+		switch (key) {
+		case "alive":
+			return tmp.alive;
+		case "inCamp":
+			return tmp.inCamp;
 		}
 
-		Debug.LogError ("GET_CONDITION: NO SUCH KEY");
+		Debug.LogError ("getCondition: no such condition");
+
 		return false;
 	}
 
 	// ============================================== functions
 	// set conditions
-	public void setCondition (int key, bool cond)
+	public void setCondition (string key, string name, bool cond)
 	{
-		if (_conditions.ContainsKey (key)) {
-			_conditions[key] = true;
+		survCond tmp = _conditions [name];
+		
+		switch (key) {
+		case "alive":
+			tmp.alive = cond;
+			break;
+		case "inCamp":
+			tmp.inCamp = cond;
+			break;
 		}
-
-		Debug.Log (key);
-		Debug.LogError ("SET_CONDTION: NO SUCH KEY");
 	}
 }

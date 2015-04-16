@@ -54,8 +54,7 @@ public class ReportHandler : MonoBehaviour
 				reports.RemoveAt(r);
 			}
 		}
-
-
+		
 		Debug.Log("Passing Reports");
 		if(reports.Count > 0){
 
