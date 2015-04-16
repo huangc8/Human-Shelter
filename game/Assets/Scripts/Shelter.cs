@@ -273,10 +273,10 @@ public class Shelter : MonoBehaviour
 	}
 
 	// increase defense
-	public int BolsterDefenses (int proficiency)
+	public DefenseLevel BolsterDefenses (int proficiency)
 	{
 		_defenses += proficiency;
-		return _defenses;
+		return DefensivePower;
 	}
 	
 	// increase attack

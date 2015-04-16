@@ -367,10 +367,38 @@ public class Survivor : ScriptableObject
         int fatigueModifier = (100 / (10 + Mathf.Max(Fatigue, 0))) * 10 + spillover;
 
         int proficiency = (GetProficiency(task.Defend) + 10) + fatigueModifier;
-        int newDefenses = s.BolsterDefenses(proficiency);
+        Shelter.DefenseLevel newDefenses = s.BolsterDefenses(proficiency);
+
+		string defenseDescription = " undefended.";
+
+		switch(newDefenses){
+		case Shelter.DefenseLevel.Undefended:
+			defenseDescription = " undefended.";
+			break;
+		case Shelter.DefenseLevel.BarelyDefended:
+			defenseDescription = " barely defended.";
+			break;
+		case Shelter.DefenseLevel.SlightlyDefended:
+			defenseDescription = " slightly defended.";
+			break;
+		case Shelter.DefenseLevel.ModeratelyDefended:
+			defenseDescription = " moderately defended.";
+			break;
+		case Shelter.DefenseLevel.HeavilyDefended:
+			defenseDescription = " heavily defended.";
+			break;
+		case Shelter.DefenseLevel.WellDefended:
+			defenseDescription = " well defended.";
+			break;
+		case Shelter.DefenseLevel.InpenetrableFortress:
+			defenseDescription = " very well defended.";
+		default:
+			defenseDescription = " undefended."
+		}
+
 
         Report r = new Report();
-        r.SetMessage(_name + " Bolstered defenses to " + newDefenses);
+        r.SetMessage(_name + " Bolstered defenses to" + defenseDescription );
         return r;
     }
     
