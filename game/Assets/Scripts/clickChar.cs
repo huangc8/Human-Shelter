@@ -68,12 +68,12 @@ public class clickChar : MonoBehaviour
 		if (_gametime._currentDay == 0) {
 				visitorAtGate = null;
 		}
+				
+		renderer.enabled = true;
 
 		if (this.tag == "NewVisitor") {
 
 			if(_gametime._currentDay == 1){
-
-				renderer.enabled = true;
 
 				// between talk 2 and Marina show up
 				if(_startNewConversation.getConv("Conv_1_1") 
@@ -81,8 +81,9 @@ public class clickChar : MonoBehaviour
 				   && !_startNewConversation.getConv("Conv_1_3")){
 					renderer.enabled = false;
 				}
+
 			}else{
-				if(visitorAtGate != null)
+				if(visitorAtGate != null && _ui.fading!=1)
 				{
 					renderer.enabled=true;
 				}
