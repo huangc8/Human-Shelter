@@ -14,6 +14,8 @@ public class clickChar : MonoBehaviour
 	private Conditions _Cond; 												// conditions
 
 	int arrayIndex; 														// character index in shelter.survivor
+	Survivor visitorAtGate;
+
 
 	// ====================================================================== init
 	// Use this for initialization
@@ -28,6 +30,7 @@ public class clickChar : MonoBehaviour
 
 		//invisible at first
 		renderer.enabled = false;
+
 	}
 
 	// ===================================================================== action
@@ -35,8 +38,11 @@ public class clickChar : MonoBehaviour
 	private void OnMouseDown ()
 	{
 		if (this.tag == "NewVisitor") {
-			if(!_ui.tutorial){
-				_startNewConversation.ClickCheck("gate");
+			if(visitorAtGate)
+			{
+				if(!_ui.tutorial){
+					_startNewConversation.ClickCheck("gate");
+				}
 			}
 		}
 		else{
@@ -63,7 +69,7 @@ public class clickChar : MonoBehaviour
 
 	void Update()
 	{
-		Survivor visitorAtGate = _visitors._personList [_gametime._currentDay];
+		visitorAtGate = _visitors._personList [_gametime._currentDay];
 
 		// for newVisitor sprite
 		if (this.tag == "NewVisitor") {
@@ -81,6 +87,7 @@ public class clickChar : MonoBehaviour
 				   && _Cond.getCondition("inCamp", "Brian")
 				   && !_startNewConversation.getConv("Conv_1_3") || visitorAtGate == null){
 					renderer.enabled = false;
+					visitorAtGate = null;
 				}
 			}else{
 				// check if render

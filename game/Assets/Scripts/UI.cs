@@ -11,6 +11,8 @@ public class UI : MonoBehaviour {
 	GameTime _gametime;
 	StartNewConversation _startNewConversation;
 	ReportHandler _reports;
+	private Conditions _Cond; 												// conditions
+
 
 	//these are needed for showing and hiding buttons
 	public bool showAllButtons;
@@ -44,6 +46,8 @@ public class UI : MonoBehaviour {
 		if (_reports == null) {
 			_reports = g.GetComponent<ReportHandler> ();
 		}
+		_Cond = g.GetComponent<Conditions>();
+
 
 		charButtons = sideButtons = showButtons = showJournal = showHelp = false;
 
@@ -185,6 +189,15 @@ public class UI : MonoBehaviour {
 							tutorial = false;
 						}
 					}
+					if(warning ==3)
+					{
+						GUI.Box (new Rect (Screen.width * .38f, Screen.height * .45f, Screen.width * .24f, Screen.height * .1f), 
+						         "You should talk to Brian before continuing."
+						         , boxStyle);
+						if (GUI.Button (new Rect (Screen.width*.38f, Screen.height *.55f, Screen.width * .24f, buttonHeight),  "Continue", buttonStyle)) {
+							tutorial = false;
+						}
+					}
 
 					boxStyle.padding = new RectOffset (1, 1, 1, 1);
 					boxStyle.wordWrap = false;
@@ -223,8 +236,14 @@ public class UI : MonoBehaviour {
 								unass = true;
 							}
 						}
-						//no error until bugs are fixed
-						if(_visitors._personList[_gametime._currentDay]!=null && false)
+						if (_gametime._currentDay == 1 && _startNewConversation.getConv("Conv_1_1")
+						         && _Cond.getCondition("inCamp", "Brian")
+						         && !_startNewConversation.getConv("Conv_1_3"))
+						{
+							tutorial = true;
+							warning = 3;
+						}
+						else if(_visitors._personList[_gametime._currentDay]!=null)
 						{
 							tutorial = true;
 							warning = 1;
@@ -234,6 +253,7 @@ public class UI : MonoBehaviour {
 							tutorial = true;
 							warning = 2;
 						}
+
 						else
 						{
 							_gametime.newDay();
