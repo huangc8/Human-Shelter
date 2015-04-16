@@ -23,8 +23,7 @@ public class Conditions : MonoBehaviour
 	public Shelter _shelter; 							// reference to the shelter class
 	
 	// dialogue dictionary
-	private Dictionary <string, bool> _alive;			// whether character is still alive
-	private Dictionary <string, bool> _inCamp;			// whether character is in camp
+	private Dictionary <int, bool> _conditions;			// whether character is still alive
 
 	// ============================================== initialize
 	// Use this for initialization
@@ -35,79 +34,39 @@ public class Conditions : MonoBehaviour
 		_visitor = this.GetComponent<Visitor> (); 
 
 		// initiate data base
-		_alive = new Dictionary<string, bool> ();
-		_inCamp = new Dictionary<string, bool> ();
+		_conditions = new Dictionary <int, bool> ();
 
 		// ==================== PLEASE CREATE BOOLEAN HERE!!!! =====================
 		// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 		// add conditions index	value	  condition detail
+		_conditions.Add(0, false);
 
-		//for each character, add their name to the four condition bases
-		foreach (Survivor character in _visitor._personList) {
-			_alive.Add (character.Name, true);
-			_inCamp.Add(character.Name, false);
-		}
 		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		// ==========================================================================
 	}
 
 	// ============================================== accessor
 	// get conditions 
-	public bool getCondition (string key)
+	public bool getCondition (int key)
 	{
-		//First half of the string should be the condition, second half should be the name
-		//Tokenize the string to get the corresponding array
-		string [] words = key.Split (' ');
-		bool tmp = false; 
-		key = words [1];
-		
-		switch (words [0]) { // no break because return -> break never reached
-		case "alive": // execute the survivor
-			if (_alive.TryGetValue (key, out tmp)) {
-				return tmp; // return boolean
-			} else {
-				Debug.Log ("Error: No such condition"); // return error message
-				return false;
-			}
-		case "inCamp": // decline survivor entrance to camp
-			if (_inCamp.TryGetValue (key, out tmp)) {
-				return tmp; // return boolean
-			} else {
-				Debug.Log ("Error: No such condition"); // return error message
-				return false;
-			}
-		}// end of switch
+		if (_conditions.ContainsKey (key)) {
+			return _conditions[key];
+		}
 
+		Debug.LogError ("GET_CONDITION: NO SUCH KEY");
 		return false;
 	}
 
 	// ============================================== functions
 	// set conditions
-	public void setCondition (string key, bool cond)
+	public void setCondition (int key, bool cond)
 	{
-		//First half of the string should be the condition, second half should be the name
-		//Tokenize the string to get the corresponding array
-		string [] words = key.Split (' ');
-
-		bool tmp = false;
-		key = words [1];
-		
-		switch (words [0]) {
-		case "alive": //execute the survivor
-			if (_alive.TryGetValue (key, out tmp)) {
-				_alive [key] = cond; // set condition
-			} else {
-				Debug.Log ("Error: No such condition"); // return error message
-			}
-			break;
-		case "inCamp":
-			if (_inCamp.TryGetValue (key, out tmp)) {
-				_inCamp [key] = cond; // set condition
-			} else {
-				Debug.Log ("Error: No such condition"); // return error message
-			}
-			break;
+		if (_conditions.ContainsKey (key)) {
+			_conditions[key] = true;
 		}
+
+		Debug.Log (key);
+		Debug.LogError ("SET_CONDTION: NO SUCH KEY");
 	}
 }

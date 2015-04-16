@@ -7,11 +7,11 @@ public class Dialogue : MonoBehaviour
 
 		// ==================================================== data
 		public PixelCrushers.DialogueSystem.DialogueSystemController _DiagCon; // dialogue system
-		public Conditions _conditions; 	// condition data base
 		public UI _ui;	// ui reference
 		public GameTime _gt; // gametime reference
 		private Shelter _shelter; 	// shelter class reference
 		private Visitor _visitor;	// visitor class reference
+		private Conditions _conditions; 	// condition data base
 		private bool diaChoice = false; // whether the conversation have a choice
 		private int choiceID = -1; // what is current choice
 		private int lastID = -1; // what is last choice
@@ -21,6 +21,7 @@ public class Dialogue : MonoBehaviour
 		{
 				_shelter = this.GetComponent<Shelter> ();
 				_visitor = this.GetComponent<Visitor> ();
+				_conditions = this.GetComponent<Conditions> ();
 		}
 
 		// ==================================================== functions
@@ -41,7 +42,6 @@ public class Dialogue : MonoBehaviour
 				case 9: // **************invite Eric**************
 						visitorAtGate = _visitor._personList [3];
 						_shelter.InviteSurvivor (visitorAtGate);
-						_conditions.setCondition ("inCamp Eric", true);
 						break;
 				case 10: 
 						if (_gt._currentDay == 3) {	//************ decline Eric
@@ -50,7 +50,6 @@ public class Dialogue : MonoBehaviour
 						} else { //************* invite Danny
 								visitorAtGate = _visitor._personList [4];
 								_shelter.InviteSurvivor (visitorAtGate);
-								_conditions.setCondition ("inCamp Danny", true);
 						}
 						break;
 				case 11:
@@ -60,7 +59,6 @@ public class Dialogue : MonoBehaviour
 						} else { //************** invite Bree
 								visitorAtGate = _visitor._personList [6];
 								_shelter.InviteSurvivor (visitorAtGate);
-								_conditions.setCondition ("inCamp Bree", true);
 						}
 						break;
 				case 12: //****************** decline Bree
@@ -70,7 +68,6 @@ public class Dialogue : MonoBehaviour
 				case 16: //****************** invite Shane
 						visitorAtGate = _visitor._personList [7];
 						_shelter.InviteSurvivor (visitorAtGate);
-						_conditions.setCondition ("inCamp Shane", true);
 						break;
 				case 17: //****************** Evict Shane
 						visitorAtGate = _visitor._personList [7];
@@ -87,6 +84,7 @@ public class Dialogue : MonoBehaviour
 				case 25: // **************invite Brian***************
 						visitorAtGate = _visitor._personList [0];
 						_shelter.InviteSurvivor (visitorAtGate);
+						_conditions.setCondition(0, true);
 						break;
 				}
 		}

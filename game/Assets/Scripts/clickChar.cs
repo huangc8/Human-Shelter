@@ -10,7 +10,8 @@ public class clickChar : MonoBehaviour
 	private UI _ui;															// the UI class
 	private GameTime _gametime;												// game time class
 	private StartNewConversation _startNewConversation;						// start new conversation
-	private Dialogue _Diag; // dialogue system
+	private Dialogue _Diag; 												// dialogue system
+	private Conditions _Cond; 												// conditions
 
 	int arrayIndex; 														// character index in shelter.survivor
 
@@ -23,6 +24,7 @@ public class clickChar : MonoBehaviour
 		_ui = g.GetComponent<UI> ();
 		_gametime = g.GetComponent<GameTime> ();
 		_startNewConversation = g.GetComponent<StartNewConversation> ();
+		_Cond = g.GetComponent<Conditions>();
 
 		//invisible at first
 		renderer.enabled = false;
@@ -69,18 +71,23 @@ public class clickChar : MonoBehaviour
 
 		if (this.tag == "NewVisitor") {
 
-			if(visitorAtGate != null)
-			{
-				renderer.enabled=true;
-			}
-			else {
-				renderer.enabled=false;
-			}
+			if(_gametime._currentDay == 1){
 
-			// Marina don't show up before Brian
-			if (_gametime._currentDay == 1) {
-				if (_startNewConversation.getConv ("Conv_1_1") && !_startNewConversation.getConv ("Conv_1_3")) {
+				renderer.enabled = true;
+
+				// between talk 2 and Marina show up
+				if(_startNewConversation.getConv("Conv_1_1") 
+				   && _Cond.getCondition(0) 
+				   && !_startNewConversation.getConv("Conv_1_3")){
 					renderer.enabled = false;
+				}
+			}else{
+				if(visitorAtGate != null)
+				{
+					renderer.enabled=true;
+				}
+				else {
+					renderer.enabled=false;
 				}
 			}
 		}

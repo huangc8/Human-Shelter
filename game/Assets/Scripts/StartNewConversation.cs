@@ -126,6 +126,10 @@ public class StartNewConversation : MonoBehaviour
 								//start conv
 								_dialogue.startConv ("Conv_5_2", false);
 						}
+
+						if(name == "gate"){
+								_dialogue.startConv("Conv24", false);		
+						}
 						break;
 				// --------------------- day 6 -----------------------
 				case 6:
