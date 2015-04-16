@@ -1,15 +1,13 @@
 fileFormatVersion: 2
-guid: 1aafe51545ae7fd499ed6e3290883dcb
+guid: c10b225b7c78649c7a3fdc75f55d003f
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Danny Idle Sprite_0
-    21300002: Danny Idle Sprite_1
-    21300004: Danny Idle Sprite_2
-    21300006: Danny Idle Sprite_3
-    21300008: Danny Idle Sprite_4
-    21300010: Danny Idle Sprite_5
-    21300012: Danny Idle Sprite_6
-    21300014: Danny Idle Sprite_7
+    21300000: Shane Idle Sprite_0
+    21300002: Shane Idle Sprite_1
+    21300004: Shane Idle Sprite_2
+    21300006: Shane Idle Sprite_3
+    21300008: Shane Idle Sprite_4
+    21300010: Shane Idle Sprite_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -51,83 +49,63 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Danny Idle Sprite_0
+    - name: Shane Idle Sprite_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 2
         y: 0
-        width: 172
-        height: 225
+        width: 61
+        height: 184
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Danny Idle Sprite_1
+    - name: Shane Idle Sprite_1
       rect:
         serializedVersion: 2
-        x: 172
+        x: 66
         y: 0
-        width: 172
-        height: 225
+        width: 61
+        height: 184
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Danny Idle Sprite_2
+    - name: Shane Idle Sprite_2
       rect:
         serializedVersion: 2
-        x: 344
+        x: 130
         y: 0
-        width: 172
-        height: 225
+        width: 61
+        height: 184
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Danny Idle Sprite_3
+    - name: Shane Idle Sprite_3
       rect:
         serializedVersion: 2
-        x: 516
+        x: 194
         y: 0
-        width: 172
-        height: 225
+        width: 61
+        height: 184
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Danny Idle Sprite_4
+    - name: Shane Idle Sprite_4
       rect:
         serializedVersion: 2
-        x: 688
+        x: 258
         y: 0
-        width: 172
-        height: 225
+        width: 61
+        height: 184
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Danny Idle Sprite_5
+    - name: Shane Idle Sprite_5
       rect:
         serializedVersion: 2
-        x: 860
+        x: 322
         y: 0
-        width: 172
-        height: 225
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Danny Idle Sprite_6
-      rect:
-        serializedVersion: 2
-        x: 1032
-        y: 0
-        width: 172
-        height: 225
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Danny Idle Sprite_7
-      rect:
-        serializedVersion: 2
-        x: 1204
-        y: 0
-        width: 172
-        height: 225
+        width: 61
+        height: 184
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
