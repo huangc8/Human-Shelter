@@ -295,6 +295,47 @@ public class Shelter : MonoBehaviour
 		return _attackStrength;
 	}
 
+	/// <summary>
+	/// Execute the specified survivor s.
+	/// </summary>
+	/// <param name="s">survivor.</param>
+	public Report Execute(Survivor s){
+		
+		int proficiency = s.GetProficiency(Survivor.task.Execute);
+		
+		Report r = new Report();
+		if(proficiency + Random.Range (-5,5) > 5){
+			r.SetMessage(s.Name + " resisted execution.");
+			
+		}
+		else{
+			r.SetMessage(s.Name + " was executed without incident.");
+			
+		}
+		
+		KillSurvivor(s.Name);
+		return r;
+	}
+
+	public Report Evict (Survivor s)
+	{
+		int proficiency = s.GetProficiency(Survivor.task.Evict);
+		
+		Report r = new Report();
+		if(proficiency + Random.Range (-5,5) > 5){
+			r.SetMessage(s.Name + " resisted eviction.");
+			
+		}
+		else{
+			r.SetMessage(s.Name + " was evicted without incident.");
+			
+		}
+		
+		EvictSurvivor(s);
+		return r;
+	}
+
+
 	// ================================================== action on survivor
 	// Invites a survivor.
 	public void InviteSurvivor (Survivor visitorAtGate)

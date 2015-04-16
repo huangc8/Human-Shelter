@@ -504,9 +504,19 @@ public class Survivor : ScriptableObject
     // Execute the specified survivor.
     public Report Execute(Shelter s)
     {
-        Report r = new Report();
+		int proficiency = GetProficiency(task.Execute);
+		
+		Report r = new Report();
+		if(proficiency + Random.Range (-5,5) > 5){
+			r.SetMessage(_name + " resisted execution.");
+
+		}
+		else{
+			r.SetMessage(_name + " was executed without incident.");
+
+		}
+
         s.KillSurvivor(this.Name);
-        r.SetMessage(_name + " successfully executed");
         return r;
     }
     
