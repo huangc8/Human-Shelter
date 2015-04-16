@@ -301,7 +301,7 @@ public class GameWorld : MonoBehaviour
 		foreach (Enemy camp in Enemies) {
 			if (camp.ShouldAttack ()) {
 				//If no one is home lose 50% of parts
-				if (_shelter.DefensivePower == 0) {
+				if (_shelter.DefensivePower == Shelter.DefenseLevel.Undefended) {
 					Report rep = new Report ();
 					rep.SetMessage ("Your camp was attacked, but no one was there, so they took some of your stores.");
 					reports.Add (rep);
@@ -309,7 +309,9 @@ public class GameWorld : MonoBehaviour
 				}
 				//else calculate your defense chances, calculate a chance to lose  a survivor and some parts
 				else {
-					if (_shelter.DefensivePower + Random.Range (-5, 5) < camp.Strength) {
+
+
+					if ( (int)_shelter.DefensivePower + Random.Range (-5, 5) < camp.Strength) {
 						string deadSurvivor = _shelter.KillRandomSurvivor ();
 						_shelter.LoseHalfResources ();
 						Report rep = new Report ();
@@ -337,6 +339,39 @@ public class GameWorld : MonoBehaviour
 			_daysSinceSpawn++;
 		}
 
+		//print out the raidability of each class
+		int foundCamps = 0;
+		int unknownCamps = 0;
+
+		foreach(Enemy camp in Enemies){
+			if(camp.IsUnscouted()){
+				unknownCamps++;
+			}
+			else{
+				foundCamps++;
+			}
+		}
+
+		if(foundCamps > 0 && unknownCamps > 0){
+			Report numCampsFound = new Report();
+			numCampsFound.SetMessage("There are " + foundCamps + " enemy camps you have located and " + unknownCamps + " you have not located.");
+
+			reports.Add(numCampsFound);
+		}
+		else if(foundCamps > 0){
+			Report numCampsFound = new Report();
+			numCampsFound.SetMessage("There are " + foundCamps + " enemy camps you have located.");
+			
+			reports.Add(numCampsFound);
+
+		}
+		else if(unknownCamps > 0){
+			Report numCampsFound = new Report();
+			numCampsFound.SetMessage("There are " + unknownCamps + " enemy camps you have not located.");
+			
+			reports.Add(numCampsFound);
+			
+		}
 		//print out the contents of reports
 		Debug.Log("Printing Reports in GameWorld.NewDay():");
 
@@ -354,7 +389,7 @@ public class GameWorld : MonoBehaviour
 	/// </summary>
 	void AddEnemy ()
 	{
-		Enemy e = new Enemy ();
+		Enemy e = new Enemy (_shelter._gametime._currentDay);
 		Enemies.Add (e);
 	}
 

@@ -81,7 +81,18 @@ public class Shelter : MonoBehaviour
 	}
 	// ------------------------------ end of Stores class ---------------------------------------
 
+	public enum DefenseLevel{
+		Undefended,
+		BarelyDefended,
+		SlightlyDefended,
+		ModeratelyDefended,
+		HeavilyDefended,
+		WellDefended,
+		InpenetrableFortress
+	}
+
 	// =============================================================== data
+	public DefenseLevel _defenseLevel;
 	public GameWorld _gameWorld; 			// game world reference
 	public GameTime _gametime;				// game time reference
 	public Visitor _visitors;				// visitor reference
@@ -94,14 +105,14 @@ public class Shelter : MonoBehaviour
 	private Stores _storage; 				// the storage
 	private int _numEvictedSurvivors; 		// current number of survivors who have been evicted
 	private int _numSurvivors; 				// current number of survivors
-	private int _defenses; 					// the defense of the building (depend on guard
 	private int _attackStrength; 			// the raiding strength
+	private int _defenses = 0;
 
 	// =============================================================== initialization
 	// Use this for initialization
 	void Start ()
 	{		
-		_defenses = 0;
+		_defenseLevel = DefenseLevel.Undefended;
 		_survivors = new Survivor[6];
 		_images = new GameObject[6];
 		_evictedSurvivors = new Survivor[100];
@@ -170,11 +181,30 @@ public class Shelter : MonoBehaviour
 	}
 	
 	// get defense strength
-	public int DefensivePower {
+	public DefenseLevel DefensivePower{
 		get {
-			return _defenses;
+			if(_defenses < 5){
+				return DefenseLevel.Undefended;
+			}
+			else if(_defenses < 15){
+				return DefenseLevel.BarelyDefended;
+			}
+			else if(_defenses < 35){
+				return DefenseLevel.SlightlyDefended;
+			}
+			else if(_defenses < 50){
+				return DefenseLevel.ModeratelyDefended;
+			}
+			else if(_defenses < 70){
+				return DefenseLevel.HeavilyDefended;
+			}
+			else if(_defenses < 90){
+				return DefenseLevel.WellDefended;
+			}
+			else{
+				return DefenseLevel.InpenetrableFortress;
+			}
 		}
-		
 	}
 
 	// check for game over (cond: out of food & out of survivors
