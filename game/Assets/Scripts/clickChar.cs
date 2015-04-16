@@ -27,6 +27,7 @@ public class clickChar : MonoBehaviour
 		_gametime = g.GetComponent<GameTime> ();
 		_startNewConversation = g.GetComponent<StartNewConversation> ();
 		_Cond = g.GetComponent<Conditions>();
+		_Diag = g.GetComponent<Dialogue> ();
 
 		//invisible at first
 		renderer.enabled = false;
@@ -37,33 +38,36 @@ public class clickChar : MonoBehaviour
 	// check for mouse click
 	private void OnMouseDown ()
 	{
-		if (this.tag == "NewVisitor") {
-			if(visitorAtGate)
-			{
-				if(!_ui.tutorial){
-					_startNewConversation.ClickCheck("gate");
+		if(!_Diag._DiagCon.IsConversationActive)
+		{
+			if (this.tag == "NewVisitor") {
+				if(visitorAtGate)
+				{
+					if(!_ui.tutorial){
+						_startNewConversation.ClickCheck("gate");
+					}
 				}
 			}
-		}
-		else{
-			//find corresponding character within shelter
-			arrayIndex = -1;
-			for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
-				if (this.tag == _shelter._survivors [i].Name) {
-					arrayIndex = i;
+			else{
+				//find corresponding character within shelter
+				arrayIndex = -1;
+				for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
+					if (this.tag == _shelter._survivors [i].Name) {
+						arrayIndex = i;
+					}
 				}
-			}
-			if (arrayIndex == -1) {
-				Debug.Log ("Couldn't find index for " + this.tag + ".  Make sure this this tag is exactly the same as the character's name.");
-			}
+				if (arrayIndex == -1) {
+					Debug.Log ("Couldn't find index for " + this.tag + ".  Make sure this this tag is exactly the same as the character's name.");
+				}
 
-			// adjust world view
-			Vector3 pos = Camera.main.WorldToViewportPoint (this.transform.position);
-			float x = pos.x;
-			float y = 1 - pos.y;
+				// adjust world view
+				Vector3 pos = Camera.main.WorldToViewportPoint (this.transform.position);
+				float x = pos.x;
+				float y = 1 - pos.y;
 
-			// send message to ui
-			_ui.charClick (arrayIndex, x, y);
+				// send message to ui
+				_ui.charClick (arrayIndex, x, y);
+			}
 		}
 	}
 
