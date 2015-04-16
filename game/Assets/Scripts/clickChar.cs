@@ -69,7 +69,7 @@ public class clickChar : MonoBehaviour
 
 		if (this.tag == "NewVisitor") {
 
-			if(visitorAtGate != null)
+			if(visitorAtGate != null && _ui.fading!=1)
 			{
 				renderer.enabled=true;
 			}

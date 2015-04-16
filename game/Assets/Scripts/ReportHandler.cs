@@ -17,7 +17,6 @@ public class ReportHandler : MonoBehaviour
 	public bool showReports;
 	public ArrayList _pages;
 	public int _currentPage = 0;
-	GUIStyle labelStyle;
 
 	// ===================================================== initialization
 	// Use this for initialization
@@ -27,10 +26,9 @@ public class ReportHandler : MonoBehaviour
 		_pages = new ArrayList ();
 		_reports = new List<Report>();
 
-		labelStyle = new GUIStyle ("Label");
 	}
 
-	List<Report> CurrentReports{
+	public List<Report> CurrentReports{
 		get{
 			if(_pages != null && _pages.Count > 0){
 				return (List<Report>)_pages[_currentPage];
@@ -120,8 +118,7 @@ public class ReportHandler : MonoBehaviour
 
 	void OnGUI()
 	{
-		labelStyle.fontSize = Screen.width / 90;
-		labelStyle.normal.textColor = Color.white; 
+
 
 
 
@@ -153,10 +150,10 @@ public class ReportHandler : MonoBehaviour
 		{
 			if(_hasReports)
 			{
-				float x = 300;
-				float y = 100;
-				float w = 200;
-				float h = 30;
+				//float x = 300;
+				//float y = 100;
+				//float w = 200;
+				//float h = 30;
 
 				/*if(_currentPage > 0){
 					//move to previous report
@@ -181,21 +178,7 @@ public class ReportHandler : MonoBehaviour
 				}
 #endif
 
-				x = Screen.width*.22f;
-				y = Screen.height*.25f;
-				w = Screen.width*.6f;
-				h = Screen.height*.08f;
-				//Print the report text
-				for(int i = 0; i < CurrentReports.Count; i++)
-				{
-					try{
-						GUI.Label(new Rect(x,y,w,h), CurrentReports[i].GetMessage(), labelStyle); //error thrown is deifinitely not an indexing erro
-						y += h;
-					}
-					catch{
-						Debug.LogError("ReportHandler (109) ERROR: i = " + i + " CurrentReports.Count: " + CurrentReports.Count);
-					}
-				}
+				//all in UI now
 
 
 				/*x += w;
