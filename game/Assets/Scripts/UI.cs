@@ -441,8 +441,8 @@ public class UI : MonoBehaviour {
 						for(int i = 0; i < _reports.CurrentReports.Count; i++)
 						{
 							try{
-								GUI.Label(new Rect(w,h,Screen.width*.6f,Screen.height*.08f), _reports.CurrentReports[i].GetMessage(), labelStyle); //error thrown is deifinitely not an indexing erro
-								h += Screen.height*.08f;
+								GUI.Label(new Rect(w,h,Screen.width*.6f,Screen.height*.04f), _reports.CurrentReports[i].GetMessage(), labelStyle); //error thrown is deifinitely not an indexing erro
+								h += Screen.height*.04f;
 							}
 							catch{
 								Debug.LogError("ReportHandler (109) ERROR: i = " + i + " CurrentReports.Count: " + _reports.CurrentReports.Count);
