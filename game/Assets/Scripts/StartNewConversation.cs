@@ -242,6 +242,8 @@ public class StartNewConversation : MonoBehaviour
 	// Start Conversation at the beginning of day.
 	public void DayCheck ()
 	{
+		NotifyCheck();
+
 		//Switch based off of day
 		switch (_gameTime._currentDay) {
 		// --------------------- day 1 -----------------------
@@ -271,8 +273,6 @@ public class StartNewConversation : MonoBehaviour
 	// check for special case 
 	public bool specialCase ()
 	{
-
-		NotifyCheck();
 
 		// switch based off game day
 		switch (_gameTime._currentDay) {
