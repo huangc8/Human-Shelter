@@ -25,34 +25,37 @@ public class GameWorld : MonoBehaviour
 		int _visibility; 		// how easy they are to see
 		int _aggressiveness; 	// how likely they are to attack you
 
-		ScoutingProgress _scoutedProgress;
+		private ScoutingProgress _scoutedProgress;
 
 		bool _located = false;	// whether is aware by player
 
 		
 		public Report MakeScoutingProgress (int proficiency)
 		{
-			Report r = new Report();
-			if(proficiency > 3){
-				//increase by 2 points
-				_scoutedProgress = (ScoutingProgress)((int)_scoutedProgress + 1);
-				if(_scoutedProgress == ScoutingProgress.exactLocation){
-					_located = true;
-				}
-				_scoutedProgress = (ScoutingProgress)((int)_scoutedProgress + 1);
-				if(_scoutedProgress == ScoutingProgress.exactLocation){
-					_located = true;
-				}
-			}
-			else if (proficiency>1){
-				//increase by 1 point
-				_scoutedProgress = (ScoutingProgress)((int)_scoutedProgress + 1);
-				if(_scoutedProgress == ScoutingProgress.exactLocation){
-					_located = true;
-				}
-			}
 
-			if(_located == true){
+			Debug.Log ("36: Making scouting progress, proficiency:" + proficiency);
+			Report r = new Report();
+			if(_scoutedProgress != ScoutingProgress.exactLocation){
+				if(proficiency > 20){
+					//increase by 2 points
+					_scoutedProgress = (ScoutingProgress)((int)_scoutedProgress + 1);
+					if(_scoutedProgress == ScoutingProgress.exactLocation){
+						_located = true;
+					}
+					_scoutedProgress = (ScoutingProgress)((int)_scoutedProgress + 1);
+					if(_scoutedProgress == ScoutingProgress.exactLocation){
+						_located = true;
+					}
+				}
+				else if (proficiency>5){
+					//increase by 1 point
+					_scoutedProgress = (ScoutingProgress)((int)_scoutedProgress + 1);
+					if(_scoutedProgress == ScoutingProgress.exactLocation){
+						_located = true;
+					}
+				}
+			}
+			if(_located == true && _scoutedProgress == ScoutingProgress.exactLocation){
 				r.SetMessage("The exact location of an enemy camp has been located. You can attack it now.");
 			}
 			else{
@@ -74,6 +77,9 @@ public class GameWorld : MonoBehaviour
 					break;
 				}
 			}
+
+			
+			Debug.LogError ("Scouting progress has been made. Scouting progress is now: " + _scoutedProgress.ToString());
 			return r;
 		}
 
@@ -84,18 +90,19 @@ public class GameWorld : MonoBehaviour
 			_strength = Random.Range (0, 10);
 			_visibility = Random.Range (0, 10);
 			_aggressiveness = Random.Range (0, 10);
-			_scoutedProgress = 0;
-
+			_scoutedProgress = ScoutingProgress.mystery;
+			_located = false;
 			_readiness = -5;
 		}
 
 		// Generate an enemy around a certain difficulty level
 		public Enemy (int difficulty)
 		{
-			_strength = Random.Range (difficulty - 2, difficulty + 2);
-			_visibility = Random.Range (difficulty - 2, difficulty + 2);
-			_aggressiveness = Random.Range (difficulty - 2, difficulty + 2);
-
+			_strength = Random.Range (difficulty, 30);
+			_visibility = Random.Range (difficulty , 20);
+			_aggressiveness = Random.Range (difficulty, difficulty + 4);
+			_scoutedProgress = ScoutingProgress.mystery;
+			_located = false;
 			_readiness = -5;
 		}
 
@@ -117,7 +124,7 @@ public class GameWorld : MonoBehaviour
 		// whether aware by player
 		public bool IsUnscouted ()
 		{
-			return _scoutedProgress == ScoutingProgress.exactLocation;
+			return _scoutedProgress != ScoutingProgress.exactLocation;
 		}
 
 		// ============================================================ action
@@ -182,7 +189,7 @@ public class GameWorld : MonoBehaviour
 	private int _maxResources = 0; //the max resources to be looted from today's target
 	int _daysSinceSpawn = 0;				// 
 	int _scoutingBonus;						// 	
-	ArrayList Enemies = new ArrayList ();	// enemy list
+	public ArrayList Enemies = new ArrayList ();	// enemy list
 
 	private ArrayList ScoutingReports = new ArrayList();
 
@@ -277,18 +284,23 @@ public class GameWorld : MonoBehaviour
 					if (playerDamage < camp.Strength) { //50% of wounding a character
 						if (Random.Range (0, 10) < 5) {
 							_shelter.WoundRandomRaider(reports);
+							camp.LoseStrength();
 						}
 					} else { // player attempt to raid other camp with enough strength
 
 						// damage the enemy camp
+						if(playerDamage < camp.Strength *2){
+							_shelter.SlightlyWoundRandomRaider(reports);
+						}
+
 						camp.inflictDamage (playerDamage);
 
 						// check if camp dead
 						if (camp.Strength < 0) {
 							Report raidReport = new Report ();
-							int newFood = Random.Range (0, 20);
-							int newMedicine = Random.Range (0, 20);
-							int newParts = Random.Range (0, 20);
+							int newFood = Random.Range (10, 40);
+							int newMedicine = Random.Range (10, 40);
+							int newParts = Random.Range (10, 40);
 							
 							_shelter.Food += newFood;
 							_shelter.Medicine += newMedicine;
@@ -322,7 +334,7 @@ public class GameWorld : MonoBehaviour
 				//If no one is home lose 50% of parts
 				if (_shelter.DefensivePower == Shelter.DefenseLevel.Undefended) {
 					Report rep = new Report ();
-					rep.SetMessage ("Your camp was attacked, but no one was there, so they took some of your stores.");
+					rep.SetMessage ("Your camp was attacked, but no one was there, so you hid while they took some of your stores.");
 					reports.Add (rep);
 					_shelter.LoseHalfResources ();
 				}
@@ -428,6 +440,8 @@ public class GameWorld : MonoBehaviour
 	{
 		Enemy e = new Enemy (_shelter._gametime._currentDay);
 		Enemies.Add (e);
+		
+		Debug.LogError("439, ading a new enemy visibility IsUnscouted():" + e.IsUnscouted());
 	}
 
 	/// <summary>
