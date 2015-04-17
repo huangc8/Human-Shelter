@@ -117,7 +117,7 @@ public class GameWorld : MonoBehaviour
 		// whether aware by player
 		public bool IsUnscouted ()
 		{
-			return _located == false;
+			return _scoutedProgress == ScoutingProgress.exactLocation;
 		}
 
 		// ============================================================ action
@@ -189,6 +189,15 @@ public class GameWorld : MonoBehaviour
 	private ScavengeableLocation _scavengeTarget;
 	private ScavengeQuality _scavengeQuality;
 
+	public bool ExistVisibleShelters ()
+	{
+		foreach(Enemy e in Enemies){
+			if(e.IsUnscouted() == false){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	// scavenge location enum
 	public enum ScavengeableLocation
@@ -220,7 +229,7 @@ public class GameWorld : MonoBehaviour
 	// add scouting bonus
 	public void AddScoutingBonus (int scoutingBonus)
 	{
-		_scoutingBonus += scoutingBonus;
+		_scoutingBonus += scoutingBonus + 3;
 	}
 	
 	public ScavengeableLocation ScavengeTarget {
@@ -470,7 +479,7 @@ public class GameWorld : MonoBehaviour
 		int [] tmpScavengedTargets = new int[NUM_SCAVENGE_TARGETS];
 
 		for(int i = 0 ; i < NUM_SCAVENGE_TARGETS; i++){
-			tmpScavengedTargets[i] += Random.Range (0,10);
+			tmpScavengedTargets[i] += Random.Range (0,4);
 		}
 
 		//get the value for each scavenged target and randomly offset it. Take the value with the 
@@ -491,7 +500,7 @@ public class GameWorld : MonoBehaviour
 		_scavengeTarget = ScavengeableLocation.GroceryStore;
 
 		for(int i = 0; i < NUM_SCAVENGE_TARGETS; i++){
-			if(scavengedTargets[i] <= scavengedTargets[(int)_scavengeTarget]){
+			if(tmpScavengedTargets[i] < scavengedTargets[(int)_scavengeTarget]){
 				_scavengeTarget = (ScavengeableLocation)i;
 			}
 		}

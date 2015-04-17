@@ -122,6 +122,9 @@ public class Survivor : ScriptableObject
 				_gameWorld._shelter.KillSurvivor(this._name);
 
 			}
+			else if(_health > 10){
+				_health = 10;
+			}
         }
     }
 
@@ -156,6 +159,7 @@ public class Survivor : ScriptableObject
     public void HealMe(int healAmount)
     {
         Health += healAmount;
+
     }
 
 	// Advances the hunger. Moves the survivor to the next level of starvation
@@ -206,7 +210,7 @@ public class Survivor : ScriptableObject
     public void ConsumeMedicine(Shelter s)
     {
 		// if massively wounded
-        if (Health < 10)
+        if (Health < 5)
         {
             if (s.Medicine < 2)
             {
@@ -214,16 +218,10 @@ public class Survivor : ScriptableObject
             } else
             {
                 s.UseMedicine(2); //consume to stabilize
+				Health++;
             }
         }
-		
-        if (s.Medicine < 1)
-        {
-            Health--;
-        } else
-        {
-            s.UseMedicine(1); //consume just cause
-        }
+
         
         if (Health < 0)
         {
@@ -254,7 +252,7 @@ public class Survivor : ScriptableObject
         
         sWound = wound.Uninjured;
         //Chance of getting wounded, if the wound is severe enough, do not continue scouting
-        if (successChance + Random.Range(0, 10) < 13)
+        if (successChance + Random.Range(0, 10) < 6)
         {
             sWound = (wound) Random.Range(0, (int)wound.Count);
             switch (sWound)
@@ -307,7 +305,7 @@ public class Survivor : ScriptableObject
         {
             spillover = Mathf.Abs(Fatigue);
         }
-        int fatigueModifier = -(100 / (10 + (10 + Mathf.Max(Fatigue, 0)))) * 10 + spillover;
+        int fatigueModifier = -Fatigue/10;
         
         int proficiency = GetProficiency(task.Scout) + 10 + fatigueModifier;
         
@@ -351,11 +349,11 @@ public class Survivor : ScriptableObject
         {
             spillover = Mathf.Abs(Fatigue);
         }
-        int fatigueModifier = -(100 / (10 + (10 + Mathf.Max(Fatigue, 0)))) * 10 + spillover;
+        int fatigueModifier = -Fatigue/10;
         
         int proficiency = GetProficiency(task.Heal);
         
-        int medicineUsed = 20 - (proficiency + fatigueModifier);
+        int medicineUsed = Mathf.Max (10 - (proficiency + fatigueModifier),0);
         
         for (int i = 0; i < s.NumberOfSurvivors; i++)
         {
@@ -366,6 +364,9 @@ public class Survivor : ScriptableObject
                 
                 s.UseMedicine(medicineUsed);
             }
+			else{ //heal for justOneHitpoint
+				s._survivors[i].HealMe((proficiency + fatigueModifier)/3);
+			}
         }
         r.SetMessage(_name + " healed " + heals + " survivors with " + medicineUsed*heals + " medicine.");
         return r;
@@ -379,7 +380,7 @@ public class Survivor : ScriptableObject
         {
             spillover = Mathf.Abs(Fatigue);
         }
-        int fatigueModifier = -(100 / (10 + Mathf.Max(Fatigue, 0))) * 10 + spillover;
+        int fatigueModifier = -Fatigue/10;
 
         int proficiency = (GetProficiency(task.Defend) + 10) + fatigueModifier;
         Shelter.DefenseLevel newDefenses = s.BolsterDefenses(proficiency);
@@ -428,7 +429,7 @@ public class Survivor : ScriptableObject
         {
             spillover = Mathf.Abs(Fatigue);
         }
-        int fatigueModifier = -(100 / (10 + (10 + Mathf.Max(Fatigue, 0)))) * 10 + spillover;
+        int fatigueModifier = -Fatigue/10;
         int proficiency = GetProficiency(task.Scavenge)+ fatigueModifier;
 
 		Survivor.wound sustainedWound = Survivor.wound.Uninjured;
@@ -444,20 +445,20 @@ public class Survivor : ScriptableObject
             switch (_gameWorld.ScavengeTarget)
             {
                 case GameWorld.ScavengeableLocation.GroceryStore:
-                    sFood += 1 + qualityMultiplier * (int)(Random.Range(0, 10) * (proficiency + fatigueModifier + 11) * .1f);
+                    sFood += 1 + qualityMultiplier * (int)(Random.Range(3, 6) * (Mathf.Max (proficiency + fatigueModifier + 11,3)) * .5f);
                     r.SetMessage(_name + " scavenged " + sFood + " food.");
                     s.Food += sFood;                
                     break;
                 
                 case GameWorld.ScavengeableLocation.Hospital:
-                    sMedicine += 1 + qualityMultiplier * (int)(Random.Range(0, 10) * (proficiency + fatigueModifier + 11) * .1f);
+				sMedicine += 1 + qualityMultiplier * (int)(Random.Range(3, 6) * (Mathf.Max (proficiency + fatigueModifier + 11,3)) * .5f);
                     r.SetMessage(_name + " scavenged " + sMedicine + " medicine.");
                     s.Medicine += sMedicine;
                     break;
                 
                 
                 case GameWorld.ScavengeableLocation.Mall:
-                    sParts += 1 + qualityMultiplier * (int)(Random.Range(0, 10) * (proficiency + fatigueModifier + 11) * .1f);
+				sParts += 1 + qualityMultiplier * (int)(Random.Range(3, 6) * (Mathf.Max (proficiency + fatigueModifier + 11,3)) * .5f);
 				if(sParts == 1){
                     r.SetMessage(_name + " scavenged " + sParts + " part.");
 				}
@@ -504,7 +505,7 @@ public class Survivor : ScriptableObject
         {
             spillover = Mathf.Abs(Fatigue);
         }
-        int fatigueModifier = (int)-((100 / (10 + Mathf.Max(Fatigue, 0.0f))) * 10) + spillover;
+        int fatigueModifier = -Fatigue/10;
         
         int proficiency = GetProficiency(task.Raiding) + fatigueModifier + boost;
         int newAttack = s.BolsterAttack(proficiency);

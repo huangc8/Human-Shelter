@@ -62,11 +62,11 @@ public class GameTime : MonoBehaviour
 		_reports = new List<Report>();
 		//Evaluate each task
 		for (int s = 0; s < _shelter.NumberOfSurvivors; s++) {
-
+			ArrayList rtmp;
 			//carry out the task
 			switch (_shelter._survivors [s].AssignedTask) {
 			case Survivor.task.Scout:
-				ArrayList rtmp = (_shelter._survivors [s].Scout (_shelter));
+				rtmp = (_shelter._survivors [s].Scout (_shelter));
 				if (rtmp != null) {
 					foreach (Report r in rtmp) {
 						_reports.Add (r);
@@ -89,7 +89,17 @@ public class GameTime : MonoBehaviour
 				_reports.Add (_shelter.Evict (_shelter._survivors[s]));
 				break;
 			case Survivor.task.Raiding:
-				_reports.Add (_shelter._survivors [s].Raid (_shelter));
+				if(_gameWorld.ExistVisibleShelters() == true){
+					_reports.Add (_shelter._survivors [s].Raid (_shelter));
+				}
+				else{
+					rtmp = (_shelter._survivors [s].Scout (_shelter));
+					if (rtmp != null) {
+						foreach (Report r in rtmp) {
+							_reports.Add (r);
+						}
+					}
+				}
 				break;
 			case Survivor.task.Unassigned:
 				goto case Survivor.task.Resting;

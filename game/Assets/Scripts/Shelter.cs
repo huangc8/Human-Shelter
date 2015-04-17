@@ -19,7 +19,7 @@ public class Shelter : MonoBehaviour
 			this._parent = parent;
 			_parts = 0;
 			_food = 50;
-			_medicine = 0;
+			_medicine = 50;
 		}
 		
 		// ================================================================= accessor
@@ -255,6 +255,7 @@ public class Shelter : MonoBehaviour
 		else{
 			medicineConsumedToday += maxConsumption;
 		}
+
 
 
 

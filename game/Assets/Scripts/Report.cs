@@ -19,7 +19,7 @@ public class Report : ScriptableObject
 
 	public void AddWoundMessage (Survivor.wound sustainedWound)
 	{
-		_message += " In the process a " + sustainedWound + " was sustained.";
+		_message += " In the process a " + sustainedWound.ToString().ToLower() + " wound was sustained.";
 	}
 
 	public void PrintReport(int i){
