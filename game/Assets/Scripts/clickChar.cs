@@ -38,7 +38,7 @@ public class clickChar : MonoBehaviour
 	// check for mouse click
 	private void OnMouseDown ()
 	{
-		if(!_Diag._DiagCon.IsConversationActive)
+		if(!_Diag._DiagCon.IsConversationActive && _ui.fading != 1)
 		{
 			if (this.tag == "NewVisitor") {
 				if(visitorAtGate)
