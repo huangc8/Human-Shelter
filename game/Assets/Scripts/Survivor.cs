@@ -15,6 +15,7 @@ public class Survivor : ScriptableObject
     public bool _enabled = false;                   // whether character is enabled
 	public bool _notify = false;					// whether character have important things to say
     
+
     // fix survivor info
     private string _name;                           // name of the survivor
     public GameObject image;                        // character sprite
@@ -241,7 +242,10 @@ public class Survivor : ScriptableObject
     {
         int proficiency = GetProficiency(task.Resting);
 		int restModifier = ((int)hunger.Count - (int)_starvation);
-        _fatigue -= (int)((proficiency * (Health)) / 10.0f) * restModifier;
+        _fatigue -= Mathf.Max ((int)((proficiency * (Health)) / 5.0f) * restModifier + 5,10);
+		if(_fatigue < 0){
+			_fatigue = 0;
+		}
         return _fatigue;
     }
 
@@ -357,15 +361,13 @@ public class Survivor : ScriptableObject
         {
             if (s.Medicine >= medicineUsed)
             {
-                if (s._survivors [i]._task == task.Resting)
-                {
-                    heals++;
-                    s._survivors [i].HealMe(proficiency + fatigueModifier);
-                }
+                heals++;
+                s._survivors [i].HealMe(proficiency + fatigueModifier);
+                
                 s.UseMedicine(medicineUsed);
             }
         }
-        r.SetMessage(_name + " healed " + heals + " survivors.");
+        r.SetMessage(_name + " healed " + heals + " survivors with " + medicineUsed*heals + " medicine.");
         return r;
     }
 

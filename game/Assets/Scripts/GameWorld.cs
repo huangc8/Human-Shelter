@@ -178,7 +178,8 @@ public class GameWorld : MonoBehaviour
 
 	public Shelter _shelter;						// shelter class
 	public int totalScoutingPower  = 0;
-
+	
+	private int _maxResources = 0; //the max resources to be looted from today's target
 	int _daysSinceSpawn = 0;				// 
 	int _scoutingBonus;						// 	
 	ArrayList Enemies = new ArrayList ();	// enemy list
@@ -431,6 +432,29 @@ public class GameWorld : MonoBehaviour
 		T V = (T)A.GetValue (UnityEngine.Random.Range (0, A.Length));
 		return V;
 	}
+
+	/// <summary>
+	/// Get up to the total amount of resources you try to loot ()
+	/// </summary>
+	/// <returns>The resources.</returns>
+	private int getResources(int attemptedLooting){
+		if(attemptedLooting <= _maxResources){
+			_maxResources -= attemptedLooting;
+			return attemptedLooting;
+		}
+		else{
+			_maxResources = 0;
+			return attemptedLooting;
+		}
+	}
+
+	/// <summary>
+	/// Checks to see whether the lootable target has been completely cleared out
+	/// </summary>
+	/// <returns><c>true</c>, if out was cleaneded, <c>false</c> otherwise.</returns>
+	private bool cleanedOut(){
+		return _maxResources == 0;
+	}
 	
 	/// <summary>
 	/// Selects the scavenge target.
@@ -455,10 +479,13 @@ public class GameWorld : MonoBehaviour
 
 		if (scav > 9) {
 			_scavengeQuality = ScavengeQuality.Plentiful;
+			_maxResources = 175;
 		} else if (scav > 6) {
 			_scavengeQuality = ScavengeQuality.Good;
+			_maxResources = 125;
 		} else {
 			_scavengeQuality = ScavengeQuality.Scarce;
+			_maxResources = 75;
 		}
 
 		_scavengeTarget = ScavengeableLocation.GroceryStore;

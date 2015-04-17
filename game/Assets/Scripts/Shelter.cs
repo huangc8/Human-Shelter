@@ -306,6 +306,7 @@ public class Shelter : MonoBehaviour
 	// consume medicine
 	public void UseMedicine (int useAmount)
 	{
+
 		_storage.UseMedicine (useAmount);
 	}
 
@@ -332,10 +333,10 @@ public class Shelter : MonoBehaviour
 	public Report GetEatingReport(){
 		Report r = new Report();
 		if(foodEatenToday == 1){
-			r.SetMessage("Your settlement has consumed " + foodEatenToday + " food items.");
+			r.SetMessage("Your settlement has consumed " + foodEatenToday + " food item.");
 		}
 		else{
-			r.SetMessage("Your settlement has consumed " + foodEatenToday + " food item.");
+			r.SetMessage("Your settlement has consumed " + foodEatenToday + " food items.");
 		}
 
 		foodEatenToday = 0;
