@@ -231,8 +231,10 @@ public class StartNewConversation : MonoBehaviour
 	// check if notify turns on
 	public void NotifyCheck(){
 		foreach (Survivor s in _shelter._survivors) {
-			if (NoteCheck (s.name)) {
-				s._notify = true;
+			if(s != null){
+				if (NoteCheck (s.name)) {
+					s._notify = true;
+				}
 			}
 		}
 	}
