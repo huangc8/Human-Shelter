@@ -197,22 +197,22 @@ public class Shelter : MonoBehaviour
 	// get defense strength
 	public DefenseLevel DefensivePower{
 		get {
-			if(_defenses < 5){
+			if(_defenses < 3){
 				return DefenseLevel.Undefended;
 			}
-			else if(_defenses < 15){
+			else if(_defenses < 6){
 				return DefenseLevel.BarelyDefended;
 			}
-			else if(_defenses < 35){
+			else if(_defenses < 10){
 				return DefenseLevel.SlightlyDefended;
 			}
-			else if(_defenses < 50){
+			else if(_defenses < 20){
 				return DefenseLevel.ModeratelyDefended;
 			}
-			else if(_defenses < 70){
+			else if(_defenses < 30){
 				return DefenseLevel.HeavilyDefended;
 			}
-			else if(_defenses < 90){
+			else if(_defenses < 50){
 				return DefenseLevel.WellDefended;
 			}
 			else{
@@ -321,6 +321,9 @@ public class Shelter : MonoBehaviour
 	public DefenseLevel BolsterDefenses (int proficiency)
 	{
 		_defenses += proficiency;
+		if(_defenses < 3){
+			_defenses = 3;
+		}
 		return DefensivePower;
 	}
 	
