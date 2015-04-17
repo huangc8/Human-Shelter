@@ -175,7 +175,9 @@ public class Survivor : ScriptableObject
     public Report Eat(Shelter s)
     {
 		Report r = new Report();
-        if (s.EatFood(Random.Range(1, _appetite)) == false)
+		int consumption = Random.Range(_appetite, _appetite + 4);
+
+        if (s.EatFood(consumption) == false)
 		{
 
 			r = AdvanceHunger();
@@ -191,6 +193,11 @@ public class Survivor : ScriptableObject
             }
 			return r;
         }
+		else{
+			_starvation = hunger.Content;
+
+		}
+
 		return null;
     }
 
