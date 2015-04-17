@@ -20,7 +20,18 @@ public class ScaleFontSize : MonoBehaviour {
 		foreach (var style in styles) {
 			GUIStyle guiStyle = guiRoot.guiSkin.GetStyle(style.styleName);
 			if (guiStyle != null) {
-				guiStyle.fontSize = (int) (style.scaleFactor * Screen.height);
+				//guiStyle.fontSize = (int) (style.scaleFactor * Screen.height);
+				guiStyle.fontSize = Screen.width/90;
+
+				if(style.styleName == "Button")
+				{
+					guiStyle.fontSize = Screen.width/75;
+				}
+				if(style.styleName == "Subtitle")
+				{
+					guiStyle.fontSize = Screen.width/75;
+					guiStyle.padding = new RectOffset(Screen.width/170,Screen.width/30,Screen.height/40,Screen.height/70);
+				}
 				// guiStyle.fixedHeight = 0;
 				// guiStyle.fixedWidth = 0;
 			}
