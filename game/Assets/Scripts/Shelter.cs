@@ -327,7 +327,7 @@ public class Shelter : MonoBehaviour
 	// increase attack
 	public int BolsterAttack (int proficiency)
 	{
-		_attackStrength += proficiency;
+		_attackStrength = (_attackStrength + 1 ) * proficiency;
 		return _attackStrength;
 	}
 
@@ -434,6 +434,19 @@ public class Shelter : MonoBehaviour
 		Destroy (s);
 		_numEvictedSurvivors++;
 		_numSurvivors--;
+	}
+
+	public void SlightlyWoundRandomRaider (ArrayList reports)
+	{
+		int length = 0;
+		foreach (Survivor s in _survivors) {
+			if(s.AssignedTask == Survivor.task.Raiding){
+				if(Random.Range(0,10) < 3){
+					s.Health -= 2;
+					reports.Add(s.Name +  " sustained a minor wound while raiding.");
+				}
+			}
+		}
 	}
 
 	// wound a random raider.
