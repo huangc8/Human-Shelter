@@ -15,6 +15,9 @@ public class clickChar : MonoBehaviour
 
 	int arrayIndex; 														// character index in shelter.survivor
 	Survivor visitorAtGate;													// character at gate
+	int day;
+	Transform alert, light;
+
 	// ====================================================================== init
 	// Use this for initialization
 	void Start ()
@@ -29,6 +32,16 @@ public class clickChar : MonoBehaviour
 
 		//invisible at first
 		renderer.enabled = false;
+
+		day = _gametime._currentDay;
+
+		foreach (Transform child in transform)
+		{
+			if(child.name == "Alert")
+			{
+				alert = child;
+			}
+		}
 
 	}
 
@@ -71,6 +84,30 @@ public class clickChar : MonoBehaviour
 
 	void Update()
 	{
+		if(day != _gametime._currentDay && _ui.fading != 1 && renderer.enabled == true && this.tag != "NewVisitor")
+		{
+			day = _gametime._currentDay;
+
+			//find corresponding character within shelter
+			arrayIndex = -1;
+			for (int i = 0; i < _shelter._numPeople; i++) {
+				if (this.tag == _shelter._survivors [i].Name) {
+					arrayIndex = i;
+				}
+			}
+			if (arrayIndex == -1) {
+				Debug.Log ("Couldn't find index for " + this.tag + ".  Make sure this this tag is exactly the same as the character's name.");
+			}
+
+
+
+			Debug.Log (this.tag + "   " + day + "  " + _shelter._survivors[arrayIndex]._notify);
+
+			
+		}
+		
+		
+		
 		visitorAtGate = _visitors._personList [_gametime._currentDay];
 
 		// for newVisitor sprite
