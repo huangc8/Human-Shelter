@@ -118,7 +118,8 @@ public class Shelter : MonoBehaviour
 	private int _numEvictedSurvivors; 		// current number of survivors who have been evicted
 	private int _numSurvivors; 				// current number of survivors
 	private int _attackStrength; 			// the raiding strength
-	private int _defenses = 0;
+	private int _defenses = 0;				// the defending system
+	private int _numPeople;					// the number of survivor you let in
 
 	int medicineConsumedToday;
 
@@ -134,6 +135,7 @@ public class Shelter : MonoBehaviour
 		_storage = new Stores (this);
 		_numSurvivors = 0;
 		_numEvictedSurvivors = 0;
+		_numPeople = 0;
 	}
 
 	//================================================== accessor
@@ -408,6 +410,7 @@ public class Shelter : MonoBehaviour
 
 		// increase number of survivor
 		_numSurvivors++;
+		_numPeople++;
 	}
 
 	// reject a survivor at gate
