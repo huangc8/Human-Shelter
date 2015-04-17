@@ -106,15 +106,17 @@ public class GameTime : MonoBehaviour
 
 			// increase survivor status
 
-			ArrayList tReports = _gameWorld.CalculateShelterLocation();
-
-			foreach(Report r in tReports){
-				_reports.Add(r);
-			}
 
 			_shelter._survivors [s].Exhaust ();
 			_reports.Add(_shelter._survivors [s].Eat (_shelter));
 			_shelter._survivors [s].ConsumeMedicine (_shelter);
+		}
+
+		
+		ArrayList tReports = _gameWorld.CalculateShelterLocation();
+		
+		foreach(Report r in tReports){
+			_reports.Add(r);
 		}
 
 		// update report from gameworld
@@ -122,6 +124,9 @@ public class GameTime : MonoBehaviour
 		foreach (Report r in rt) {
 			_reports.Add (r);
 		}
+		
+		_reports.Add(_shelter.GetEatingReport());
+		_reports.Add (_shelter.GetMedicineConsumptionReport());
 
 #if debug
 		//print the reports

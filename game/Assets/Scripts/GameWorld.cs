@@ -183,6 +183,8 @@ public class GameWorld : MonoBehaviour
 	int _scoutingBonus;						// 	
 	ArrayList Enemies = new ArrayList ();	// enemy list
 
+	private ArrayList ScoutingReports = new ArrayList();
+
 	private ScavengeableLocation _scavengeTarget;
 	private ScavengeQuality _scavengeQuality;
 
@@ -463,7 +465,7 @@ public class GameWorld : MonoBehaviour
 			if (e.IsUnscouted ()) {
 
 			} else {
-				reports.Add (e.AttackLikeliness ());
+				//reports.Add (e.AttackLikeliness ());
 			}
 		}
 
@@ -482,9 +484,11 @@ public class GameWorld : MonoBehaviour
 					reports.Add (r);
 				}
 			} else {
-				reports.Add (e.AttackLikeliness ());
+
 			}
+			reports.Add (e.AttackLikeliness ());
 		}
+
 		totalScoutingPower = 0;
 		return reports;
 	}

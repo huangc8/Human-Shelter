@@ -102,6 +102,9 @@ public class Shelter : MonoBehaviour
 
 	// =============================================================== data
 	public DefenseLevel _defenseLevel;
+
+	int foodEatenToday;
+
 	public GameWorld _gameWorld; 			// game world reference
 	public GameTime _gametime;				// game time reference
 	public Visitor _visitors;				// visitor reference
@@ -116,6 +119,8 @@ public class Shelter : MonoBehaviour
 	private int _numSurvivors; 				// current number of survivors
 	private int _attackStrength; 			// the raiding strength
 	private int _defenses = 0;
+
+	int medicineConsumedToday;
 
 	// =============================================================== initialization
 	// Use this for initialization
@@ -245,6 +250,15 @@ public class Shelter : MonoBehaviour
 	// consume medicine
 	public bool ConsumeMedicine(int maxConsumption){
 		if(maxConsumption > _storage.Medicine){
+			medicineConsumedToday += _storage.Medicine;
+		}
+		else{
+			medicineConsumedToday += maxConsumption;
+		}
+
+
+
+		if(maxConsumption > _storage.Medicine){
 			_storage.Medicine = 0;
 			return false;
 		}
@@ -252,9 +266,29 @@ public class Shelter : MonoBehaviour
 		return true;
 	}
 
+	public Report GetMedicineConsumptionReport ()
+	{
+		Report r = new Report();
+
+		r.SetMessage("Your shelter consumed " + medicineConsumedToday + " medicine.");
+
+		medicineConsumedToday = 0;
+
+
+		return r;
+	}
+
 	// consume food
 	public bool EatFood (int toEat)
 	{
+		if(_storage.Food >= toEat){
+			foodEatenToday += toEat ;
+		}
+		else{
+			foodEatenToday += _storage.Food;
+		}
+		
+
 		_storage.Food = _storage.Food - toEat;
 		if (_storage.Food < 0) {
 			_storage.Food = 0;
@@ -293,6 +327,14 @@ public class Shelter : MonoBehaviour
 	{
 		_attackStrength += proficiency;
 		return _attackStrength;
+	}
+
+	public Report GetEatingReport(){
+		Report r = new Report();
+		r.SetMessage("Your settlement has consumed " + foodEatenToday + " food items.");
+
+		foodEatenToday = 0;
+		return r;
 	}
 
 	/// <summary>
