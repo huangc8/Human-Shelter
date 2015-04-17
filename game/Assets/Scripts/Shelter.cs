@@ -331,7 +331,12 @@ public class Shelter : MonoBehaviour
 
 	public Report GetEatingReport(){
 		Report r = new Report();
-		r.SetMessage("Your settlement has consumed " + foodEatenToday + " food items.");
+		if(foodEatenToday == 1){
+			r.SetMessage("Your settlement has consumed " + foodEatenToday + " food items.");
+		}
+		else{
+			r.SetMessage("Your settlement has consumed " + foodEatenToday + " food item.");
+		}
 
 		foodEatenToday = 0;
 		return r;

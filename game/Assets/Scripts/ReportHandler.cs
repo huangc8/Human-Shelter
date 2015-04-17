@@ -77,7 +77,7 @@ public class ReportHandler : MonoBehaviour
 
 			Report bugTracer = new Report();
 
-			bugTracer.SetMessage("ERROR CHECK LINE 59 ReportHandler");
+			//bugTracer.SetMessage("ERROR CHECK LINE 59 ReportHandler");
 			//new List<Report>();
 
 			_currentPage = _pages.Count -1;

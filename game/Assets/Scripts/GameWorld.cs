@@ -283,8 +283,15 @@ public class GameWorld : MonoBehaviour
 							_shelter.Food += newFood;
 							_shelter.Medicine += newMedicine;
 							_shelter.Parts += newParts;
-							
-							raidReport.SetMessage ("Your raiders have destroyed a camp gaining you " + newFood + " food, " + newMedicine + " medicine and " + newParts + " parts.");
+
+
+							if(newParts == 1){
+								raidReport.SetMessage ("Your raiders have destroyed a camp gaining you " + newFood + " food, " + newMedicine + " medicine and " + newParts + " part.");
+							}
+							else{
+								
+								raidReport.SetMessage ("Your raiders have destroyed a camp gaining you " + newFood + " food, " + newMedicine + " medicine and " + newParts + " parts.");
+							}
 							reports.Add (raidReport);
 							deadCamps.Add (camp);
 						}
@@ -356,20 +363,38 @@ public class GameWorld : MonoBehaviour
 
 		if(foundCamps > 0 && unknownCamps > 0){
 			Report numCampsFound = new Report();
-			numCampsFound.SetMessage("There are " + foundCamps + " enemy camps you have located and " + unknownCamps + " you have not located.");
 
+			if(foundCamps == 1){
+				numCampsFound.SetMessage("There is " + foundCamps + " enemy camp you have located and " + unknownCamps + " you have not located.");
+			}
+			else{
+				numCampsFound.SetMessage("There are " + foundCamps + " enemy camps you have located and " + unknownCamps + " you have not located.");
+			}
 			reports.Add(numCampsFound);
 		}
 		else if(foundCamps > 0){
 			Report numCampsFound = new Report();
-			numCampsFound.SetMessage("There are " + foundCamps + " enemy camps you have located.");
+			if(foundCamps == 1){
+				numCampsFound.SetMessage("There is " + foundCamps + " enemy camp you have located.");
+			}
+			else{
+				numCampsFound.SetMessage("There are " + foundCamps + " enemy camps you have located.");
+
+			}
 			
 			reports.Add(numCampsFound);
 
 		}
 		else if(unknownCamps > 0){
 			Report numCampsFound = new Report();
-			numCampsFound.SetMessage("There are " + unknownCamps + " enemy camps you have not located.");
+
+			if(unknownCamps == 1){
+				numCampsFound.SetMessage("There is " + unknownCamps + " enemy camp you have not located.");
+			}
+			else{
+				numCampsFound.SetMessage("There are " + unknownCamps + " enemy camps you have not located.");
+
+			}
 			
 			reports.Add(numCampsFound);
 			

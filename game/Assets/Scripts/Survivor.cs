@@ -413,7 +413,7 @@ public class Survivor : ScriptableObject
 
 
         Report r = new Report();
-        r.SetMessage(_name + " Bolstered defenses to" + defenseDescription );
+        r.SetMessage(_name + " bolstered defenses to" + defenseDescription );
         return r;
     }
     
@@ -454,7 +454,13 @@ public class Survivor : ScriptableObject
                 
                 case GameWorld.ScavengeableLocation.Mall:
                     sParts += 1 + qualityMultiplier * (int)(Random.Range(0, 10) * (proficiency + fatigueModifier + 11) * .1f);
-                    r.SetMessage(_name + " scavenged " + sParts + " parts.");
+				if(sParts == 1){
+                    r.SetMessage(_name + " scavenged " + sParts + " part.");
+				}
+				else{
+					
+					r.SetMessage(_name + " scavenged " + sParts + " parts.");
+				}
                     s.Parts += sParts;
                     break;
                 
@@ -496,7 +502,7 @@ public class Survivor : ScriptableObject
         int newAttack = s.BolsterAttack(proficiency);
         
         Report r = new Report();
-        r.SetMessage(_name + " Bolstered attack strength to " + newAttack);
+        r.SetMessage(_name + " bolstered attack strength to " + newAttack);
         return r;
     }
 
@@ -541,7 +547,7 @@ public class Survivor : ScriptableObject
             r.SetMessage(_name + "'s fatigue is restored to " + restoration);
         } else if (restoration < 0)
         {
-            r.SetMessage(_name + "has rested to " + restoration + " points.");
+            r.SetMessage(_name + " has rested to " + restoration + " points.");
         }
 		else{
 			r.SetMessage(_name + " has rested to " + restoration + " points.");
