@@ -441,7 +441,8 @@ public class Shelter : MonoBehaviour
 		foreach (Survivor s in _survivors) {
 			if(s.AssignedTask == Survivor.task.Raiding){
 				Report r = new Report();
-                s.WoundCheck(this,r,0, "raiding","raid");
+				Survivor.wound w = Survivor.wound.Uninjured;
+                s.WoundCheck(this,r,0, "raiding","raid",ref w);
                 reports.Add(r);
 			}
 		}

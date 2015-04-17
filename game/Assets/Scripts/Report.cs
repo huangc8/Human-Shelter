@@ -17,6 +17,11 @@ public class Report : ScriptableObject
 		Debug.LogWarning ("Message has been set to:" + _message);
 	}
 
+	public void AddWoundMessage (Survivor.wound sustainedWound)
+	{
+		_message += " In the process a " + sustainedWound + " was sustained.";
+	}
+
 	public void PrintReport(int i){
 		Debug.Log ("Report [" + i + "]: " + _message);
 	}

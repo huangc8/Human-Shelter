@@ -250,9 +250,9 @@ public class Survivor : ScriptableObject
     }
 
     // Check to see if the surivor is wounded/dies return false for failing the mission, true for continuing
-    public bool WoundCheck(Shelter s, Report r, int successChance, string tasking,string task){
+    public bool WoundCheck(Shelter s, Report r, int successChance, string tasking,string task,ref wound sWound){
         
-        wound sWound = wound.Uninjured;
+        sWound = wound.Uninjured;
         //Chance of getting wounded, if the wound is severe enough, do not continue scouting
         if (successChance + Random.Range(0, 10) < 13)
         {
@@ -307,7 +307,7 @@ public class Survivor : ScriptableObject
         {
             spillover = Mathf.Abs(Fatigue);
         }
-        int fatigueModifier = (100 / (10 + (10 + Mathf.Max(Fatigue, 0)))) * 10 + spillover;
+        int fatigueModifier = -(100 / (10 + (10 + Mathf.Max(Fatigue, 0)))) * 10 + spillover;
         
         int proficiency = GetProficiency(task.Scout) + 10 + fatigueModifier;
         
@@ -315,7 +315,7 @@ public class Survivor : ScriptableObject
 
         ArrayList NewReps = new ArrayList();
 
-        if(WoundCheck(s,rTemporary,proficiency, "scouting","scout"))
+        if(WoundCheck(s,rTemporary,proficiency, "scouting","scout", ref sWound))
         {
 
             int locationBonus = (int)Mathf.Pow(Random.Range(1.0f, 4.0f) * proficiency, .36f);
@@ -351,7 +351,7 @@ public class Survivor : ScriptableObject
         {
             spillover = Mathf.Abs(Fatigue);
         }
-        int fatigueModifier = (100 / (10 + (10 + Mathf.Max(Fatigue, 0)))) * 10 + spillover;
+        int fatigueModifier = -(100 / (10 + (10 + Mathf.Max(Fatigue, 0)))) * 10 + spillover;
         
         int proficiency = GetProficiency(task.Heal);
         
@@ -379,7 +379,7 @@ public class Survivor : ScriptableObject
         {
             spillover = Mathf.Abs(Fatigue);
         }
-        int fatigueModifier = (100 / (10 + Mathf.Max(Fatigue, 0))) * 10 + spillover;
+        int fatigueModifier = -(100 / (10 + Mathf.Max(Fatigue, 0))) * 10 + spillover;
 
         int proficiency = (GetProficiency(task.Defend) + 10) + fatigueModifier;
         Shelter.DefenseLevel newDefenses = s.BolsterDefenses(proficiency);
@@ -428,10 +428,12 @@ public class Survivor : ScriptableObject
         {
             spillover = Mathf.Abs(Fatigue);
         }
-        int fatigueModifier = (100 / (10 + (10 + Mathf.Max(Fatigue, 0)))) * 10 + spillover;
+        int fatigueModifier = -(100 / (10 + (10 + Mathf.Max(Fatigue, 0)))) * 10 + spillover;
         int proficiency = GetProficiency(task.Scavenge)+ fatigueModifier;
-		
-        if(WoundCheck(s,r,proficiency,"scavenging","scavenge"))
+
+		Survivor.wound sustainedWound = Survivor.wound.Uninjured;
+
+        if(WoundCheck(s,r,proficiency,"scavenging","scavenge",ref sustainedWound))
         {
             int sFood = 0;
             int sMedicine = 0;
@@ -467,6 +469,10 @@ public class Survivor : ScriptableObject
                     break;
                 
             }
+
+			if(sustainedWound != Survivor.wound.Uninjured){
+				r.AddWoundMessage(sustainedWound);
+			}
         }
         return r;
     }
@@ -498,7 +504,7 @@ public class Survivor : ScriptableObject
         {
             spillover = Mathf.Abs(Fatigue);
         }
-        int fatigueModifier = (int)((100 / (10 + Mathf.Max(Fatigue, 0.0f))) * 10) + spillover;
+        int fatigueModifier = (int)-((100 / (10 + Mathf.Max(Fatigue, 0.0f))) * 10) + spillover;
         
         int proficiency = GetProficiency(task.Raiding) + fatigueModifier + boost;
         int newAttack = s.BolsterAttack(proficiency);
