@@ -101,10 +101,6 @@ public class Shelter : MonoBehaviour
 	}
 
 	// =============================================================== data
-	public DefenseLevel _defenseLevel;
-
-	int foodEatenToday;
-
 	public GameWorld _gameWorld; 			// game world reference
 	public GameTime _gametime;				// game time reference
 	public Visitor _visitors;				// visitor reference
@@ -119,8 +115,10 @@ public class Shelter : MonoBehaviour
 	private int _numSurvivors; 				// current number of survivors
 	private int _attackStrength; 			// the raiding strength
 	private int _defenses = 0;				// the defending system
-	private int _numPeople;					// the number of survivor you let in
 
+	public DefenseLevel _defenseLevel;		// the defenseLevel
+	public int _numPeople;					// the number of survivor you let in
+	int foodEatenToday;
 	int medicineConsumedToday;
 
 	// =============================================================== initialization
@@ -258,27 +256,12 @@ public class Shelter : MonoBehaviour
 			medicineConsumedToday += maxConsumption;
 		}
 
-
-
-
 		if(maxConsumption > _storage.Medicine){
 			_storage.Medicine = 0;
 			return false;
 		}
 		_storage.Parts -= maxConsumption;
 		return true;
-	}
-
-	public Report GetMedicineConsumptionReport ()
-	{
-		Report r = new Report();
-
-		r.SetMessage("Your shelter consumed " + medicineConsumedToday + " medicine.");
-
-		medicineConsumedToday = 0;
-
-
-		return r;
 	}
 
 	// consume food
@@ -333,6 +316,20 @@ public class Shelter : MonoBehaviour
 		return _attackStrength;
 	}
 
+	// get medicine consumption report
+	public Report GetMedicineConsumptionReport ()
+	{
+		Report r = new Report();
+		
+		r.SetMessage("Your shelter consumed " + medicineConsumedToday + " medicine.");
+		
+		medicineConsumedToday = 0;
+		
+		
+		return r;
+	}
+
+	// get food consumption report
 	public Report GetEatingReport(){
 		Report r = new Report();
 		if(foodEatenToday == 1){
@@ -346,10 +343,7 @@ public class Shelter : MonoBehaviour
 		return r;
 	}
 
-	/// <summary>
-	/// Execute the specified survivor s.
-	/// </summary>
-	/// <param name="s">survivor.</param>
+	// execute a survivor
 	public Report Execute(Survivor s){
 		
 		int proficiency = s.GetProficiency(Survivor.task.Execute);
@@ -368,6 +362,7 @@ public class Shelter : MonoBehaviour
 		return r;
 	}
 
+	// evict a survivor
 	public Report Evict (Survivor s)
 	{
 		int proficiency = s.GetProficiency(Survivor.task.Evict);
@@ -439,6 +434,7 @@ public class Shelter : MonoBehaviour
 		_numSurvivors--;
 	}
 
+	// slightly wounded a raider
 	public void SlightlyWoundRandomRaider (ArrayList reports)
 	{
 		int length = 0;

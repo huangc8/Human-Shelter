@@ -14,9 +14,7 @@ public class clickChar : MonoBehaviour
 	private Conditions _Cond; 												// conditions
 
 	int arrayIndex; 														// character index in shelter.survivor
-	Survivor visitorAtGate;
-
-
+	Survivor visitorAtGate;													// character at gate
 	// ====================================================================== init
 	// Use this for initialization
 	void Start ()
@@ -51,7 +49,7 @@ public class clickChar : MonoBehaviour
 			else{
 				//find corresponding character within shelter
 				arrayIndex = -1;
-				for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
+				for (int i = 0; i < _shelter._numPeople; i++) {
 					if (this.tag == _shelter._survivors [i].Name) {
 						arrayIndex = i;
 					}
