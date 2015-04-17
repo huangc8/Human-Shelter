@@ -240,7 +240,7 @@ public class Survivor : ScriptableObject
     {
         int proficiency = GetProficiency(task.Resting);
 		int restModifier = ((int)hunger.Count - (int)_starvation);
-        _fatigue -= Mathf.Max ((int)((proficiency * (Health)) / 5.0f) * restModifier + 5,10);
+        _fatigue -= Mathf.Max ((int)((proficiency * (Health)) / 5.0f) * restModifier + 10,15);
 		if(_fatigue < 0){
 			_fatigue = 0;
 		}

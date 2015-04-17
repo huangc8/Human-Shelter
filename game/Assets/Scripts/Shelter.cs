@@ -327,7 +327,7 @@ public class Shelter : MonoBehaviour
 	// increase attack
 	public int BolsterAttack (int proficiency)
 	{
-		_attackStrength = (_attackStrength + 1 ) * proficiency;
+		_attackStrength += (_attackStrength + 10 );
 		return _attackStrength;
 	}
 
