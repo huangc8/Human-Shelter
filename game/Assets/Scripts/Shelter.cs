@@ -475,6 +475,9 @@ public class Shelter : MonoBehaviour
 	// kill survivor
 	public void KillSurvivor (string s)
 	{
+		Report r = new Report();
+		r.SetMessage(s + " has died.");
+		_gametime.addReport(r);
 		// find the survivors position
 		int sPosition = -1;
 		for (int i = 0; i < _numSurvivors; i++) {
@@ -492,6 +495,7 @@ public class Shelter : MonoBehaviour
 		} else {
 			Debug.LogError("KillSurvivor: No such Survivor");
 		}
+
 	}
 
 	// ================================================================ helper

@@ -41,6 +41,10 @@ public class GameTime : MonoBehaviour
 		_currentDay = 0;
 	}
 
+	public void addReport(Report r){
+		_reports.Add(r);
+	}
+
 	// =============================================== action
 	// Start a new day, complete all of the tasks the survivors were sent on
 	public void newDay ()
