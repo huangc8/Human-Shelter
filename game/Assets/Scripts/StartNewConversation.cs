@@ -341,38 +341,43 @@ public class StartNewConversation : MonoBehaviour
 			break;
 		// --------------------- day 2 -----------------------
 		case 2:
-			if (hadConversation ["Report_2"] == false) {
+			if (hadConversation ["Report_1"] == false) {
 				talk ("Report_1", false);
 			}
 			break;
 		// --------------------- day 3 -----------------------
 		case 3:
-			if (hadConversation ["Report_3"] == false) {
-				talk ("Report_1", false);
+			if (hadConversation ["Report_2"] == false) {
+				talk ("Report_2", false);
 			}
 			break;
 		// --------------------- day 4 -----------------------
 		case 4:
-			if (hadConversation ["Report_4"] == false) {
-				talk ("Report_1", false);
+			if (hadConversation ["Report_3"] == false) {
+				talk ("Report_3", false);
 			}
 			break;
 		// --------------------- day 5 -----------------------
 		case 5:
-			if (hadConversation ["Report_5"] == false) {
-				talk ("Report_1", false);
+			if (hadConversation ["Report_4"] == false) {
+				talk ("Report_4", false);
 			}
 			break;
 		// --------------------- day 6 -----------------------
 		case 6:
-			if (hadConversation ["Report_6"] == false) {
-				talk ("Report_1", false);
+			if (hadConversation ["Report_5"] == false) {
+				talk ("Report_5", false);
 			}
 			break;
 		// --------------------- day 7 -----------------------
 		case 7:
+			if (hadConversation ["Report_6"] == false) {
+				talk ("Report_6", false);
+			}
+			break;
+		case 8:
 			if (hadConversation ["Report_7"] == false) {
-				talk ("Report_1", false);
+				talk ("Report_7", false);
 			}
 			break;
 		}

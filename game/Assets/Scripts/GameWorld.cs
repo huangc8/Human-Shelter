@@ -443,7 +443,7 @@ public class GameWorld : MonoBehaviour
 		Enemy e = new Enemy (_shelter._gametime._currentDay);
 		Enemies.Add (e);
 		
-		Debug.LogError("439, ading a new enemy visibility IsUnscouted():" + e.IsUnscouted());
+		//Debug.LogError("439, ading a new enemy visibility IsUnscouted():" + e.IsUnscouted());
 	}
 
 	/// <summary>

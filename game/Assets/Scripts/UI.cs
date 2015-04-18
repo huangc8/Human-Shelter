@@ -481,7 +481,7 @@ public class UI : MonoBehaviour {
 								h += Screen.height*.04f;
 							}
 							catch{
-								Debug.LogError("ReportHandler (109) ERROR: i = " + i + " CurrentReports.Count: " + _reports.CurrentReports.Count);
+								//Debug.LogError("ReportHandler (109) ERROR: i = " + i + " CurrentReports.Count: " + _reports.CurrentReports.Count);
 							}
 						}
 
