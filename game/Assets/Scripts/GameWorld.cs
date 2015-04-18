@@ -143,8 +143,8 @@ public class GameWorld : MonoBehaviour
 		// whether the enemy camp will attack you
 		public bool ShouldAttack ()
 		{
-			int attackChance = Random.Range (0, 4) + _aggressiveness + _readiness;
-			if (attackChance > 11) {
+			int attackChance = Random.Range (0, 10) + _aggressiveness + _readiness;
+			if (attackChance > 8) {
 				_readiness = -5;
 				return true;
 			}
