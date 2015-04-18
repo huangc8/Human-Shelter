@@ -46,8 +46,8 @@ public class Survivor : ScriptableObject
         Heal,               // restore other player health 
         Defend,             // increase camp defend 
         Scavenge,           // increase camp resource
-        Raiding,            // massively increase camp resource (special one, can't always be used)
         Resting,            // restore survivor fatigue
+		Raiding,            // massively increase camp resource (special one, can't always be used)
 		Evict,            	// delete survivor
         Execute,            // delete survivor
         Unassigned,         // go to resting
