@@ -105,6 +105,7 @@ public class Shelter : MonoBehaviour
 	public GameTime _gametime;				// game time reference
 	public Visitor _visitors;				// visitor reference
 	public Conditions _cond;				// conditions reference
+	public StartNewConversation _startConv;	// start new conversation reference
 
 	public Survivor[] _survivors; 			// array of survivors, maximum capacity is 6
 	public Survivor[] _evictedSurvivors; 	// array of survivors who have been kicked out of the shelter
@@ -409,6 +410,9 @@ public class Shelter : MonoBehaviour
 		// increase number of survivor
 		_numSurvivors++;
 		_numPeople++;
+
+		// update notify
+		_startConv.NotifyCheck ();
 	}
 
 	// reject a survivor at gate
