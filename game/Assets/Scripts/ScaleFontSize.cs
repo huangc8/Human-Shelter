@@ -27,10 +27,14 @@ public class ScaleFontSize : MonoBehaviour {
 				{
 					guiStyle.fontSize = Screen.width/75;
 				}
+				if(style.styleName == "Label")
+				{
+					guiStyle.fontSize = Screen.width/65;
+				}
 				if(style.styleName == "Subtitle")
 				{
 					guiStyle.fontSize = Screen.width/75;
-					guiStyle.padding = new RectOffset(Screen.width/170,Screen.width/30,Screen.height/40,Screen.height/70);
+					guiStyle.padding = new RectOffset(Screen.width/73,Screen.width/30,Screen.height/18,Screen.height/70);
 				}
 				// guiStyle.fixedHeight = 0;
 				// guiStyle.fixedWidth = 0;

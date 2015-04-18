@@ -22,6 +22,7 @@ public class Survivor : ScriptableObject
     private int _appetite = 10;                     // rate of consuming food
     private int[] _proficiencies;                   // array, stores skill at each task
 	private hunger _starvation;						// how hungry the person is
+	private bool _justInjured = false;
 
     // changing survivor info
     private int _health = 10;                       // health of survivor
@@ -107,6 +108,15 @@ public class Survivor : ScriptableObject
         }
     }
 
+	public bool JustInjured{
+		get{
+			return _justInjured;
+		}
+		set{
+			_justInjured = value;
+		}
+	}
+
 	// gets & set health
     public int Health
     {
@@ -116,6 +126,10 @@ public class Survivor : ScriptableObject
         }
         set
         {
+			if(value < 0){
+				_justInjured = true;
+			}
+
             _health = value;
 			if(_health < 0){
 				_health = 0;
@@ -217,8 +231,13 @@ public class Survivor : ScriptableObject
                 Health--;
             } else
             {
-                s.UseMedicine(2); //consume to stabilize
-				Health++;
+				if(_justInjured == false){
+	                s.UseMedicine(2); //consume to stabilize
+					Health++;
+				}
+				else{
+					_justInjured = false;
+				}
             }
         }
 

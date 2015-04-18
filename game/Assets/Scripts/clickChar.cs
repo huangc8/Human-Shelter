@@ -40,6 +40,7 @@ public class clickChar : MonoBehaviour
 			if(child.name == "Alert")
 			{
 				alert = child;
+				alert.renderer.enabled= false;
 			}
 		}
 
@@ -100,9 +101,15 @@ public class clickChar : MonoBehaviour
 			}
 
 
+			Debug.Log (_shelter._survivors[arrayIndex].Name + "   " + day + "  " + _shelter._survivors[arrayIndex]._notify);
 
-			Debug.Log (this.tag + "   " + day + "  " + _shelter._survivors[arrayIndex]._notify);
-
+			if(_shelter._survivors[arrayIndex]._notify)
+			{
+				alert.renderer.enabled=true;
+			}
+			else{
+				alert.renderer.enabled=false;
+			}
 			
 		}
 		
