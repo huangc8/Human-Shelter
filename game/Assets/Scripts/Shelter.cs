@@ -127,8 +127,8 @@ public class Shelter : MonoBehaviour
 	void Start ()
 	{		
 		_defenseLevel = DefenseLevel.Undefended;
-		_survivors = new Survivor[6];
-		_images = new GameObject[6];
+		_survivors = new Survivor[100];
+		_images = new GameObject[100];
 		_evictedSurvivors = new Survivor[10];
 		
 		_storage = new Stores (this);

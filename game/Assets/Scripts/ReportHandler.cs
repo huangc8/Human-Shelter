@@ -55,7 +55,7 @@ public class ReportHandler : MonoBehaviour
 			}
 		}
 		
-		Debug.Log("Passing Reports");
+		//Debug.Log("Passing Reports");
 		if(reports.Count > 0){
 
 
@@ -126,10 +126,10 @@ public class ReportHandler : MonoBehaviour
 
 
 		if(CurrentReports == null){
-			Debug.LogError("Reports are null.");
+			//Debug.LogError("Reports are null.");
 		}
 
-		Debug.Log ("ReportHandler.OnGUI():");
+		//Debug.Log ("ReportHandler.OnGUI():");
 
 #if debugmode
 		int rIndex = 0;
