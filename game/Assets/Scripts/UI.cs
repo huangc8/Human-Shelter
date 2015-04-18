@@ -513,7 +513,7 @@ public class UI : MonoBehaviour {
 						GUI.Box(new Rect (w,h, Screen.width*.15f, Screen.height*.07f), "Help", boxStyle);
 						
 						h+= Screen.height *.08f;
-						boxStyle.fontSize = smallFont;
+						boxStyle.fontSize = (int)(smallFont*.95f);;
 						boxStyle.alignment = TextAnchor.UpperLeft;
 						boxStyle.padding =  new RectOffset (15, 1, 15, 1);
 
@@ -523,14 +523,16 @@ public class UI : MonoBehaviour {
 						              "Speak with new arrivals to find out what they're looking for.\n" +
 						              "When you're finished, click Next Day progress.\n\n" +
 						              "Task descriptions:\n" +
-						              "Scout: \t\tSearch nearby for other camps that may have supplies to steal.\n\n" +
-						              "Heal: \t\tThis survivor will help increase the health of injured survivors.\n\n" +
-						              "Defend: \t\tIncrease your camp's defences, in preperation for an attack.\n\n" +
-						              "Scavenge: \tSearch a nearby area for supplies. \n\t\tEach day, your journal will tell you which building can be scavenged.\n\n" +
-						              "Raiding: \t\tIncrease your attack strength, making raids more successful.\n\n" +
+						              "Scout: \t\tSearch nearby for other camps or buildings that may have supplies to steal.\n\n" +
+						              "Heal: \t\tThis survivor will use medicine to increase the health of other injured survivors.\n\n" +
+						              "Defend: \t\tIncrease your camp's defenses, in preperation for an attack.\n\n" +
+						              "Scavenge: \tSearch a nearby area for supplies. \n" +
+						              "\t\tEach day, your journal will tell you which building can be scavenged.\n\n" +
+						              "Raiding: \t\tIncrease your attack strength, to prepare for a raid.\n" +
+						              "\t\tWhen a raid is possible, you can attack an enemy camp for a lot of resources.\n\n" +
 						              "Resting: \t\tStay inside for the day and restore some health and stamina.\n\n" +
 						              "Evict: \t\tKick this person out of your camp.\n\n" +
-						              "Execute: \tKill this survivor."
+						              "Execute: \t\tKill this survivor."
 
 						              , boxStyle))
 						{
@@ -610,10 +612,46 @@ public class UI : MonoBehaviour {
 									//Code for making evict and execute look different
 								}
 
-							if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight), ((Survivor.task)t).ToString (), buttonStyle)) {
-								showButtons=true;
-								_shelter._survivors [index].AssignedTask = ((Survivor.task)t);
+							if(((Survivor.task)t).ToString ()== "Raiding")
+							{
+								if(true)//raid not possible
+								{
+										buttonStyle.hover.background=black;
+										buttonStyle.active.background=black;
+										buttonStyle.normal.background=black;
+										buttonStyle.hover.textColor = Color.white;
+										buttonStyle.active.textColor = Color.white;
+										GUI.Box (new Rect (w, h, buttonWidth, buttonHeight), "Raid", buttonStyle);
+										buttonStyle.hover.background=button2;
+										buttonStyle.active.background=button3;
+										buttonStyle.normal.background=button1;
+										buttonStyle.hover.textColor = Color.black;
+										buttonStyle.active.textColor = Color.black;
+
+								}
+								else{
+									if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight), "Raid", buttonStyle)) {
+										showButtons=true;
+										_shelter._survivors [index].AssignedTask = ((Survivor.task)t);
+									}
+								}
 							}
+
+							else if(((Survivor.task)t).ToString ()=="Resting")
+							{
+								if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight), "Rest", buttonStyle)) {
+									showButtons=true;
+									_shelter._survivors [index].AssignedTask = ((Survivor.task)t);
+								}
+							}
+
+							else{
+								if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight), ((Survivor.task)t).ToString (), buttonStyle)) {
+									showButtons=true;
+									_shelter._survivors [index].AssignedTask = ((Survivor.task)t);
+								}
+							}
+
 							buttonStyle.normal.background = (Texture2D)Resources.Load ("buttonBack", typeof(Texture2D));
 							buttonStyle.normal.textColor = Color.white;
 
