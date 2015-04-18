@@ -30,6 +30,7 @@ public class UI : MonoBehaviour {
 	Font regular, bold;
 	Texture2D box, button1, button2, button3, black;
 	Transform highlight;
+	Transform blackbox;
 
 	// ========================================================== initialization
 	// Use this for initialization
@@ -49,6 +50,13 @@ public class UI : MonoBehaviour {
 		}
 		_Cond = g.GetComponent<Conditions>();
 
+		foreach(Transform child in g.transform)
+		{
+			if(child.name == "BlackBox")
+			{
+				blackbox = child;
+			}
+		}
 
 		charButtons = sideButtons = showButtons = showJournal = showHelp = false;
 
@@ -272,10 +280,9 @@ public class UI : MonoBehaviour {
 
 						else
 						{
-							_gametime.newDay();
 							_reports.showReports = false;
-							showJournal=true;
-							showButtons=true;
+							//showJournal=true;
+							//showButtons=true;
 							charButtons = sideButtons = showHelp= false;
 							fading = 1;
 						}
@@ -718,19 +725,25 @@ public class UI : MonoBehaviour {
 				if(fade>=100)
 				{
 					fading =2;
+					_gametime.newDay();
 					//showAllButtons=true;
 				}
 			}
-			if(fading ==2)
+			if(fading ==2 && !_diag._DiagCon.IsConversationActive)
 			{
+				showJournal = true;
 				fade-=1.0f;
 				if(fade<=0)
 				{
 					fading = 0;
+					blackbox.renderer.enabled = false;
+
 				}
 			}
-			GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, fade/100);
-			GUI.Box(new Rect (0, 0, Screen.width, Screen.height), "", boxStyle);
+			//GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, fade/100);
+			//GUI.Box(new Rect (0, 0, Screen.width, Screen.height), "", boxStyle);
+			blackbox.renderer.enabled = true;
+			blackbox.renderer.material.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, fade/100);
 		}
 
 		// start screen

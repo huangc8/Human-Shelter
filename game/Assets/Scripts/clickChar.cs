@@ -37,8 +37,6 @@ public class clickChar : MonoBehaviour
 
 		foreach (Transform child in transform)
 		{
-			Debug.Log(child);
-
 			if(child.name == "Alert")
 			{
 				alert = child;
