@@ -29,6 +29,7 @@ public class UI : MonoBehaviour {
 	GUIStyle labelStyle;
 	Font regular, bold;
 	Texture2D box, button1, button2, button3, black;
+	Transform highlight;
 
 	// ========================================================== initialization
 	// Use this for initialization
@@ -55,7 +56,7 @@ public class UI : MonoBehaviour {
 		tutorial = true;
 		warning = 0;
 		
-		index = 0;
+		index = -1;
 		animateSide = 500;
 		fade = 0;
 		fading = 0;
@@ -88,9 +89,24 @@ public class UI : MonoBehaviour {
 		//style.alignment = TextAnchor.MiddleCenter;
 		if(!tutorial && !_diag._DiagCon.IsConversationActive)
 		{
+			if(highlight)
+			{
+				highlight.renderer.enabled=false;
+			}
+
 			x = ax;
 			y = ay;
 			index = aindex;
+
+
+			foreach (Transform child in _shelter._survivors[index].image.transform)
+			{
+				if(child.name == "Highlight")
+				{
+					highlight = child;
+				}
+			}
+
 			
 			charButtons = true;
 			showButtons = true;
@@ -539,7 +555,7 @@ public class UI : MonoBehaviour {
 					buttonWidth = Screen.width * .13f;
 
 
-					if(_shelter.NumberOfSurvivors > 0){ //if we have no survivors don't try to do this
+					if(_shelter.NumberOfSurvivors > 0 && index >=0){ //if we have no survivors don't try to do this
 
 						boxStyle.alignment = TextAnchor.UpperCenter;
 						boxStyle.font = bold;
@@ -730,6 +746,19 @@ public class UI : MonoBehaviour {
 	// ========================================================== Update
 	// Update is called once per frame
 	void Update () {
+		if(index>=0)
+		{
+
+			if(sideButtons || charButtons)
+			{
+
+				highlight.renderer.enabled= true;
+			}
+			else
+			{
+				highlight.renderer.enabled= false;
+			}
+		}
 		if(showAllButtons){
 			//this will get rid of buttons when you click anywhere other than a button
 			if (Input.GetMouseButtonUp(0)) {

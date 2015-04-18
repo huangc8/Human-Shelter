@@ -37,10 +37,17 @@ public class clickChar : MonoBehaviour
 
 		foreach (Transform child in transform)
 		{
+			Debug.Log(child);
+
 			if(child.name == "Alert")
 			{
 				alert = child;
 				alert.renderer.enabled= false;
+			}
+			if(child.name == "Highlight")
+			{
+				light = child;
+				light.renderer.enabled= false;
 			}
 		}
 
