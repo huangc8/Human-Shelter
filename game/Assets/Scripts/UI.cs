@@ -799,7 +799,7 @@ public class UI : MonoBehaviour {
 	// ========================================================== Update
 	// Update is called once per frame
 	void Update () {
-		if(index>=0)
+		if(index>=0 && highlight)
 		{
 
 			if(sideButtons || charButtons)
