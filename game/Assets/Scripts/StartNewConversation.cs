@@ -21,29 +21,36 @@ public class StartNewConversation : MonoBehaviour
 		_shelter = this.GetComponent<Shelter>();
 
 		hadConversation = new Dictionary<string, bool> ();
+		//-------------------- Day 1----------------------
+		hadConversation ["Conv_1_1"] = false; // Brian at gate -> invite #25
+		hadConversation ["Conv_1_2"] = false; // Marina at gate -> invite #23 / reject #24
+		hadConversation ["Conv_1_3"] = false; // Talk to Brian about people at gate
 
-		hadConversation ["Conv_1_1"] = false;
-		hadConversation ["Conv_1_2"] = false;
-		hadConversation ["Conv_1_3"] = false;
-
+		//-------------------- Day 2----------------------
 		hadConversation ["Conv_2_1"] = false;
 		hadConversation ["Conv_2_2"] = false;
 
+		//-------------------- Day 3----------------------
 		hadConversation ["Conv_3_1"] = false;
 		hadConversation ["Conv_3_2"] = false;
 
+		//-------------------- Day 4----------------------
 		hadConversation ["Conv_4_1"] = false;
 		hadConversation ["Conv_4_2"] = false;
 
+		//-------------------- Day 5----------------------
 		hadConversation ["Conv_5_1"] = false;
 		hadConversation ["Conv_5_2"] = false;
 
+		//-------------------- Day 6----------------------
 		hadConversation ["Conv_6_1"] = false;
 
+		//-------------------- Day 7----------------------
 		hadConversation ["Conv_7_1"] = false;
 		hadConversation ["Conv_7_2"] = false;
 		hadConversation ["Conv_7_3"] = false;
 
+		//------------------- Reports --------------------
 		hadConversation ["Report_1"] = false;
 
 		talked = false;
