@@ -57,7 +57,6 @@ public class Conditions : MonoBehaviour
 	// get conditions 
 	public bool getCondition (string key, string name)
 	{
-
 		survCond tmp = _conditions [name];
 
 		switch (key) {
