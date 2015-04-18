@@ -82,7 +82,6 @@ public class StartNewConversation : MonoBehaviour
 			if (hadConversation ["Conv_2_2"] == false && name == "Marina") {
 				talk ("Conv_2_2", false);
 			}
-
 			break;
 		// --------------------- day 3 -----------------------
 		case 3:
@@ -225,16 +224,15 @@ public class StartNewConversation : MonoBehaviour
 			}
 			break;
 		}// end of switch
+
 		return false;
 	}
 
 	// check if notify turns on
 	public void NotifyCheck(){
-		foreach (Survivor s in _shelter._survivors) {
-			if(s != null){
-				if (NoteCheck (s.name)) {
-					s._notify = true;
-				}
+		for(int i = 0; i < _shelter._numPeople; i++){
+			if(_shelter._survivors[i] != null){
+				_shelter._survivors[i]._notify = NoteCheck(_shelter._survivors[i].Name);
 			}
 		}
 	}
