@@ -345,6 +345,7 @@ public class UI : MonoBehaviour {
 					GUI.Box (new Rect (w, h - Screen.height * .001f, buttonWidth, buttonHeight * .001f),"", boxStyle);
 					if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight),"Talk to " + _shelter._survivors[index].Name, buttonStyle)) {
 						_startNewConversation.ClickCheck(_shelter._survivors[index].Name);
+						charButtons=false;
 					}
 					h+= buttonHeight *1.25f;
 

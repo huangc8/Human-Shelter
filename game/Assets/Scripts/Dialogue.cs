@@ -91,9 +91,9 @@ public class Dialogue : MonoBehaviour
 		{	
 				// if conversation is going on, update choice
 				if (_DiagCon.IsConversationActive) {
+					_ui.showAllButtons = false;
 						if (diaChoice) {
 							choiceID = _DiagCon.getID ();
-							_ui.showAllButtons = false;
 						}
 				} else {
 						_ui.showAllButtons = true;
