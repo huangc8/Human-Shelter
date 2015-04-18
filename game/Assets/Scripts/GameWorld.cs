@@ -553,8 +553,11 @@ public class GameWorld : MonoBehaviour
 	public ArrayList CalculateShelterLocation(){
 		ArrayList reports = new ArrayList ();
 		foreach (Enemy e in Enemies) {
+			int successChance = (totalScoutingPower + Random.Range(5,15) + enemyLocatingBonus) * 2;
 			if (e.IsUnscouted ()) {
-				if (e.Visibility < totalScoutingPower + Random.Range(5,15) + enemyLocatingBonus) {
+
+
+				if (e.Visibility < successChance) {
 					//Let us see it
 					enemyLocatingBonus = 0;
 					Report r = e.MakeScoutingProgress (totalScoutingPower);
@@ -562,6 +565,8 @@ public class GameWorld : MonoBehaviour
 				}
 				else{
 					enemyLocatingBonus+=5;
+
+					Debug.Log ("SuccessChance: " + successChance + " enemyLocationBonus:" + enemyLocatingBonus + " e.Visibility:" + e.Visibility);
 				}
 			} else {
 
