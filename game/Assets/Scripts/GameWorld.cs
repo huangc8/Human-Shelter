@@ -179,7 +179,9 @@ public class GameWorld : MonoBehaviour
 	// ------------------------------ end of Enemy class ---------------------------------------
 
 	// ========================================================= data
-	
+
+	private int enemyLocatingBonus = 0;
+
 	private const int NUM_SCAVENGE_TARGETS = 3;
 	public int [] scavengedTargets = new int[NUM_SCAVENGE_TARGETS]; //3 chosen - number of enums for scavenging
 
@@ -552,11 +554,14 @@ public class GameWorld : MonoBehaviour
 		ArrayList reports = new ArrayList ();
 		foreach (Enemy e in Enemies) {
 			if (e.IsUnscouted ()) {
-				if (e.Visibility < totalScoutingPower) {
+				if (e.Visibility < totalScoutingPower + Random.Range(5,15) + enemyLocatingBonus) {
 					//Let us see it
-					
+					enemyLocatingBonus = 0;
 					Report r = e.MakeScoutingProgress (totalScoutingPower);
 					reports.Add (r);
+				}
+				else{
+					enemyLocatingBonus+=5;
 				}
 			} else {
 
