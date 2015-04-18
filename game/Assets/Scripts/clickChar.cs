@@ -48,7 +48,6 @@ public class clickChar : MonoBehaviour
 				light.renderer.enabled= false;
 			}
 		}
-
 	}
 
 	// ===================================================================== action
@@ -68,9 +67,11 @@ public class clickChar : MonoBehaviour
 			else{
 				//find corresponding character within shelter
 				arrayIndex = -1;
-				for (int i = 0; i < _shelter._numPeople; i++) {
-					if (this.tag == _shelter._survivors [i].Name) {
-						arrayIndex = i;
+				for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
+					if(_shelter._survivors[i] != null){
+						if (this.tag == _shelter._survivors [i].Name) {
+							arrayIndex = i;
+						}
 					}
 				}
 				if (arrayIndex == -1) {
@@ -82,8 +83,10 @@ public class clickChar : MonoBehaviour
 				float x = pos.x;
 				float y = 1 - pos.y;
 
+				if(arrayIndex >= 0){
 				// send message to ui
 				_ui.charClick (arrayIndex, x, y);
+				}
 			}
 		}
 	}
@@ -98,9 +101,11 @@ public class clickChar : MonoBehaviour
 
 				//find corresponding character within shelter
 				arrayIndex = -1;
-				for (int i = 0; i < _shelter._numPeople; i++) {
-					if (this.tag == _shelter._survivors [i].Name) {
-						arrayIndex = i;
+				for (int i = 0; i < _shelter.NumberOfSurvivors; i++) {
+					if(_shelter._survivors[i] != null){
+						if (this.tag == _shelter._survivors [i].Name) {
+							arrayIndex = i;
+						}
 					}
 				}
 				if (arrayIndex == -1) {
@@ -109,13 +114,14 @@ public class clickChar : MonoBehaviour
 			}
 
 			//Debug.Log (_shelter._survivors[arrayIndex].Name + "   " + day + "  " + _shelter._survivors[arrayIndex]._notify);
-
-			if(_shelter._survivors[arrayIndex]._notify)
-			{
-				alert.renderer.enabled=true;
-			}
-			else{
-				alert.renderer.enabled=false;
+			if (arrayIndex >= 0) {
+				if(_shelter._survivors[arrayIndex]._notify)
+				{
+					alert.renderer.enabled=true;
+				}
+				else{
+					alert.renderer.enabled=false;
+				}
 			}
 			
 		}

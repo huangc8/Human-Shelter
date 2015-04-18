@@ -129,7 +129,7 @@ public class Shelter : MonoBehaviour
 		_defenseLevel = DefenseLevel.Undefended;
 		_survivors = new Survivor[6];
 		_images = new GameObject[6];
-		_evictedSurvivors = new Survivor[100];
+		_evictedSurvivors = new Survivor[10];
 		
 		_storage = new Stores (this);
 		_numSurvivors = 0;
@@ -389,11 +389,7 @@ public class Shelter : MonoBehaviour
 	public void InviteSurvivor (Survivor visitorAtGate)
 	{	
 		// make the last empty spot to be the new survivor
-		if (visitorAtGate.Name == "Brian") {
-			this._survivors [0] = visitorAtGate;	
-		} else {
-			this._survivors [_numSurvivors] = visitorAtGate;
-		}
+		this._survivors [_numSurvivors] = visitorAtGate;
 
 		//show on map
 		visitorAtGate.image.renderer.enabled = true;
@@ -419,8 +415,6 @@ public class Shelter : MonoBehaviour
 	public void RejectSurvivor(Survivor s){
 		_evictedSurvivors [_numEvictedSurvivors] = CopySurvivor (s);
 		_numEvictedSurvivors++;
-		Destroy (s.image); 
-		Destroy (s);
 	}
 
 	// copy the survivor
@@ -434,11 +428,20 @@ public class Shelter : MonoBehaviour
 	// Evicts a survivor.
 	public void EvictSurvivor (Survivor s)
 	{
-		_evictedSurvivors [_numEvictedSurvivors] = CopySurvivor (s);
-		Destroy (s.image); 
+		int sPosition = -1;
+		for (int i = 0; i < _numSurvivors; i++) {
+			if (_survivors [i].Name == s.Name) {
+				sPosition = i;
+				break;
+			}
+		}
+		Destroy (s.image);
 		Destroy (s);
+		_evictedSurvivors [_numEvictedSurvivors] = CopySurvivor (s);
+		_survivors[sPosition] = null;
 		_numEvictedSurvivors++;
 		_numSurvivors--;
+		sortSurvivor ();
 	}
 
 	// slightly wounded a raider
@@ -493,15 +496,49 @@ public class Shelter : MonoBehaviour
 
 		// kill him/her
 		if (sPosition != -1) {
-			Destroy (_survivors [sPosition].image);
-			Destroy (_survivors [sPosition]);
+			Destroy (_survivors[sPosition].image);
+			Destroy (_survivors[sPosition]);
+			_survivors[sPosition] = null;
 			_numSurvivors--;
+			sortSurvivor();
 		} else {
 			Debug.LogError("KillSurvivor: No such Survivor");
 		}
-
 	}
 
+	// fill in the missing survivor gap
+	public void sortSurvivor(){
+		for (int i = 0; i < _numSurvivors; i++) {
+			if(_survivors[i] == null){
+				int next = i+1;
+				while(_survivors[next]==null && next < _numSurvivors){
+					next++;
+				}
+				if(_survivors[next] == null){
+					Debug.LogError("Shelter.cs -> sortSurvivor() -> NOT ENOUGH SURVIVOR.");
+				}else{
+					_survivors[i] = _survivors[next];
+					_survivors[next] = null;
+				}
+			}
+		}
+	}
+
+	/*
+	void Update(){
+		string tmp = "";
+		tmp += _numSurvivors + " ";
+		for (int i = 0; i < 6; i++) {
+			if(_survivors[i] != null){
+				tmp += _survivors[i].Name;
+			}else{
+				tmp += "NULL";
+			}
+			tmp += i;
+		}
+		Debug.Log (tmp);
+	}
+	*/
 	// ================================================================ helper
 	// Refreshes shelter for a new day, sets _defenses to 0
 	public void NewDay ()

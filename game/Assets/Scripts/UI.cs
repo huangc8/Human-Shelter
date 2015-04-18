@@ -286,7 +286,7 @@ public class UI : MonoBehaviour {
 							charButtons = sideButtons = showHelp= false;
 							fading = 1;
 						}
-				}
+				} // end of next day
 
 				GUI.Box (new Rect (w,h, squareSize, smallSquareSize), "Medicine", boxStyle);
 
@@ -565,11 +565,12 @@ public class UI : MonoBehaviour {
 					buttonWidth = Screen.width * .13f;
 
 
-					if(_shelter.NumberOfSurvivors > 0 && index >=0){ //if we have no survivors don't try to do this
+					if(_shelter.NumberOfSurvivors > 0 && index >=0 && _shelter._survivors[index] != null){ //if we have no survivors don't try to do this
 
 						boxStyle.alignment = TextAnchor.UpperCenter;
 						boxStyle.font = bold;
 						GUI.Box (new Rect (w, h, buttonWidth, buttonHeight),_shelter._survivors[index].Name, boxStyle);
+						
 
 						h+= buttonHeight;
 						boxStyle.font = regular;
@@ -803,7 +804,6 @@ public class UI : MonoBehaviour {
 
 			if(sideButtons || charButtons)
 			{
-
 				highlight.renderer.enabled= true;
 			}
 			else
