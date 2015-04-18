@@ -504,8 +504,8 @@ public class Shelter : MonoBehaviour
 		} else {
 			Debug.LogError("KillSurvivor: No such Survivor");
 		}
-
-		/*r.SetMessage(s + " has died.");
+		/*
+		r.SetMessage(s + " has died.");
 		_gametime.addReport(r);
 		// find the survivors position
 		int sPosition = -1;
