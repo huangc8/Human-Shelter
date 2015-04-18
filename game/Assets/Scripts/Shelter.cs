@@ -414,7 +414,9 @@ public class Shelter : MonoBehaviour
 	// reject a survivor at gate
 	public void RejectSurvivor(Survivor s){
 		_evictedSurvivors [_numEvictedSurvivors] = CopySurvivor (s);
+		_visitors._personList [_gametime._currentDay] = null;
 		_numEvictedSurvivors++;
+
 	}
 
 	// copy the survivor
