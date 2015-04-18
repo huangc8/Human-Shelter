@@ -44,6 +44,8 @@ public class StartNewConversation : MonoBehaviour
 		hadConversation ["Conv_7_2"] = false;
 		hadConversation ["Conv_7_3"] = false;
 
+		hadConversation ["Report_1"] = false;
+
 		talked = false;
 	}
 
@@ -249,6 +251,9 @@ public class StartNewConversation : MonoBehaviour
 			break;
 		// --------------------- day 2 -----------------------
 		case 2:
+			if (hadConversation ["Report_1"] == false) {
+				talk ("Report_1", false);
+			}
 			break;
 		// --------------------- day 3 -----------------------
 		case 3:
