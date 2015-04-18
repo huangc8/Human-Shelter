@@ -85,23 +85,25 @@ public class clickChar : MonoBehaviour
 
 	void Update()
 	{
-		if(day != _gametime._currentDay && _ui.fading != 1 && renderer.enabled == true && this.tag != "NewVisitor")
+		if(_ui.fading != 1 && renderer.enabled == true && this.tag != "NewVisitor")
 		{
-			day = _gametime._currentDay;
+			if(day != _gametime._currentDay)
+			{
+				day = _gametime._currentDay;
 
-			//find corresponding character within shelter
-			arrayIndex = -1;
-			for (int i = 0; i < _shelter._numPeople; i++) {
-				if (this.tag == _shelter._survivors [i].Name) {
-					arrayIndex = i;
+				//find corresponding character within shelter
+				arrayIndex = -1;
+				for (int i = 0; i < _shelter._numPeople; i++) {
+					if (this.tag == _shelter._survivors [i].Name) {
+						arrayIndex = i;
+					}
+				}
+				if (arrayIndex == -1) {
+					Debug.Log ("Couldn't find index for " + this.tag + ".  Make sure this this tag is exactly the same as the character's name.");
 				}
 			}
-			if (arrayIndex == -1) {
-				Debug.Log ("Couldn't find index for " + this.tag + ".  Make sure this this tag is exactly the same as the character's name.");
-			}
 
-
-			Debug.Log (_shelter._survivors[arrayIndex].Name + "   " + day + "  " + _shelter._survivors[arrayIndex]._notify);
+			//Debug.Log (_shelter._survivors[arrayIndex].Name + "   " + day + "  " + _shelter._survivors[arrayIndex]._notify);
 
 			if(_shelter._survivors[arrayIndex]._notify)
 			{
