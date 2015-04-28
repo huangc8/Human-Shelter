@@ -485,7 +485,7 @@ public class Shelter : MonoBehaviour
 	public void KillSurvivor (string s)
 	{
 		Report r = new Report();
-		r.SetMessage(s + " has been seriously wounded.");
+		/*r.SetMessage(s + " has been seriously wounded.");
 
 		_gametime.addReport(r);
 		// find the survivors position
@@ -504,7 +504,7 @@ public class Shelter : MonoBehaviour
 		} else {
 			Debug.LogError("KillSurvivor: No such Survivor");
 		}
-		/*
+		*/
 		r.SetMessage(s + " has died.");
 		_gametime.addReport(r);
 		// find the survivors position
@@ -525,7 +525,7 @@ public class Shelter : MonoBehaviour
 			sortSurvivor();
 		} else {
 			Debug.LogError("KillSurvivor: No such Survivor");
-		}*/
+		}
 	}
 
 	// fill in the missing survivor gap
