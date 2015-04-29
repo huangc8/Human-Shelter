@@ -24,8 +24,6 @@ public class Visitor : MonoBehaviour {
 		_images [4] = GameObject.FindWithTag ("Danny");
 		_images [6] = GameObject.FindWithTag ("Bree");
 		_images [7] = GameObject.FindWithTag ("Shane");
-
-
 		
 		//index maps to day of arrival, game starts on day 1
 		_personList = new Survivor[30];

@@ -62,6 +62,12 @@ public class StartNewConversation : MonoBehaviour
 
 		//------------------- Reports --------------------
 		hadConversation ["Report_1"] = false;
+		hadConversation ["Report_2"] = false;
+		hadConversation ["Report_3"] = false;
+		hadConversation ["Report_4"] = false;
+		hadConversation ["Report_5"] = false;
+		hadConversation ["Report_6"] = false;
+		hadConversation ["Report_7"] = false;
 
 		//------------------- Shrug ----------------------
 		hadConversation ["Shrug_Brian"] = true;
