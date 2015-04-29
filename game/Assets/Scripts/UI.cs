@@ -615,7 +615,8 @@ public class UI : MonoBehaviour {
 
 							if(((Survivor.task)t).ToString ()== "Raiding")
 							{
-								if(false)//raid not possible
+
+									if(_shelter.CanRaidShelters())//raid not possible
 								{
 										buttonStyle.hover.background=black;
 										buttonStyle.active.background=black;

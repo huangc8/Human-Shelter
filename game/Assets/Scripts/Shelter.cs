@@ -303,6 +303,11 @@ public class Shelter : MonoBehaviour
 		_storage.LoseHalfResources ();
 	}
 
+	public bool CanRaidShelters ()
+	{
+		return _gameWorld.CanRaidShelters();
+	}
+
 	// increase defense
 	public DefenseLevel BolsterDefenses (int proficiency)
 	{

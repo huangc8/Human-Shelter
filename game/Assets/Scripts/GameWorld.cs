@@ -473,6 +473,16 @@ public class GameWorld : MonoBehaviour
 		}
 	}
 
+	public bool CanRaidShelters ()
+	{
+		foreach (Enemy camp in Enemies) {
+			if(camp.IsUnscouted() == true){
+				return false;
+			}
+		}
+		return true;
+	}
+
 	/// <summary>
 	/// Checks to see whether the lootable target has been completely cleared out
 	/// </summary>
