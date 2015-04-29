@@ -615,7 +615,7 @@ public class UI : MonoBehaviour {
 
 							if(((Survivor.task)t).ToString ()== "Raiding")
 							{
-								if(true)//raid not possible
+								if(false)//raid not possible
 								{
 										buttonStyle.hover.background=black;
 										buttonStyle.active.background=black;
