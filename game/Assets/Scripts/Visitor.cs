@@ -34,8 +34,6 @@ public class Visitor : MonoBehaviour {
 		_personList [4] = CreateSurvivor ("Danny", _images[4]);
 		_personList [6] = CreateSurvivor ("Bree", _images[6]);
 		_personList [7] = CreateSurvivor ("Shane", _images[7]);
-
-
 	}
 
 	// =================================================== survivor function

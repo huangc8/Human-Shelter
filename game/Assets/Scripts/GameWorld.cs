@@ -179,7 +179,9 @@ public class GameWorld : MonoBehaviour
 	// ------------------------------ end of Enemy class ---------------------------------------
 
 	// ========================================================= data
-	
+
+	private int enemyLocatingBonus = 0;
+
 	private const int NUM_SCAVENGE_TARGETS = 3;
 	public int [] scavengedTargets = new int[NUM_SCAVENGE_TARGETS]; //3 chosen - number of enums for scavenging
 
@@ -441,7 +443,7 @@ public class GameWorld : MonoBehaviour
 		Enemy e = new Enemy (_shelter._gametime._currentDay);
 		Enemies.Add (e);
 		
-		Debug.LogError("439, ading a new enemy visibility IsUnscouted():" + e.IsUnscouted());
+		//Debug.LogError("439, ading a new enemy visibility IsUnscouted():" + e.IsUnscouted());
 	}
 
 	/// <summary>
@@ -469,6 +471,16 @@ public class GameWorld : MonoBehaviour
 			_maxResources = 0;
 			return attemptedLooting;
 		}
+	}
+
+	public bool CanRaidShelters ()
+	{
+		foreach (Enemy camp in Enemies) {
+			if(camp.IsUnscouted() == false){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/// <summary>
@@ -551,12 +563,20 @@ public class GameWorld : MonoBehaviour
 	public ArrayList CalculateShelterLocation(){
 		ArrayList reports = new ArrayList ();
 		foreach (Enemy e in Enemies) {
+			int successChance = (totalScoutingPower + Random.Range(5,15) + enemyLocatingBonus) * 2;
 			if (e.IsUnscouted ()) {
-				if (e.Visibility < totalScoutingPower) {
+
+
+				if (e.Visibility < successChance) {
 					//Let us see it
-					
+					enemyLocatingBonus = 0;
 					Report r = e.MakeScoutingProgress (totalScoutingPower);
 					reports.Add (r);
+				}
+				else{
+					enemyLocatingBonus+=5;
+
+					Debug.Log ("SuccessChance: " + successChance + " enemyLocationBonus:" + enemyLocatingBonus + " e.Visibility:" + e.Visibility);
 				}
 			} else {
 
