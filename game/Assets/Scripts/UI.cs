@@ -31,6 +31,7 @@ public class UI : MonoBehaviour {
 	Texture2D box, button1, button2, button3, black;
 	Transform highlight;
 	Transform blackbox;
+	Transform title;
 
 	// ========================================================== initialization
 	// Use this for initialization
@@ -55,6 +56,10 @@ public class UI : MonoBehaviour {
 			if(child.name == "BlackBox")
 			{
 				blackbox = child;
+			}
+			if(child.name == "Title")
+			{
+				title=child;
 			}
 		}
 
@@ -170,12 +175,16 @@ public class UI : MonoBehaviour {
 		if(showAllButtons && _gametime._currentDay > 0)
 		//if(true)
 		{
+			//fade the GUI if in transistion
+			GUI.color = new Color(1,1,1,1-(fade/100f));
+
 			if(fading !=1)
 			{
 
 				//tutorial
 				if(tutorial)
 				{
+					showJournal=false;
 					boxStyle.alignment = TextAnchor.UpperLeft;
 					boxStyle.padding = new RectOffset (15, 5, 15, 10);
 					boxStyle.wordWrap = true;
@@ -183,7 +192,7 @@ public class UI : MonoBehaviour {
 					if(warning ==0)
 					{
 						GUI.Box (new Rect (Screen.width * .25f, Screen.height * .2f, Screen.width * .5f, Screen.height * .55f), 
-						         "Welcome to Human Shelter!  Your goal is to survive.\n\nClick on the characters to speak with them and discover what is going on.\n" +
+						         "Welcome to Human Sickness!  Your goal is to survive.\n\nClick on the characters to speak with them and discover what is going on.\n" +
 						         "Listen carefully to your residents, because knowledge\nof their strengths and history will help you survive.\n\n" +
 						         "Assign each person a job for the day, but be careful: The wrong\nchoices could lead to disaster.\n" +
 						         "Click the Help button for more information on assignments.\n\nThere's someone at the gate!  You should go find out what they want.\n\n" +
@@ -762,10 +771,14 @@ public class UI : MonoBehaviour {
 			if(fading ==1)
 			{
 				fade+=.8f;
+				GUI.color = new Color(1,1,1,1-(fade/100f));
 				if(fade>=100)
 				{
 					fading =2;
 					_gametime.newDay();
+					//hide title screen at start
+					title.renderer.enabled=false;
+
 					//showAllButtons=true;
 				}
 			}
@@ -780,18 +793,23 @@ public class UI : MonoBehaviour {
 
 				}
 			}
-			//GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, fade/100);
-			//GUI.Box(new Rect (0, 0, Screen.width, Screen.height), "", boxStyle);
 			blackbox.renderer.enabled = true;
-			blackbox.renderer.material.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, fade/100);
+			blackbox.renderer.material.color = new Color(1, 1, 1, fade/100);
 		}
 
 		// start screen
 		if (_gametime._currentDay == 0) {
-			// new day button
-			if (GUI.Button (new Rect (Screen.width*.1f, Screen.height*.07f, buttonWidth, buttonHeight),  "New Game", buttonStyle)) {
+			title.renderer.enabled=true;
+			boxStyle.fontSize = (int)(bigFont*1.6f);
+			//title
+			GUI.Box(new Rect (Screen.width*.1f, Screen.height*.05f, buttonWidth*2.3f, buttonHeight*4), "Human Sickness", boxStyle);
 
-				_gametime.newDay();
+			buttonStyle.fontSize = (int)(bigFont*1.3f);
+			// new day button
+			if (GUI.Button (new Rect (Screen.width*.1f, Screen.height*.5f, buttonWidth*1.5f, buttonHeight*3),  "New Game", buttonStyle)) {
+				//_gametime.newDay();
+				fading=1;
+
 			}
 		}
 	}// end of GUI
