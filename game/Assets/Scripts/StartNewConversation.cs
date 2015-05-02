@@ -31,34 +31,46 @@ public class StartNewConversation : MonoBehaviour
 		//-------------------- Day 2----------------------
 		hadConversation ["Conv_2_1"] = false; // Talk to Brian
 		hadConversation ["Conv_2_2"] = false; // Talk to Marina
-		hadConversation ["Conv_2_3"] = false; // David at gate -> invite #15 / reject #16
-		hadConversation ["Chat_2_1"] = false; // Chat David and Marina -> both David and Marina is in the camp
+		hadConversation ["Chat_2_1"] = false; // Chat Brian & Marina 
 
 		//-------------------- Day 3----------------------
 		hadConversation ["Conv_3_1"] = false; // Talk to Brian
-		hadConversation ["Conv_3_2"] = false; // Eric at gate -> invite #9 / reject #10
+		hadConversation ["Conv_3_2"] = false; // David at gate -> invite #15 / reject #16
+		hadConversation ["Chat_3_1"] = false; // Chat Marina & David
 
 		//-------------------- Day 4----------------------
 		hadConversation ["Conv_4_1"] = false; // Talk to Marina
-		hadConversation ["Conv_4_2"] = false; // Danny at gate -> invite # 10 / reject #11
-		hadConversation ["Conv_4_3"] = false; // Talk to David
+		hadConversation ["Conv_4_3"] = false; // Talk to David 
 
 		//-------------------- Day 5----------------------
 		hadConversation ["Conv_5_1"] = false; // Talk to Brian
-		hadConversation ["Conv_5_2"] = false; // Talk to Eric
-		hadConversation ["Chat_5_1"] = false; // Chat David and Marina -> both David and Marina is in the camp
+		hadConversation ["Conv_5_2"] = false; // Eric at gate -> invite #9 / reject #10
+		hadConversation ["Chat_5_1"] = false; // Chat David and Marina
 
 		//-------------------- Day 6----------------------
 		hadConversation ["Conv_6_1"] = false; // Bree at gate -> invite #11 / reject #12
-		hadConversation ["Chat_6_1"] = false; // Chat David and Marina -> both David and Marina is in the camp 
-		hadConversation ["Chat_6_2"] = false; // Chat Eric and Brian -> both Eric and Brian is in the camp 
-
 
 		//-------------------- Day 7----------------------
-		hadConversation ["Conv_7_1"] = false; // Shane at gate
-		hadConversation ["Conv_7_2"] = false; // Talk to Bree
-		hadConversation ["Conv_7_3"] = false; // Talk to Danny
-		hadConversation ["Chat_7_1"] = false; // Chat David and Marina -> both David and Marina is in the camp 
+		hadConversation ["Conv_7_1"] = false; // Talk to Eric
+
+		//-------------------- Day 8----------------------
+		hadConversation ["Conv_8_1"] = false; // Talk to Bree
+
+
+		//-------------------- Day 9----------------------
+		hadConversation ["Chat_9_1"] = false; // Chat Eric & Brian
+		//-------------------- Day 10---------------------
+		hadConversation ["Chat_10_1"] = false; // Chat Marina & David
+
+		//-------------------- Day 11---------------------
+		hadConversation ["Conv_11_1"] = false; // Danny at gate -> invite #10 / reject #11
+		hadConversation ["Conv_11_2"] = false; // Talk to Bree
+		//-------------------- Day 12---------------------
+		hadConversation ["Conv_12_1"] = false; // Shane at gate -> invite #16 / reject #17
+		//-------------------- Day 13---------------------
+		hadConversation ["Chat_13_1"] = false; // Chat Brian & Bree 
+		//-------------------- Day 14---------------------
+		hadConversation ["Chat_14_1"] = false; // Chat David & Marina 
 
 		//------------------- Reports --------------------
 		hadConversation ["Report_1"] = false;
@@ -68,6 +80,13 @@ public class StartNewConversation : MonoBehaviour
 		hadConversation ["Report_5"] = false;
 		hadConversation ["Report_6"] = false;
 		hadConversation ["Report_7"] = false;
+		hadConversation ["Report_8"] = false;
+		hadConversation ["Report_9"] = false;
+		hadConversation ["Report_10"] = false;
+		hadConversation ["Report_11"] = false;
+		hadConversation ["Report_12"] = false;
+		hadConversation ["Report_13"] = false;
+		hadConversation ["Report_14"] = false;
 
 		//------------------- Shrug ----------------------
 		hadConversation ["Shrug_Brian"] = true;
@@ -109,26 +128,26 @@ public class StartNewConversation : MonoBehaviour
 			break;
 		// --------------------- day 2 -----------------------
 		case 2:
+			if(hadConversation ["Chat_2_1"] == false && (name == "Marina" || name == "Brian") && ChatCheck ("Chat_2_1")){
+				talk("Chat_2_1", false);
+				break;
+			}
+
 			if (hadConversation ["Conv_2_1"] == false && name == "Brian") {
 				talk ("Conv_2_1", false);
 			}
 			
 			if (hadConversation ["Conv_2_2"] == false && name == "Marina") {
 				talk ("Conv_2_2", false);
-				break;
-			}
-
-			if(hadConversation ["Conv_2_3"] == false && name == "gate"){
-				talk("Conv_2_3", true);
-			}
-
-			if(hadConversation ["Chat_2_1"] == false && name == "Marina" && ChatCheck ("Chat_2_1")){
-				talk("Chat_2_1", false);
-				break;
 			}
 			break;
 		// --------------------- day 3 -----------------------
 		case 3:
+			if(hadConversation ["Chat_3_1"] == false && (name == "Marina" || name == "David") && ChatCheck ("Chat_3_1")){
+				talk("Chat_3_1", false);
+				break;
+			}
+
 			if (hadConversation ["Conv_3_1"] == false && name == "Brian") {
 				talk ("Conv_3_1", false);
 			}
@@ -158,11 +177,11 @@ public class StartNewConversation : MonoBehaviour
 				talk ("Conv_5_1", false);
 			}
 
-			if (hadConversation ["Conv_5_2"] == false && name == "Eric") {
-				talk ("Conv_5_2", false);
+			if (hadConversation ["Conv_5_2"] == false && name == "gate") {
+				talk ("Conv_5_2", true);
 			}
 
-			if(hadConversation ["Chat_5_1"] == false && name == "Marina" && ChatCheck("Chat_5_1")){
+			if(hadConversation ["Chat_5_1"] == false && (name == "Marina" || name == "David") && ChatCheck("Chat_5_1")){
 				talk ("Chat_5_1", false);
 			}
 			break;
@@ -171,26 +190,59 @@ public class StartNewConversation : MonoBehaviour
 			if (hadConversation ["Conv_6_1"] == false && name == "gate") {
 				talk ("Conv_6_1", true);
 			}
-			if(hadConversation ["Chat_6_1"] == false && name == "Marina" && ChatCheck("Chat_6_1")){
-				talk ("Chat_6_1", false);
-			}
-			if(hadConversation ["Chat_6_2"] == false && name == "Eric" && ChatCheck("Chat_6_2")){
-				talk ("Chat_6_2", false);
-			}
 			break;
 		// --------------------- day 7 -----------------------
 		case 7:
-			if (hadConversation ["Conv_7_1"] == false && name == "gate") {
-				talk ("Conv_7_1", true);
+			if (hadConversation ["Conv_7_1"] == false && name == "Eric") {
+				talk ("Conv_7_1", false);
 			}
-			if (hadConversation ["Conv_7_2"] == false && name == "Bree") {
-				talk ("Conv_7_2", false);
+			break;
+		// --------------------- day 8 -----------------------
+		case 8:
+			if (hadConversation ["Conv_8_1"] == false && name == "Bree") {
+				talk ("Conv_8_1", false);
 			}
-			if (hadConversation ["Conv_7_3"] == false && name == "Danny") {
-				talk ("Conv_7_3", false);
+			break;
+		// --------------------- day 9 -----------------------
+		case 9:
+			if(hadConversation ["Chat_9_1"] == false && (name == "Brian" || name == "Eric") && ChatCheck("Chat_9_1")){
+				talk ("Chat_9_1", false);
 			}
-			if(hadConversation ["Chat_7_1"] == false && name == "Marina" && ChatCheck("Chat_7_1")){
-				talk ("Chat_7_1", false);
+			break;
+		// --------------------- day 10 -----------------------
+		case 10:
+			if(hadConversation ["Chat_10_1"] == false && (name == "Marina" || name == "David") && ChatCheck("Chat_10_1")){
+				talk ("Chat_10_1", false);
+			}
+			break;
+		// --------------------- day 11 -----------------------
+		case 11:
+			if (hadConversation ["Conv_11_1"] == false && name == "gate") {
+				talk ("Conv_11_1", true);
+			}
+			if (hadConversation ["Conv_11_2"] == false && name == "Bree") {
+				talk ("Conv_11_2", false);
+			}
+			break;
+		// --------------------- day 12 -----------------------
+		case 12:
+			if (hadConversation ["Conv_12_1"] == false && name == "gate") {
+				talk ("Conv_12_1", true);
+			}
+			break;
+		// --------------------- day 13 -----------------------
+		case 13:
+			if(hadConversation ["Chat_13_1"] == false && (name == "Bree" || name == "Brian") && ChatCheck("Chat_13_1")){
+				talk ("Chat_13_1", false);
+			}
+			break;
+		// --------------------- day 14 -----------------------
+		case 14:
+			if (hadConversation ["Conv_14_1"] == false && name == "Danny") {
+				talk ("Conv_14_1", false);
+			}
+			if(hadConversation ["Chat_14_1"] == false && (name == "Marina" || name == "David") && ChatCheck("Chat_14_1")){
+				talk ("Chat_14_1", false);
 			}
 			break;
 		}// end of switch
@@ -242,12 +294,12 @@ public class StartNewConversation : MonoBehaviour
 			if (hadConversation ["Conv_2_1"] == false && name == "Brian") {
 				return true;
 			}
-			
+		
 			if (hadConversation ["Conv_2_2"] == false && name == "Marina") {
 				return true;
 			}
-					
-			if(hadConversation ["Chat_2_1"] == false && name == "Marina" && ChatCheck ("Chat_2_1")){
+			
+			if(hadConversation ["Chat_2_1"] == false && (name == "Marina" || name == "Brian") && ChatCheck ("Chat_2_1")){
 				return true;
 			}
 			break;
@@ -256,12 +308,17 @@ public class StartNewConversation : MonoBehaviour
 			if (hadConversation ["Conv_3_1"] == false && name == "Brian") {
 				return true;
 			}
+			
+			if(hadConversation ["Chat_3_1"] == false && (name == "Marina" || name == "David") && ChatCheck ("Chat_3_1")){
+				return true;
+			}
 			break;
 			// --------------------- day 4 -----------------------
 		case 4:
 			if (hadConversation ["Conv_4_1"] == false && name == "Marina") {
 				return true;
-			}			
+			}
+			
 			if(hadConversation ["Conv_4_3"] == false && name == "David"){
 				return true;
 			}
@@ -272,32 +329,61 @@ public class StartNewConversation : MonoBehaviour
 				return true;
 			}
 			
-			if (hadConversation ["Conv_5_2"] == false && name == "Eric") {
-				return true;
-			}
-			
-			if(hadConversation ["Chat_5_1"] == false && name == "Marina" && ChatCheck("Chat_5_1")){
+			if(hadConversation ["Chat_5_1"] == false && (name == "Marina" || name == "David") && ChatCheck("Chat_5_1")){
 				return true;
 			}
 			break;
 			// --------------------- day 6 -----------------------
 		case 6:
-			if(hadConversation ["Chat_6_1"] == false && name == "Marina" && ChatCheck("Chat_6_1")){
-				return true;
-			}
-			if(hadConversation ["Chat_6_2"] == false && name == "Eric" && ChatCheck("Chat_6_2")){
+			if (hadConversation ["Conv_6_1"] == false && name == "gate") {
 				return true;
 			}
 			break;
 			// --------------------- day 7 -----------------------
 		case 7:
-			if (hadConversation ["Conv_7_2"] == false && name == "Bree") {
+			if (hadConversation ["Conv_7_1"] == false && name == "Eric") {
 				return true;
 			}
-			if (hadConversation ["Conv_7_3"] == false && name == "Danny") {
+			break;
+			// --------------------- day 8 -----------------------
+		case 8:
+			if (hadConversation ["Conv_8_1"] == false && name == "Bree") {
 				return true;
 			}
-			if(hadConversation ["Chat_7_1"] == false && name == "Marina" && ChatCheck("Chat_7_1")){
+			break;
+			// --------------------- day 9 -----------------------
+		case 9:
+			if(hadConversation ["Chat_9_1"] == false && (name == "Brian" || name == "Eric") && ChatCheck("Chat_9_1")){
+				return true;
+			}
+			break;
+			// --------------------- day 10 -----------------------
+		case 10:
+			if(hadConversation ["Chat_10_1"] == false && (name == "Marina" || name == "David") && ChatCheck("Chat_10_1")){
+				return true;
+			}
+			break;
+			// --------------------- day 11 -----------------------
+		case 11:
+			if (hadConversation ["Conv_11_2"] == false && name == "Bree") {
+				return true;
+			}
+			break;
+			// --------------------- day 12 -----------------------
+		case 12:
+			break;
+			// --------------------- day 13 -----------------------
+		case 13:
+			if(hadConversation ["Chat_13_1"] == false && (name == "Bree" || name == "Brian") && ChatCheck("Chat_13_1")){
+				return true;
+			}
+			break;
+			// --------------------- day 14 -----------------------
+		case 14:
+			if (hadConversation ["Conv_14_1"] == false && name == "Danny") {
+				return true;
+			}
+			if(hadConversation ["Chat_14_1"] == false && (name == "Marina" || name == "David") && ChatCheck("Chat_14_1")){
 				return true;
 			}
 			break;
@@ -315,6 +401,43 @@ public class StartNewConversation : MonoBehaviour
 					return true;
 				}
 			break;
+
+			case "Chat_3_1":
+				if(_cond.getCondition("inCamp", "Marina") && _cond.getCondition("inCamp", "David")){
+					return true;
+				}
+			break;
+
+			case "Chat_5_1":
+				if(_cond.getCondition("inCamp", "Marina") && _cond.getCondition("inCamp", "David")){
+					return true;
+				}
+			break;
+
+			case "Chat_9_1":
+				if(_cond.getCondition("inCamp", "Eric") && _cond.getCondition("inCamp", "Brian")){
+					return true;
+				}
+			break;
+		
+			case "Chat_10_1":
+				if(_cond.getCondition("inCamp", "Marina") && _cond.getCondition("inCamp", "David")){
+					return true;
+				}
+			break;
+
+			case "Chat_13_1":
+				if(_cond.getCondition("inCamp", "Brian") && _cond.getCondition("inCamp", "Bree")){
+					return true;
+				}
+			break;
+
+			case "Chat_14_1":
+				if(_cond.getCondition("inCamp", "Marina") && _cond.getCondition("inCamp", "David")){
+					return true;
+				}
+			break;
+
 		}// end of switch
 
 		return false;
@@ -375,12 +498,55 @@ public class StartNewConversation : MonoBehaviour
 				talk ("Report_6", false);
 			}
 			break;
+		// --------------------- day 8 -----------------------
 		case 8:
 			if (hadConversation ["Report_7"] == false) {
 				talk ("Report_7", false);
 			}
 			break;
-		}
+		// --------------------- day 9 -----------------------
+		case 9:
+			if (hadConversation ["Report_8"] == false) {
+				talk ("Report_8", false);
+			}
+			break;
+		// --------------------- day 10 -----------------------
+		case 10:
+			if (hadConversation ["Report_9"] == false) {
+				talk ("Report_9", false);
+			}
+			break;
+		// --------------------- day 11 -----------------------
+		case 11:
+			if (hadConversation ["Report_10"] == false) {
+				talk ("Report_10", false);
+			}
+			break;
+		// --------------------- day 12 -----------------------
+		case 12:
+			if (hadConversation ["Report_11"] == false) {
+				talk ("Report_11", false);
+			}
+			break;
+		// --------------------- day 13 -----------------------
+		case 13:
+			if (hadConversation ["Report_12"] == false) {
+				talk ("Report_12", false);
+			}
+			break;
+		// --------------------- day 14 -----------------------
+		case 14:
+			if (hadConversation ["Report_13"] == false) {
+				talk ("Report_13", false);
+			}
+			break;
+		// --------------------- day 15 -----------------------
+		case 15:
+			if (hadConversation ["Report_14"] == false) {
+				talk ("Report_14", false);
+			}
+			break;
+		} // end of switch
 	}
 
 	// check for special case 

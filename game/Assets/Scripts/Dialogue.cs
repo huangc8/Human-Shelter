@@ -57,26 +57,17 @@ public class Dialogue : MonoBehaviour
 		// --------------------- day 2 -----------------------
 		case 2:
 			switch (choiceID) {
-			case 15: // **************invite David***************
-				visitorAtGate = _visitor._personList [2];
-				_shelter.InviteSurvivor (visitorAtGate);
-				break;
-			case 16: // **************decline David***************
-				visitorAtGate = _visitor._personList [2];
-				_shelter.RejectSurvivor (visitorAtGate);
-				break;
 			}
 			break;
-
 		// --------------------- day 3 -----------------------
 		case 3:
 			switch (choiceID) {
-			case 9: // **************invite Eric**************
-				visitorAtGate = _visitor._personList [3];
+			case 15: // **************invite David***************
+				visitorAtGate = _visitor._personList [_shelter._gametime._currentDay];
 				_shelter.InviteSurvivor (visitorAtGate);
 				break;
-			case 10: // ************* reject Eric
-				visitorAtGate = _visitor._personList [3];
+			case 16: // **************decline David***************
+				visitorAtGate = _visitor._personList [_shelter._gametime._currentDay];
 				_shelter.RejectSurvivor (visitorAtGate);
 				break;
 			}
@@ -84,30 +75,30 @@ public class Dialogue : MonoBehaviour
 		// --------------------- day 4 -----------------------
 		case 4:
 			switch (choiceID) {
-			case 10: //************* invite Danny
-				visitorAtGate = _visitor._personList [4];
-				_shelter.InviteSurvivor (visitorAtGate);
-				break;
-			case 11://************* decline Danny	
-				visitorAtGate = _visitor._personList [4];
-				_shelter.RejectSurvivor (visitorAtGate);
-				break;
 			}
 			break;
 		// --------------------- day 5 -----------------------
 		case 5:
 			switch (choiceID) {
+			case 9: // **************invite Eric**************
+				visitorAtGate = _visitor._personList [_shelter._gametime._currentDay];
+				_shelter.InviteSurvivor (visitorAtGate);
+				break;
+			case 10: // ************* reject Eric
+				visitorAtGate = _visitor._personList [_shelter._gametime._currentDay];
+				_shelter.RejectSurvivor (visitorAtGate);
+				break;
 			}
 			break;
 		// --------------------- day 6 -----------------------
 		case 6:
 			switch (choiceID) {
 			case 11: //************** invite Bree
-				visitorAtGate = _visitor._personList [6];
+				visitorAtGate = _visitor._personList [_shelter._gametime._currentDay];
 				_shelter.InviteSurvivor (visitorAtGate);
 				break;
 			case 12: //****************** decline Bree
-				visitorAtGate = _visitor._personList [6];
+				visitorAtGate = _visitor._personList [_shelter._gametime._currentDay];
 				_shelter.RejectSurvivor (visitorAtGate);
 				break;
 			}
@@ -115,14 +106,57 @@ public class Dialogue : MonoBehaviour
 		// --------------------- day 7 -----------------------
 		case 7:
 			switch (choiceID) {
+			}
+			break;
+		// --------------------- day 8 -----------------------
+		case 8:
+			switch (choiceID) {
+			}
+			break;
+		// --------------------- day 9 -----------------------
+		case 9:
+			switch (choiceID) {
+			}
+			break;
+		// --------------------- day 10 -----------------------
+		case 10:
+			switch (choiceID) {
+			}
+			break;
+		// --------------------- day 11 -----------------------
+		case 11:
+			switch (choiceID) {
+			case 10: //************* invite Danny
+				visitorAtGate = _visitor._personList [_shelter._gametime._currentDay];
+				_shelter.InviteSurvivor (visitorAtGate);
+				break;
+			case 11://************* decline Danny	
+				visitorAtGate = _visitor._personList [_shelter._gametime._currentDay];
+				_shelter.RejectSurvivor (visitorAtGate);
+				break;
+			}
+			break;
+		// --------------------- day 12 -----------------------
+		case 12:
+			switch (choiceID) {
 			case 16: //****************** invite Shane
-				visitorAtGate = _visitor._personList [7];
+				visitorAtGate = _visitor._personList [_shelter._gametime._currentDay];
 				_shelter.InviteSurvivor (visitorAtGate);
 				break;
 			case 17: //****************** Evict Shane
-				visitorAtGate = _visitor._personList [7];
+				visitorAtGate = _visitor._personList [_shelter._gametime._currentDay];
 				_shelter.RejectSurvivor (visitorAtGate);
 				break;
+			}
+			break;
+		// --------------------- day 13 -----------------------
+		case 13:
+			switch (choiceID) {
+			}
+			break;
+		// --------------------- day 14 -----------------------
+		case 14:
+			switch (choiceID) {
 			}
 			break;
 		} // end of swtich
