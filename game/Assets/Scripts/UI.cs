@@ -12,6 +12,7 @@ public class UI : MonoBehaviour {
 	StartNewConversation _startNewConversation;
 	ReportHandler _reports;
 	private Conditions _Cond; 												// conditions
+	NewDayAnim _newdayanim;
 
 
 	//these are needed for showing and hiding buttons
@@ -50,6 +51,7 @@ public class UI : MonoBehaviour {
 			_reports = g.GetComponent<ReportHandler> ();
 		}
 		_Cond = g.GetComponent<Conditions>();
+		_newdayanim = g.GetComponent<NewDayAnim> ();
 
 		foreach(Transform child in g.transform)
 		{
@@ -73,7 +75,6 @@ public class UI : MonoBehaviour {
 		animateSide = 500;
 		fade = 0;
 		fading = 0;
-
 
 
 		boxStyle = new GUIStyle ("box");
@@ -262,6 +263,7 @@ public class UI : MonoBehaviour {
 				if (GUI.Button (new Rect (Screen.width*.9f, h*1.15f, squareSize, squareSize/3),  "Next Day", buttonStyle)) {
 						//see if anyone is unassigned
 						bool unass = false;
+
 						for(int i =0; i< _shelter.NumberOfSurvivors; i++)
 						{
 							if(_shelter._survivors[i].AssignedTask == Survivor.task.Unassigned)
@@ -290,9 +292,10 @@ public class UI : MonoBehaviour {
 						else
 						{
 							_reports.showReports = false;
-							//showJournal=true;
-							//showButtons=true;
 							charButtons = sideButtons = showHelp= false;
+							//run animations
+							StartCoroutine( _newdayanim.run(_shelter._survivors, _shelter.NumberOfSurvivors));
+
 							fading = 1;
 						}
 				} // end of next day
@@ -429,7 +432,7 @@ public class UI : MonoBehaviour {
 				}
 
 
-				if(showJournal)
+				if(showJournal && _gametime._currentDay>1)
 					{
 						if(fading !=1)
 						{
@@ -768,18 +771,22 @@ public class UI : MonoBehaviour {
 			boxStyle.active.background=black;
 			boxStyle.hover.background=black;
 
-			if(fading ==1)
+			if(fading ==1 && !_newdayanim.running)
 			{
 				fade+=.8f;
 				GUI.color = new Color(1,1,1,1-(fade/100f));
 				if(fade>=100)
 				{
 					fading =2;
+					//return everyone to camp, visually
+					for(int i =0; i<_shelter.NumberOfSurvivors; i++)
+					{
+						_shelter._survivors[i].image.renderer.enabled = true;
+					}
+
 					_gametime.newDay();
 					//hide title screen at start
 					title.renderer.enabled=false;
-
-					//showAllButtons=true;
 				}
 			}
 			if(fading ==2 && !_diag._DiagCon.IsConversationActive)
