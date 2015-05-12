@@ -21,7 +21,7 @@ public class UI : MonoBehaviour {
 	private bool charButtons, sideButtons, showButtons, showJournal, showHelp;
 	private float x, y, animateSide;
 	private int index;
-	public bool tutorial;
+	public bool tutorial, credits;
 	int warning;
 	float fade;
 	public int fading;
@@ -75,6 +75,7 @@ public class UI : MonoBehaviour {
 		animateSide = 500;
 		fade = 0;
 		fading = 0;
+		credits = false;
 
 
 		boxStyle = new GUIStyle ("box");
@@ -173,8 +174,30 @@ public class UI : MonoBehaviour {
 		float squareSize = Screen.width * .07f;
 		float smallSquareSize = squareSize / 3;
 
+		if(credits)
+		{
+			boxStyle.wordWrap = true;
+			boxStyle.alignment = TextAnchor.UpperCenter;
+			boxStyle.padding = new RectOffset (15, 5, 15, 10);
+			boxStyle.fontSize = (int)(smallFont*1f);;
+			GUI.Box (new Rect (Screen.width * .05f, Screen.height * .05f, Screen.width * .4f, Screen.height * .9f), 
+			         "Credits:\n\n" +
+			         "Technical Writer:\nDamian Cross\n\n" +
+			         "Specialized Artist:\nChristian Gonzalez\n\n" +
+			         "Sound Design:\nGavin Gundler\n\n" +
+			         "Programming, User Interface:\nCaleb Hoffman\n\n" +
+			         "Programming, Dialogue:\nChi-Ning Huang\n\n" +
+			         "User Interface Design:\nBen Keel\n\n" +
+			         "Storyboard Artist:\nSky Kim\n\n" +
+			         "Project Manager:\nJon Ota\n\n" +
+			         "Programming, Mechcanics:\nWilliam Pheloung"
+			         , boxStyle);
+			if (GUI.Button (new Rect (Screen.width*.15f, Screen.height *.9f, buttonWidth, buttonHeight),  "Return to Menu", buttonStyle)) {
+				credits = false;
+			}
+		}
+
 		if(showAllButtons && _gametime._currentDay > 0)
-		//if(true)
 		{
 			//fade the GUI if in transistion
 			GUI.color = new Color(1,1,1,1-(fade/100f));
@@ -805,18 +828,29 @@ public class UI : MonoBehaviour {
 		}
 
 		// start screen
-		if (_gametime._currentDay == 0) {
+		if (_gametime._currentDay == 0 && !credits) {
 			title.renderer.enabled=true;
-			boxStyle.fontSize = (int)(bigFont*1.6f);
+			boxStyle.fontSize = (int)(bigFont*1.9f);
+			boxStyle.alignment = TextAnchor.MiddleLeft;
 			//title
-			GUI.Box(new Rect (Screen.width*.1f, Screen.height*.05f, buttonWidth*2.3f, buttonHeight*4), "Human Sickness", boxStyle);
+			GUI.Box(new Rect (Screen.width*.1f, Screen.height*.06f, buttonWidth*5f, buttonHeight*4), "Human Sickness", boxStyle);
 
-			buttonStyle.fontSize = (int)(bigFont*1.3f);
+			boxStyle.fontSize = (int)(bigFont*1.3f);
+			boxStyle.hover.textColor = Color.gray;
+			boxStyle.active.textColor = new Color(.3f,.3f,.3f);
+
 			// new day button
-			if (GUI.Button (new Rect (Screen.width*.1f, Screen.height*.5f, buttonWidth*1.5f, buttonHeight*3),  "New Game", buttonStyle)) {
-				//_gametime.newDay();
+			if (GUI.Button (new Rect (Screen.width*.1f, Screen.height*.5f, buttonWidth*1.5f, buttonHeight*3),  "New Game", boxStyle)) {
 				fading=1;
 
+			}
+			if (GUI.Button (new Rect (Screen.width*.1f, Screen.height*.6f, buttonWidth*1.5f, buttonHeight*3),  "Credits", boxStyle)) {
+				credits = true;
+				
+			}
+			if (GUI.Button (new Rect (Screen.width*.1f, Screen.height*.7f, buttonWidth*1.5f, buttonHeight*3),  "Quit", boxStyle)) {
+				Application.Quit();
+				
 			}
 		}
 	}// end of GUI
