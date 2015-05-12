@@ -182,7 +182,7 @@ public class UI : MonoBehaviour {
 			boxStyle.fontSize = (int)(smallFont*1f);;
 			GUI.Box (new Rect (Screen.width * .05f, Screen.height * .05f, Screen.width * .4f, Screen.height * .9f), 
 			         "Credits:\n\n" +
-			         "Technical Writer:\nDamian Cross\n\n" +
+			         "Writer:\nDamian Cross\n\n" +
 			         "Specialized Artist:\nChristian Gonzalez\n\n" +
 			         "Sound Design:\nGavin Gundler\n\n" +
 			         "Programming, User Interface:\nCaleb Hoffman\n\n" +
