@@ -50,14 +50,10 @@ public class NewDayAnim : MonoBehaviour {
 			}
 			else
 			{
-				s[i].image.renderer.enabled=false;
+				//s[i].image.renderer.enabled=false;
 			}
 
-
-			if(image != null)
-			{
-				StartCoroutine(charAnim(s[i], image));
-			}
+			StartCoroutine(charAnim(s[i], image));
 
 			yield return new WaitForSeconds(1f);
 
@@ -68,22 +64,36 @@ public class NewDayAnim : MonoBehaviour {
 
 	IEnumerator charAnim(Survivor s, Sprite image)
 	{
-		GameObject icon = new GameObject("Icon");
-		SpriteRenderer render = icon.AddComponent<SpriteRenderer> ();
-		render.sprite = image;
-		icon.transform.position = new Vector3 (s.image.transform.position.x, s.image.transform.position.y+1f, s.image.transform.position.z);
-		icon.transform.localScale = new Vector3 (.5f, .5f);
 
-		for(int i = 0; i< 50; i++)
+		if(image != null)
 		{
-			icon.transform.position = new Vector3(icon.transform.position.x, icon.transform.position.y+.02f, s.image.transform.position.z);
-			if(i>25)
+			GameObject icon = new GameObject("Icon");
+			SpriteRenderer render = icon.AddComponent<SpriteRenderer> ();
+			render.sprite = image;
+			icon.transform.position = new Vector3 (s.image.transform.position.x, s.image.transform.position.y+1f, s.image.transform.position.z);
+			icon.transform.localScale = new Vector3 (.5f, .5f);
+
+			for(int i = 0; i< 50; i++)
 			{
-				render.color = new Color(1,1,1,render.color.a-.08f);
+				icon.transform.position = new Vector3(icon.transform.position.x, icon.transform.position.y+.02f, s.image.transform.position.z);
+				if(i>25)
+				{
+					render.color = new Color(1,1,1,render.color.a-.08f);
+				}
+				yield return null;
 			}
-			yield return null;
+			Destroy (icon);
 		}
-		Destroy (icon);
+		else
+		{
+			while(s.image.renderer.material.color.a >0)
+			{
+				s.image.renderer.material.color = new Color(1,1,1,s.image.renderer.material.color.a-.1f);
+				yield return null;
+			}
+			s.image.renderer.enabled=false;
+			s.image.renderer.material.color = new Color(1,1,1,1);
+		}
 	}
 
 	// Update is called once per frame
