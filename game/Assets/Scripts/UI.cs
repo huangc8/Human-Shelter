@@ -195,7 +195,7 @@ public class UI : MonoBehaviour {
 						GUI.Box (new Rect (Screen.width * .25f, Screen.height * .2f, Screen.width * .5f, Screen.height * .55f), 
 						         "Welcome to Human Sickness!  Your goal is to survive.\n\nClick on the characters to speak with them and discover what is going on.\n" +
 						         "Listen carefully to your residents, because knowledge\nof their strengths and history will help you survive.\n\n" +
-						         "Assign each person a job for the day, but be careful: The wrong\nchoices could lead to disaster.\n" +
+						         "Assign each person a job for the day, but be careful: The wrong\nchoices could lead to disaster.\n\n" +
 						         "Click the Help button for more information on assignments.\n\nThere's someone at the gate!  You should go find out what they want.\n\n" +
 						         "Good luck!"
 						         , boxStyle);

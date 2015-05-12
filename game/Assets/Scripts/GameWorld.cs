@@ -33,7 +33,7 @@ public class GameWorld : MonoBehaviour
 		public Report MakeScoutingProgress (int proficiency)
 		{
 
-			Debug.Log ("36: Making scouting progress, proficiency:" + proficiency);
+			//Debug.Log ("36: Making scouting progress, proficiency:" + proficiency);
 			Report r = new Report();
 			if(_scoutedProgress != ScoutingProgress.exactLocation){
 				if(proficiency > 20){
@@ -73,13 +73,13 @@ public class GameWorld : MonoBehaviour
 					r.SetMessage("Your scouts have pinpointed the exact location of the enemy camp.");
 					break;
 				default:
-					Debug.LogError("ERROR in Gameworld, _scoutedProgress is not a valid enum.");
+					//Debug.LogError("ERROR in Gameworld, _scoutedProgress is not a valid enum.");
 					break;
 				}
 			}
 
 			
-			Debug.LogError ("Scouting progress has been made. Scouting progress is now: " + _scoutedProgress.ToString());
+			//Debug.LogError ("Scouting progress has been made. Scouting progress is now: " + _scoutedProgress.ToString());
 			return r;
 		}
 
@@ -424,11 +424,11 @@ public class GameWorld : MonoBehaviour
 			
 		}
 		//print out the contents of reports
-		Debug.Log("Printing Reports in GameWorld.NewDay():");
+		//Debug.Log("Printing Reports in GameWorld.NewDay():");
 
 
 		foreach(Report itRep in reports){
-			Debug.Log("itRep:" + itRep.GetMessage());
+			//Debug.Log("itRep:" + itRep.GetMessage());
 		}
 		
 		return reports;
@@ -576,7 +576,7 @@ public class GameWorld : MonoBehaviour
 				else{
 					enemyLocatingBonus+=5;
 
-					Debug.Log ("SuccessChance: " + successChance + " enemyLocationBonus:" + enemyLocatingBonus + " e.Visibility:" + e.Visibility);
+					//Debug.Log ("SuccessChance: " + successChance + " enemyLocationBonus:" + enemyLocatingBonus + " e.Visibility:" + e.Visibility);
 				}
 			} else {
 

@@ -14,7 +14,7 @@ public class Report : ScriptableObject
 	{
 		isInitialized = true;
 		_message = message;
-		Debug.LogWarning ("Message has been set to:" + _message);
+		//Debug.LogWarning ("Message has been set to:" + _message);
 	}
 
 	public void AddWoundMessage (Survivor.wound sustainedWound)
@@ -23,7 +23,7 @@ public class Report : ScriptableObject
 	}
 
 	public void PrintReport(int i){
-		Debug.Log ("Report [" + i + "]: " + _message);
+		//Debug.Log ("Report [" + i + "]: " + _message);
 	}
 
 	public bool IsInitialized(){
@@ -40,6 +40,6 @@ public class Report : ScriptableObject
 
 	public void Log ()
 	{
-		Debug.Log (_message);
+		//Debug.Log (_message);
 	}
 }

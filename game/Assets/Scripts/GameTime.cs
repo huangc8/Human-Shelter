@@ -112,7 +112,7 @@ public class GameTime : MonoBehaviour
 
 				Report rTmp = _shelter._survivors [s].Rest (_shelter);
 
-				Debug.Log ("rTmp Message:" + rTmp.GetMessage());
+				//Debug.Log ("rTmp Message:" + rTmp.GetMessage());
 
 				_reports.Add (rTmp);
 				break;
