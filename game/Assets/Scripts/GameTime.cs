@@ -116,14 +116,14 @@ public class GameTime : MonoBehaviour
 
 				_reports.Add (rTmp);
 				break;
-			}
+			} // end of switch
 
-			// increase survivor status
-
-
-			_shelter._survivors [s].Exhaust ();
-			_reports.Add(_shelter._survivors [s].Eat (_shelter));
-			_shelter._survivors [s].ConsumeMedicine (_shelter);
+			if(_shelter._survivors [s] != null){
+				// increase survivor status
+				_shelter._survivors [s].Exhaust ();
+				_reports.Add(_shelter._survivors [s].Eat (_shelter));
+				_shelter._survivors [s].ConsumeMedicine (_shelter);
+			}					
 		}
 
 		
@@ -166,12 +166,7 @@ public class GameTime : MonoBehaviour
 
 	// check if game win
 	private bool GameWon(){
-#if ThirtyDays
-		//check for the time and check for the number of required parts (luxuries)
-		return (_currentDay >= 30 && _shelter.HasSufficentParts());
-#else
-		return (_currentDay >= 7 && _shelter.Parts > 200);
-#endif
+		return (_shelter.Parts > 200);
 	}
 
 	// check if game lose
