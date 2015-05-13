@@ -190,7 +190,7 @@ public class UI : MonoBehaviour {
 			         "User Interface Design:\nBen Keel\n\n" +
 			         "Storyboard Artist:\nSky Kim\n\n" +
 			         "Project Manager:\nJon Ota\n\n" +
-			         "Programming, Mechcanics:\nWilliam Pheloung"
+			         "Programming, Mechanics:\nWilliam Pheloung"
 			         , boxStyle);
 			if (GUI.Button (new Rect (Screen.width*.15f, Screen.height *.9f, buttonWidth, buttonHeight),  "Return to Menu", buttonStyle)) {
 				credits = false;
