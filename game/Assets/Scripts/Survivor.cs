@@ -216,8 +216,12 @@ public class Survivor : ScriptableObject
 			_starvation = hunger.Content;
 
 		}
-
 		return null;
+		/*if (_starvation == hunger.Famished || _starvation == hunger.Starving) {
+			return r;
+		} else {
+			return null;
+		}*/
     }
 
     // Consumes medicine.

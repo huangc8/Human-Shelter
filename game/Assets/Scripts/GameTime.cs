@@ -139,6 +139,9 @@ public class GameTime : MonoBehaviour
 			_reports.Add (r);
 		}
 		
+		// player update
+		_shelter.playerEat ();
+
 		_reports.Add(_shelter.GetEatingReport());
 		_reports.Add (_shelter.GetMedicineConsumptionReport());
 
@@ -160,8 +163,6 @@ public class GameTime : MonoBehaviour
 		// reset report
 		//_reports = new List<Report> ();
 
-		// player update
-		_shelter.playerEat ();
 	}
 
 	// check if game win

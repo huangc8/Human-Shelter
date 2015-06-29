@@ -277,7 +277,7 @@ public class Shelter : MonoBehaviour
 		
 
 		_storage.Food = _storage.Food - toEat;
-		if (_storage.Food < 0) {
+		if (_storage.Food <= 0) {
 			_storage.Food = 0;
 			return false;
 		}
@@ -287,6 +287,7 @@ public class Shelter : MonoBehaviour
 	// player consume food
 	public void playerEat ()
 	{
+		foodEatenToday += 5;
 		_storage.playerEat ();
 	}
 
