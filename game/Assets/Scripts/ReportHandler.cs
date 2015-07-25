@@ -63,7 +63,10 @@ public class ReportHandler : MonoBehaviour
 			_hasReports = true;
 
 			foreach(Report rept in reports){
-				newReports.Add(rept);
+				if(rept != null && rept.IsInitialized())
+				{
+					newReports.Add(rept);
+				}
 			}
 
 			//newReports = reports;//_reports = reports;

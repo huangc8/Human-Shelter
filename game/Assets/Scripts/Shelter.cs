@@ -72,6 +72,9 @@ public class Shelter : MonoBehaviour
 		public void playerEat ()
 		{
 			Food =  Food - 5;
+			if (Food < 0) {
+				Food = 0;
+			}
 		}
 
 		// consume medicine
@@ -287,7 +290,11 @@ public class Shelter : MonoBehaviour
 	// player consume food
 	public void playerEat ()
 	{
-		foodEatenToday += 5;
+		if (_storage.Food >= 5) {
+			foodEatenToday += 5;
+		} else {
+			foodEatenToday = _storage.Food;
+		}
 		_storage.playerEat ();
 	}
 
@@ -462,6 +469,31 @@ public class Shelter : MonoBehaviour
 					s.Health -= 2;
 					reports.Add(s.Name +  " sustained a minor wound while raiding.");
 				}
+			}
+		}
+	}
+
+	// wound a random defender
+	public void WoundRandomDefender(ArrayList reports){
+		int length = 0;
+		foreach (Survivor s in _survivors) {
+			if(Random.Range (0,10) > 5 && (s.AssignedTask == Survivor.task.Defend || s.AssignedTask == Survivor.task.Heal || s.AssignedTask == Survivor.task.Resting || s.AssignedTask == Survivor.task.Unassigned)){
+				Report r = new Report();
+				Survivor.wound w = Survivor.wound.Uninjured;
+				s.WoundCheck(this,r,0, "defending","defend",ref w);
+
+				if(w != Survivor.wound.Uninjured){
+					if(s.Health > 0)
+					{
+						r.SetMessage(s.Name + " died defending.");
+					}
+					else
+					{
+						r.SetMessage(s.Name + " sustained a " + w.ToString() + " wound defending.");
+					}
+					reports.Add(r);
+				}
+
 			}
 		}
 	}

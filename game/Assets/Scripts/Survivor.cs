@@ -210,18 +210,17 @@ public class Survivor : ScriptableObject
 				r.SetMessage(_name + " has starved to death.");
                 s.KillSurvivor(this.Name);
             }
-			return r;
+			if (_starvation == hunger.Famished || _starvation == hunger.Starving) {
+				return r;
+			} else {
+				return null;
+			}
         }
 		else{
 			_starvation = hunger.Content;
 
 		}
 		return null;
-		/*if (_starvation == hunger.Famished || _starvation == hunger.Starving) {
-			return r;
-		} else {
-			return null;
-		}*/
     }
 
     // Consumes medicine.
@@ -261,9 +260,28 @@ public class Survivor : ScriptableObject
     // Reduce fatigue.
     public int RestMe()
     {
-        int proficiency = GetProficiency(task.Resting);
-		int restModifier = ((int)hunger.Count - (int)_starvation);
-        _fatigue -= Mathf.Max ((int)((proficiency * (Health)) / 5.0f) * restModifier + 10,15);
+		// Rest up to 15 points as a factor of health, and hunger
+		//
+		int resting = 5;
+		resting += Health/2;
+		switch (_starvation) {
+		case hunger.Content:
+			resting += 5;
+			break;
+		case hunger.Satiatiated:
+			resting += 4;
+			break;
+		case hunger.Hungry:
+			resting += 2;
+			break;
+		case hunger.Famished:
+			resting += 1;
+			break;
+		case hunger.Starving:
+			resting += 0;
+			break;
+		}
+		_fatigue -= resting;
 		if(_fatigue < 0){
 			_fatigue = 0;
 		}
@@ -274,7 +292,8 @@ public class Survivor : ScriptableObject
     public bool WoundCheck(Shelter s, Report r, int successChance, string tasking,string task,ref wound sWound){
         
         sWound = wound.Uninjured;
-        //Chance of getting wounded, if the wound is severe enough, do not continue scouting
+		bool invulnerable = Health > 1;
+		//Chance of getting wounded, if the wound is severe enough, do not continue scouting
         if (successChance + Random.Range(0, 10) < 6)
         {
             sWound = (wound) Random.Range(0, (int)wound.Count);
@@ -297,13 +316,16 @@ public class Survivor : ScriptableObject
             }
         }
         
-        if(Health < 0){
-            r.SetMessage(_name + " died after sustaining a " + sWound.ToString() + " wound " + tasking + ".");
+        if(Health < 0 && false == invulnerable){
+            r.SetMessage(_name + " sustained a " + sWound.ToString() + " wound " + tasking + " and is severely injured.");
             s.KillSurvivor(this.Name);
             return false;
         }
         else if (sWound == wound.Severe || sWound == wound.Grievous)
         {
+			if(invulnerable && Health < 0){
+				Health = 1;
+			}
             r.SetMessage(_name + " attempted to " + task + " but wound up sustaining a " + sWound.ToString() + " wound.");
             return false;
         }
@@ -405,7 +427,7 @@ public class Survivor : ScriptableObject
         }
         int fatigueModifier = -Fatigue/10;
 
-        int proficiency = (GetProficiency(task.Defend) + 10) + fatigueModifier;
+        int proficiency = (GetProficiency(task.Defend) + 10) + fatigueModifier + 5;
         Shelter.DefenseLevel newDefenses = s.BolsterDefenses(proficiency);
 
 		string defenseDescription = " undefended.";

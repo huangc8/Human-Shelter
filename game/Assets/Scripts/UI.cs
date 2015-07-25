@@ -14,11 +14,13 @@ public class UI : MonoBehaviour {
 	private Conditions _Cond; 												// conditions
 	NewDayAnim _newdayanim;
 
+	bool noRaidables = true;
 
 	//these are needed for showing and hiding buttons
 	public bool showAllButtons;
 	public bool startScreen;
 	private bool charButtons, sideButtons, showButtons, showJournal, showHelp;
+	private GameWorld _gameWorld;
 	private float x, y, animateSide;
 	private int index;
 	public bool tutorial, credits;
@@ -50,6 +52,7 @@ public class UI : MonoBehaviour {
 		if (_reports == null) {
 			_reports = g.GetComponent<ReportHandler> ();
 		}
+		_gameWorld = g.GetComponent<GameWorld> ();
 		_Cond = g.GetComponent<Conditions>();
 		_newdayanim = g.GetComponent<NewDayAnim> ();
 
@@ -98,6 +101,8 @@ public class UI : MonoBehaviour {
 	// ========================================================== helper
 	public void charClick(int aindex, float ax, float ay)
 	{
+		
+		noRaidables = !_gameWorld.ExistVisibleShelters();
 		//center buttons
 		//not using this at the moment because it doesn't really work
 		//GUIStyle style = GUI.skin.GetStyle("align");
@@ -651,7 +656,7 @@ public class UI : MonoBehaviour {
 							if(((Survivor.task)t).ToString ()== "Raiding")
 							{
 
-									if(false)//raid not possible
+									if(noRaidables)//raid not possible
 								{
 										buttonStyle.hover.background=black;
 										buttonStyle.active.background=black;
@@ -686,6 +691,7 @@ public class UI : MonoBehaviour {
 								if (GUI.Button (new Rect (w, h, buttonWidth, buttonHeight), ((Survivor.task)t).ToString (), buttonStyle)) {
 									showButtons=true;
 									_shelter._survivors [index].AssignedTask = ((Survivor.task)t);
+
 								}
 							}
 

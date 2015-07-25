@@ -47,13 +47,14 @@ public class GameWorld : MonoBehaviour
 						_located = true;
 					}
 				}
-				else if (proficiency>5){
+				else if (proficiency>5 || Random.Range(0,10) > 5){
 					//increase by 1 point
 					_scoutedProgress = (ScoutingProgress)((int)_scoutedProgress + 1);
 					if(_scoutedProgress == ScoutingProgress.exactLocation){
 						_located = true;
 					}
 				}
+
 			}
 			if(_located == true && _scoutedProgress == ScoutingProgress.exactLocation){
 				r.SetMessage("The exact location of an enemy camp has been located. You can attack it now.");
@@ -61,16 +62,16 @@ public class GameWorld : MonoBehaviour
 			else{
 				switch(_scoutedProgress){
 				case ScoutingProgress.mystery:
-					r.SetMessage("Your scouts have no idea where the enemy camp is.");
+					//r.SetMessage("Your scouts have no idea where the enemy camp is.");
 					break;
 				case ScoutingProgress.vagueIdea:
-					r.SetMessage("Your scouts have a vague idea where the enemy camp is.");
+					//r.SetMessage("Your scouts have a vague idea where the enemy camp is.");
 					break;
 				case ScoutingProgress.generalVicinity:
-					r.SetMessage("Your scouts have determined the general vicinity of where the enemy camp is.");
+					//r.SetMessage("Your scouts have determined the general vicinity of where the enemy camp is.");
 					break;
 				case ScoutingProgress.exactLocation:
-					r.SetMessage("Your scouts have pinpointed the exact location of the enemy camp.");
+					//r.SetMessage("Your scouts have pinpointed the exact location of the enemy camp.");
 					break;
 				default:
 					//Debug.LogError("ERROR in Gameworld, _scoutedProgress is not a valid enum.");
@@ -121,6 +122,13 @@ public class GameWorld : MonoBehaviour
 			}
 		}
 
+		// get visibility
+		public ScoutingProgress VisibilityEnum {
+			get {
+				return _scoutedProgress;
+			}
+		}
+
 		// whether aware by player
 		public bool IsUnscouted ()
 		{
@@ -143,7 +151,7 @@ public class GameWorld : MonoBehaviour
 		// whether the enemy camp will attack you
 		public bool ShouldAttack ()
 		{
-			int attackChance = Random.Range (0, 10) + _aggressiveness + _readiness;
+			int attackChance = Random.Range (0, 4) + _aggressiveness + _readiness;
 			if (attackChance > 8) {
 				_readiness = -5;
 				return true;
@@ -168,11 +176,9 @@ public class GameWorld : MonoBehaviour
 			Report rep = new Report ();
 			if (_readiness > 5) {
 				rep.SetMessage ("An enemy is prepared to attack you.");
-			} else if (_readiness < 2) {
+			} else if (_readiness > 3) {
 				rep.SetMessage ("An enemy will soon be ready to attack you.");
-			} else {
-				rep.SetMessage ("An enemy is not ready to attack you.");
-			}
+			} 
 			return rep;
 		}
 	} 
@@ -345,11 +351,8 @@ public class GameWorld : MonoBehaviour
 
 
 					if ( (int)_shelter.DefensivePower + Random.Range (-5, 5) < camp.Strength) {
-						string deadSurvivor = _shelter.KillRandomSurvivor ();
+						_shelter.WoundRandomDefender (reports);
 						_shelter.LoseHalfResources ();
-						Report rep = new Report ();
-						rep.SetMessage (deadSurvivor + " was killed in a raid on your camp. Some of your stores were taken.");
-						reports.Add (rep);
 					} else {
 						Report rep = new Report ();
 						rep.SetMessage ("Your camp was attacked, but you defended yourself.");
@@ -375,53 +378,63 @@ public class GameWorld : MonoBehaviour
 		//print out the raidability of each class
 		int foundCamps = 0;
 		int unknownCamps = 0;
+		Report CampScoutingRundown = new Report();
 
+		string campReport = "";
+		int mystery = 0;
+		int vagueIdea = 0;
+		int generalVicinity = 0;
+		int exactLocation = 0;
 		foreach(Enemy camp in Enemies){
-			if(camp.IsUnscouted()){
-				unknownCamps++;
+			if(camp.VisibilityEnum == Enemy.ScoutingProgress.mystery)
+			{
+				mystery++;
 			}
-			else{
-				foundCamps++;
+			if(camp.VisibilityEnum == Enemy.ScoutingProgress.vagueIdea)
+			{
+				vagueIdea++;
+			}
+			if(camp.VisibilityEnum == Enemy.ScoutingProgress.generalVicinity)
+			{
+				generalVicinity++;
+			}
+			if(camp.VisibilityEnum == Enemy.ScoutingProgress.exactLocation)
+			{
+				exactLocation++;
 			}
 		}
-
-		if(foundCamps > 0 && unknownCamps > 0){
-			Report numCampsFound = new Report();
-
-			if(foundCamps == 1){
-				numCampsFound.SetMessage("There is " + foundCamps + " enemy camp you have located and " + unknownCamps + " you have not located.");
-			}
-			else{
-				numCampsFound.SetMessage("There are " + foundCamps + " enemy camps you have located and " + unknownCamps + " you have not located.");
-			}
-			reports.Add(numCampsFound);
+		if (mystery > 1) {
+			campReport += "There are " + mystery + " enemy camps which you have no idea where they are located. ";
 		}
-		else if(foundCamps > 0){
-			Report numCampsFound = new Report();
-			if(foundCamps == 1){
-				numCampsFound.SetMessage("There is " + foundCamps + " enemy camp you have located.");
-			}
-			else{
-				numCampsFound.SetMessage("There are " + foundCamps + " enemy camps you have located.");
-
-			}
-			
-			reports.Add(numCampsFound);
-
+		else if( 1 == mystery){
+			campReport += "There is " + mystery + " enemy camp which you have no idea where it is located. ";
 		}
-		else if(unknownCamps > 0){
-			Report numCampsFound = new Report();
 
-			if(unknownCamps == 1){
-				numCampsFound.SetMessage("There is " + unknownCamps + " enemy camp you have not located.");
-			}
-			else{
-				numCampsFound.SetMessage("There are " + unknownCamps + " enemy camps you have not located.");
+		if (vagueIdea > 1) {
+			campReport += "There are " + vagueIdea + " enemy camps which you have vague ideas where they are located. ";
+		}
+		else if( 1 == vagueIdea){
+			campReport += "There is " + vagueIdea + " enemy camp which you have a vague idea where it is located. ";
+		}
 
-			}
-			
-			reports.Add(numCampsFound);
-			
+		if (generalVicinity > 1) {
+			campReport += "There are " + generalVicinity + " enemy camps which you know the general vicinitys of where they are located. ";
+		}
+		else if( 1 == generalVicinity){
+			campReport += "There is " + generalVicinity + " enemy camp which you know the general vicinity of where it is located. ";
+		}
+
+		if (exactLocation > 1) {
+			campReport += "There are " + exactLocation + " enemy camps which you know the exact locations of where they are located. ";
+		}
+		else if( 1 == exactLocation){
+			campReport += "There is " + exactLocation + " enemy camp which you know the general vicinity of where it is located. ";
+		}
+
+		if(campReport != ""){
+			CampScoutingRundown.SetMessage (campReport);
+
+			reports.Add (CampScoutingRundown);
 		}
 		//print out the contents of reports
 		//Debug.Log("Printing Reports in GameWorld.NewDay():");
